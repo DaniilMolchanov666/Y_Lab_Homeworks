@@ -13,7 +13,10 @@ import com.ylab.service.AuthorizationService;
 import com.ylab.utils.AuditLogger;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
+
+import static java.lang.System.*;
 
 /**
  * Класс обеспечивает консольный интерфейс для взаимодействия с пользователем.
@@ -24,12 +27,13 @@ public class ConsoleInterface {
     private AuthenticationService authenticationService;
     private AuthorizationService authorizationService;
     private UserService userService;
-    private CarService carService;
+    private     CarService carService;
     private OrderService orderService;
     private ServiceRequestService serviceRequestService;
     private AuditLogger auditLogger;
     private User currentUser;
 
+    private final String incorrectChoiceMessage = "Неверный выбор. Попробуйте снова!";
 
     public ConsoleInterface() {
         injectAllDependency();
@@ -40,7 +44,7 @@ public class ConsoleInterface {
      * загружающий все необходимые для работы приложения зависимости
      */
     private void injectAllDependency() {
-        this.scanner = new Scanner(System.in);
+        this.scanner = new Scanner(in);
         this.userService = new UserService();
         this.authenticationService = new AuthenticationService(userService);
         this.authorizationService = new AuthorizationService();
@@ -55,62 +59,79 @@ public class ConsoleInterface {
      */
     public void start() {
         while (true) {
-            System.out.println("1. Регистрация");
-            System.out.println("2. Вход");
-            System.out.println("3. Выход");
-            System.out.print("Выберите действие: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            String startMenuText = """
+                  
+                    1. Регистрация
+                    2. Вход
+                    3. Выход
+                    
+                    Выберите действие:
+                    """;
 
-            switch (choice) {
-                case 1:
-                    registerUser();
-                    break;
-                case 2:
-                    loginUser();
-                    break;
-                case 3:
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println("Неверный выбор. Попробуйте снова.");
+            switch (sendMenuAndGetChoice(startMenuText)) {
+                case "1" -> registerUser();
+                case "2" -> loginUser();
+                case "3" -> System.exit(0);
+                default -> out.println(incorrectChoiceMessage);
             }
         }
+    }
+
+    /**
+     * Метод для вывода сообщения пользователю
+     * @return вводимое пользователем значение
+     */
+    public String sendMenuAndGetChoice(String menuText) {
+        out.println(menuText);
+        return scanner.nextLine();
     }
 
     /**
      * Метод для отображения меню регистрации пользователя
      */
     private void registerUser() {
-        System.out.print("Введите имя пользователя: ");
+        out.print("Введите имя пользователя: ");
         String username = scanner.nextLine();
-        System.out.print("Введите пароль: ");
-        String password = scanner.nextLine();
-        System.out.print("Выберите роль (1 - ADMIN, 2 - MANAGER, 3 - CLIENT): ");
-        int roleChoice = scanner.nextInt();
-        scanner.nextLine();
-        Role role = Role.values()[roleChoice - 1];
 
-        User user = new User(username, password, role);
-        userService.addUser(user);
-        System.out.println("Пользователь зарегистрирован.");
+        out.print("Введите пароль: ");
+        String password = scanner.nextLine();
+
+        out.print("Выберите роль (1 - ADMIN, 2 - MANAGER, 3 - CLIENT): ");
+        String roleChoice = scanner.nextLine();
+
+        if (userService.getUserByUsername(username) != null) {
+            out.println("Пользователь с таким именем уже зарегистрирован!");
+            start();
+        }
+
+        try {
+            Role role = Role.values()[Integer.parseInt(roleChoice) - 1];
+            User user = new User(username, password, role);
+            userService.addUser(user);
+            out.println("Пользователь зарегистрирован");
+        } catch (NumberFormatException e) {
+            out.println("Неверный формат ввода данных!");
+            start();
+        }
     }
 
     /**
      * Метод для отображения меню авторизации пользователя
      */
     private void loginUser() {
-        System.out.print("Введите имя пользователя: ");
+
+        out.print("Введите имя пользователя: ");
         String username = scanner.nextLine();
-        System.out.print("Введите пароль: ");
+
+        out.print("Введите пароль: ");
         String password = scanner.nextLine();
 
         if (authenticationService.authenticate(username, password)) {
             currentUser = userService.getUserByUsername(username);
-            System.out.println("Вход выполнен успешно.");
+            out.println("Вход выполнен успешно!");
             showMainMenu();
         } else {
-            System.out.println("Неверное имя пользователя или пароль.");
+            out.println("Неверное имя пользователя или пароль!");
         }
     }
 
@@ -119,37 +140,30 @@ public class ConsoleInterface {
      */
     private void showMainMenu() {
         while (true) {
-            System.out.println("1. Управление автомобилями");
-            System.out.println("2. Обработка заказов");
-            System.out.println("3. Просмотр информации о клиентах и сотрудниках");
-            System.out.println("4. Фильтрация и поиск");
-            System.out.println("5. Аудит действий");
-            System.out.println("6. Выход");
-            System.out.print("Выберите действие: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
 
-            switch (choice) {
-                case 1:
-                    manageCars();
-                    break;
-                case 2:
-                    manageOrders();
-                    break;
-                case 3:
-                    viewUsers();
-                    break;
-                case 4:
-                    filterAndSearch();
-                    break;
-                case 5:
-                    viewAuditLog();
-                    break;
-                case 6:
+            String mainMenuText = """
+                    
+                    1. Управление автомобилями
+                    2. Обработка заказов
+                    3. Просмотр информации о клиентах и сотрудниках
+                    4. Фильтрация и поиск
+                    5. Аудит действий
+                    6. Выход
+                    
+                    Выберите действие:
+                    """;
+
+            switch (sendMenuAndGetChoice(mainMenuText)) {
+                case "1" -> manageCars();
+                case "2" -> manageOrders();
+                case "3" -> viewUsers();
+                case "4" -> filterAndSearch();
+                case "5" -> viewAuditLog();
+                case "6" -> {
                     currentUser = null;
                     return;
-                default:
-                    System.out.println("Неверный выбор. Попробуйте снова.");
+                }
+                default -> out.println("Неверный выбор. Попробуйте снова!");
             }
         }
     }
@@ -158,38 +172,31 @@ public class ConsoleInterface {
      * Метод для отображения меню для запросов по автомобилям
      */
     private void manageCars() {
-        if (!authorizationService.isAuthorized(currentUser, Role.MANAGER) && !authorizationService.isAuthorized(currentUser, Role.ADMIN)) {
-            System.out.println("У вас нет прав для управления автомобилями.");
+
+        if (Objects.equals(currentUser.getRole(), Role.CLIENT)) {
+            out.println("У вас нет прав для управления автомобилями.");
             return;
         }
 
         while (true) {
-            System.out.println("1. Просмотр списка автомобилей");
-            System.out.println("2. Добавление нового автомобиля");
-            System.out.println("3. Редактирование информации об автомобиле");
-            System.out.println("4. Удаление автомобиля");
-            System.out.println("5. Назад");
-            System.out.print("Выберите действие: ");
+            out.println("1. Просмотр списка автомобилей");
+            out.println("2. Добавление нового автомобиля");
+            out.println("3. Редактирование информации об автомобиле");
+            out.println("4. Удаление автомобиля");
+            out.println("5. Назад");
+            out.print("Выберите действие: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
 
             switch (choice) {
-                case 1:
-                    viewCars();
-                    break;
-                case 2:
-                    addCar();
-                    break;
-                case 3:
-                    editCar();
-                    break;
-                case 4:
-                    removeCar();
-                    break;
-                case 5:
+                case 1 -> viewCars();
+                case 2 -> addCar();
+                case 3 -> editCar();
+                case 4 -> removeCar();
+                case 5 -> {
                     return;
-                default:
-                    System.out.println("Неверный выбор. Попробуйте снова.");
+                }
+                default -> out.println("Неверный выбор. Попробуйте снова!");
             }
         }
     }
@@ -200,10 +207,10 @@ public class ConsoleInterface {
     private void viewCars() {
         List<Car> cars = carService.getAllCars();
         if (cars.isEmpty()) {
-            System.out.println("Список автомобилей пуст.");
+            out.println("Список автомобилей пуст");
         } else {
             for (Car car : cars) {
-                System.out.println(car);
+                out.println(car);
             }
         }
     }
@@ -212,69 +219,75 @@ public class ConsoleInterface {
      * Метод для добавления нового автомобиля в базу данных
      */
     private void addCar() {
-        System.out.print("Введите марку: ");
+        out.print("Введите марку: ");
         String brand = scanner.nextLine();
 
-        System.out.print("Введите модель: ");
+        out.print("Введите модель: ");
         String model = scanner.nextLine();
 
-        System.out.print("Введите год выпуска: ");
+        out.print("Введите год выпуска: ");
         int year = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.print("Введите цену: ");
+        out.print("Введите цену: ");
         double price = scanner.nextDouble();
         scanner.nextLine();
 
-        System.out.print("Введите состояние: ");
+        out.print("Введите состояние: ");
         String condition = scanner.nextLine();
 
         Car car = new Car(brand, model, year, price, condition);
         carService.addCar(car);
         auditLogger.logAction("Добавлен новый автомобиль: " + car);
 
-        System.out.println("Автомобиль добавлен.");
+        out.println("Автомобиль добавлен");
     }
 
     /**
      * Метод для редактирования автомобиля
      */
     private void editCar() {
-        System.out.print("Введите марку автомобиля для редактирования: ");
+        out.print("Введите марку автомобиля для редактирования: ");
         String brand = scanner.nextLine();
-        System.out.print("Введите модель автомобиля для редактирования: ");
+
+        out.print("Введите модель автомобиля для редактирования: ");
         String model = scanner.nextLine();
 
         List<Car> cars = carService.getAllCars();
         for (Car car : cars) {
             if (car.getBrand().equals(brand) && car.getModel().equals(model)) {
-                System.out.print("Введите новый год выпуска: ");
+                out.print("Введите новый год выпуска: ");
                 int year = scanner.nextInt();
                 scanner.nextLine();
-                System.out.print("Введите новую цену: ");
+
+                out.print("Введите новую цену: ");
                 double price = scanner.nextDouble();
                 scanner.nextLine();
-                System.out.print("Введите новое состояние: ");
+
+                out.print("Введите новое состояние: ");
                 String condition = scanner.nextLine();
 
                 car = new Car(brand, model, year, price, condition);
+
                 carService.removeCar(car);
                 carService.addCar(car);
                 auditLogger.logAction("Отредактирован автомобиль: " + car);
-                System.out.println("Информация об автомобиле обновлена.");
+
+                out.println("Информация об автомобиле обновлена");
                 return;
             }
         }
-        System.out.println("Автомобиль не найден.");
+        out.println("Автомобиль не найден!");
     }
 
     /**
      * Метод для удаления автомобиля
      */
     private void removeCar() {
-        System.out.print("Введите марку автомобиля для удаления: ");
+        out.print("Введите марку автомобиля для удаления: ");
         String brand = scanner.nextLine();
-        System.out.print("Введите модель автомобиля для удаления: ");
+
+        out.print("Введите модель автомобиля для удаления: ");
         String model = scanner.nextLine();
 
         List<Car> cars = carService.getAllCars();
@@ -282,29 +295,31 @@ public class ConsoleInterface {
             if (car.getBrand().equals(brand) && car.getModel().equals(model)) {
                 carService.removeCar(car);
                 auditLogger.logAction("Удален автомобиль: " + car);
-                System.out.println("Автомобиль удален.");
+
+                out.println("Автомобиль удален");
                 return;
             }
         }
-        System.out.println("Автомобиль не найден.");
+        out.println("Автомобиль не найден!");
     }
 
     /**
      * Метод для отображения меню управления запросами по заказам
      */
     private void manageOrders() {
-        if (!authorizationService.isAuthorized(currentUser, Role.MANAGER) && !authorizationService.isAuthorized(currentUser, Role.ADMIN)) {
-            System.out.println("У вас нет прав для управления заказами.");
+        if (!authorizationService.isAuthorized(currentUser, Role.MANAGER)
+                && !authorizationService.isAuthorized(currentUser, Role.ADMIN)) {
+            out.println("У вас нет прав для управления заказами!");
             return;
         }
 
         while (true) {
-            System.out.println("1. Просмотр списка заказов");
-            System.out.println("2. Создание нового заказа");
-            System.out.println("3. Изменение статуса заказа");
-            System.out.println("4. Удаление заказа");
-            System.out.println("5. Назад");
-            System.out.print("Выберите действие: ");
+            out.println("1. Просмотр списка заказов");
+            out.println("2. Создание нового заказа");
+            out.println("3. Изменение статуса заказа");
+            out.println("4. Удаление заказа");
+            out.println("5. Назад");
+            out.print("Выберите действие: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
 
@@ -324,7 +339,7 @@ public class ConsoleInterface {
                 case 5:
                     return;
                 default:
-                    System.out.println("Неверный выбор. Попробуйте снова.");
+                    out.println("Неверный выбор. Попробуйте снова!");
             }
         }
     }
@@ -335,10 +350,10 @@ public class ConsoleInterface {
     private void viewOrders() {
         List<Order> orders = orderService.getAllOrders();
         if (orders.isEmpty()) {
-            System.out.println("Список заказов пуст.");
+            out.println("Список заказов пуст");
         } else {
             for (Order order : orders) {
-                System.out.println(order);
+                out.println(order);
             }
         }
     }
@@ -347,9 +362,9 @@ public class ConsoleInterface {
      * Метод для создания заказа
      */
     private void createOrder() {
-        System.out.print("Введите марку автомобиля для заказа: ");
+        out.print("Введите марку автомобиля для заказа: ");
         String brand = scanner.nextLine();
-        System.out.print("Введите модель автомобиля для заказа: ");
+        out.print("Введите модель автомобиля для заказа: ");
         String model = scanner.nextLine();
 
         List<Car> cars = carService.getAllCars();
@@ -358,43 +373,43 @@ public class ConsoleInterface {
                 Order order = new Order(currentUser, car, "Новый");
                 orderService.addOrder(order);
                 auditLogger.logAction("Создан новый заказ: " + order);
-                System.out.println("Заказ создан.");
+                out.println("Заказ создан");
                 return;
             }
         }
-        System.out.println("Автомобиль не найден.");
+        out.println("Автомобиль не найден!");
     }
 
     /**
      * Метод для изменения статуса заказа
      */
     private void changeOrderStatus() {
-        System.out.print("Введите марку автомобиля заказа для изменения статуса: ");
+        out.print("Введите марку автомобиля заказа для изменения статуса: ");
         String brand = scanner.nextLine();
-        System.out.print("Введите модель автомобиля заказа для изменения статуса: ");
+        out.print("Введите модель автомобиля заказа для изменения статуса: ");
         String model = scanner.nextLine();
 
         List<Order> orders = orderService.getAllOrders();
         for (Order order : orders) {
             if (order.getCar().getBrand().equals(brand) && order.getCar().getModel().equals(model)) {
-                System.out.print("Введите новый статус заказа: ");
+                out.print("Введите новый статус заказа: ");
                 String status = scanner.nextLine();
                 order.setStatus(status);
                 auditLogger.logAction("Изменен статус заказа: " + order);
-                System.out.println("Статус заказа изменен.");
+                out.println("Статус заказа изменен");
                 return;
             }
         }
-        System.out.println("Заказ не найден.");
+        out.println("Заказ не найден!");
     }
 
     /**
      * Метод для удаления заказа
      */
     private void removeOrder() {
-        System.out.print("Введите марку автомобиля заказа для удаления: ");
+        out.print("Введите марку автомобиля заказа для удаления: ");
         String brand = scanner.nextLine();
-        System.out.print("Введите модель автомобиля заказа для удаления: ");
+        out.print("Введите модель автомобиля заказа для удаления: ");
         String model = scanner.nextLine();
 
         List<Order> orders = orderService.getAllOrders();
@@ -402,11 +417,11 @@ public class ConsoleInterface {
             if (order.getCar().getBrand().equals(brand) && order.getCar().getModel().equals(model)) {
                 orderService.removeOrder(order);
                 auditLogger.logAction("Удален заказ: " + order);
-                System.out.println("Заказ удален.");
+                out.println("Заказ удален!");
                 return;
             }
         }
-        System.out.println("Заказ не найден.");
+        out.println("Заказ не найден!");
     }
 
     /**
@@ -414,16 +429,16 @@ public class ConsoleInterface {
      */
     private void viewUsers() {
         if (!authorizationService.isAuthorized(currentUser, Role.ADMIN)) {
-            System.out.println("У вас нет прав для просмотра информации о пользователях.");
+            out.println("У вас нет прав для просмотра информации о пользователях!");
             return;
         }
 
         List<User> users = userService.getAllUsers();
         if (users.isEmpty()) {
-            System.out.println("Список пользователей пуст.");
+            out.println("Список пользователей пуст!");
         } else {
             for (User user : users) {
-                System.out.println("Username: " + user.getUsername() + ", Role: " + user.getRole());
+                out.println("Username: " + user.getUsername() + ", Role: " + user.getRole());
             }
         }
     }
@@ -432,9 +447,9 @@ public class ConsoleInterface {
      * Метод для отображения меню управления запросами по поиску автомобилей и заказов
      */
     private void filterAndSearch() {
-        System.out.println("1. Поиск автомобилей");
-        System.out.println("2. Поиск заказов");
-        System.out.print("Выберите действие: ");
+        out.println("1. Поиск автомобилей");
+        out.println("2. Поиск заказов");
+        out.print("Выберите действие: ");
         int choice = scanner.nextInt();
         scanner.nextLine();
 
@@ -446,7 +461,7 @@ public class ConsoleInterface {
                 searchOrders();
                 break;
             default:
-                System.out.println("Неверный выбор. Попробуйте снова.");
+                out.println("Неверный выбор. Попробуйте снова!");
         }
     }
 
@@ -454,21 +469,21 @@ public class ConsoleInterface {
      * Метод для поиска автомобиля
      */
     private void searchCars() {
-        System.out.print("Введите марку автомобиля для поиска: ");
+        out.print("Введите марку автомобиля для поиска: ");
         String brand = scanner.nextLine();
-        System.out.print("Введите модель автомобиля для поиска: ");
+        out.print("Введите модель автомобиля для поиска: ");
         String model = scanner.nextLine();
 
         List<Car> cars = carService.getAllCars();
         boolean found = false;
         for (Car car : cars) {
             if (car.getBrand().equals(brand) && car.getModel().equals(model)) {
-                System.out.println(car);
+                out.println(car);
                 found = true;
             }
         }
         if (!found) {
-            System.out.println("Автомобиль не найден.");
+            out.println("Автомобиль не найден!");
         }
     }
 
@@ -476,21 +491,21 @@ public class ConsoleInterface {
      * Метод для поиска заказа
      */
     private void searchOrders() {
-        System.out.print("Введите марку автомобиля заказа для поиска: ");
+        out.print("Введите марку автомобиля заказа для поиска: ");
         String brand = scanner.nextLine();
-        System.out.print("Введите модель автомобиля заказа для поиска: ");
+        out.print("Введите модель автомобиля заказа для поиска: ");
         String model = scanner.nextLine();
 
         List<Order> orders = orderService.getAllOrders();
         boolean found = false;
         for (Order order : orders) {
             if (order.getCar().getBrand().equals(brand) && order.getCar().getModel().equals(model)) {
-                System.out.println(order);
+                out.println(order);
                 found = true;
             }
         }
         if (!found) {
-            System.out.println("Заказ не найден.");
+            out.println("Заказ не найден!");
         }
     }
 
@@ -500,16 +515,16 @@ public class ConsoleInterface {
      */
     private void viewAuditLog() {
         if (!authorizationService.isAuthorized(currentUser, Role.ADMIN)) {
-            System.out.println("У вас нет прав для просмотра журнала действий.");
+            out.println("У вас нет прав для просмотра журнала действий!");
             return;
         }
 
         List<String> log = auditLogger.getListOfLogs();
         if (log.isEmpty()) {
-            System.out.println("Журнал действий пуст.");
+            out.println("Журнал действий пуст!");
         } else {
             for (String entry : log) {
-                System.out.println(entry);
+                out.println(entry);
             }
             auditLogger.exportLogToFile();
         }

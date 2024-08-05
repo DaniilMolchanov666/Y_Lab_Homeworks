@@ -9,6 +9,7 @@ import java.util.List;
  * Класс управляет пользователями в системе.
  */
 public class UserService {
+
     private List<User> users = new ArrayList<>();
 
     /**

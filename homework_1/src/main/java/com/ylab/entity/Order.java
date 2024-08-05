@@ -1,10 +1,13 @@
 package com.ylab.entity;
 
+import lombok.Data;
+
 import java.util.Objects;
 
 /**
  * Класс представляет заказ на покупку автомобиля.
  */
+
 public class Order {
 
     private User customer;
