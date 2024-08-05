@@ -13,6 +13,12 @@
 **/.gradle
 **/build
 
+**/gradle
+
+*.bat
+
+/gradlew
+
 # Package Files #
 *.jar
 *.war
