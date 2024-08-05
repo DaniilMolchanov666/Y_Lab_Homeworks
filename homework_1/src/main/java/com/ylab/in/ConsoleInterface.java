@@ -1,15 +1,7 @@
 package com.ylab.in;
 
-import com.ylab.service.CarService;
-import com.ylab.service.OrderService;
-import com.ylab.service.ServiceRequestService;
-import com.ylab.service.UserService;
-import com.ylab.entity.Car;
-import com.ylab.entity.Order;
-import com.ylab.entity.Role;
-import com.ylab.entity.User;
-import com.ylab.service.AuthenticationService;
-import com.ylab.service.AuthorizationService;
+import com.ylab.entity.*;
+import com.ylab.service.*;
 import com.ylab.utils.AuditLogger;
 
 import java.util.List;
@@ -27,7 +19,7 @@ public class ConsoleInterface {
     private AuthenticationService authenticationService;
     private AuthorizationService authorizationService;
     private UserService userService;
-    private     CarService carService;
+    private CarService carService;
     private OrderService orderService;
     private ServiceRequestService serviceRequestService;
     private AuditLogger auditLogger;
@@ -140,7 +132,6 @@ public class ConsoleInterface {
      */
     private void showMainMenu() {
         while (true) {
-
             String mainMenuText = """
                     
                     1. Управление автомобилями
@@ -179,21 +170,23 @@ public class ConsoleInterface {
         }
 
         while (true) {
-            out.println("1. Просмотр списка автомобилей");
-            out.println("2. Добавление нового автомобиля");
-            out.println("3. Редактирование информации об автомобиле");
-            out.println("4. Удаление автомобиля");
-            out.println("5. Назад");
-            out.print("Выберите действие: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            String carsMenuText = """
+                    
+                    1. Просмотр списка автомобилей
+                    2. Добавление нового автомобиля
+                    3. Редактирование информации об автомобиле
+                    4. Удаление автомобиля
+                    5. Назад
+                    
+                    Выберите действие:
+                    """;
 
-            switch (choice) {
-                case 1 -> viewCars();
-                case 2 -> addCar();
-                case 3 -> editCar();
-                case 4 -> removeCar();
-                case 5 -> {
+            switch (sendMenuAndGetChoice(carsMenuText)) {
+                case "1" -> carService.viewCars();
+                case "2" -> addCarMenu();
+                case "3" -> editCar();
+                case "4" -> removeCar();
+                case "5" -> {
                     return;
                 }
                 default -> out.println("Неверный выбор. Попробуйте снова!");
@@ -202,23 +195,9 @@ public class ConsoleInterface {
     }
 
     /**
-     * Метод для отображения всех автомобилей из базы данных
-     */
-    private void viewCars() {
-        List<Car> cars = carService.getAllCars();
-        if (cars.isEmpty()) {
-            out.println("Список автомобилей пуст");
-        } else {
-            for (Car car : cars) {
-                out.println(car);
-            }
-        }
-    }
-
-    /**
      * Метод для добавления нового автомобиля в базу данных
      */
-    private void addCar() {
+    private void addCarMenu() {
         out.print("Введите марку: ");
         String brand = scanner.nextLine();
 
@@ -226,21 +205,23 @@ public class ConsoleInterface {
         String model = scanner.nextLine();
 
         out.print("Введите год выпуска: ");
-        int year = scanner.nextInt();
-        scanner.nextLine();
+        String year = scanner.nextLine();
 
         out.print("Введите цену: ");
-        double price = scanner.nextDouble();
-        scanner.nextLine();
+        String price = scanner.nextLine();
 
         out.print("Введите состояние: ");
         String condition = scanner.nextLine();
 
         Car car = new Car(brand, model, year, price, condition);
-        carService.addCar(car);
-        auditLogger.logAction("Добавлен новый автомобиль: " + car);
 
-        out.println("Автомобиль добавлен");
+        if (carService.isValidCarValues(car)) {
+            carService.addCar(car);
+            auditLogger.logAction("Добавлен новый автомобиль: " + car);
+            out.println("Автомобиль добавлен");
+        } else {
+            out.println("Год и цена должны быть целыми числами! Введите еще раз!");
+        }
     }
 
     /**
@@ -257,11 +238,11 @@ public class ConsoleInterface {
         for (Car car : cars) {
             if (car.getBrand().equals(brand) && car.getModel().equals(model)) {
                 out.print("Введите новый год выпуска: ");
-                int year = scanner.nextInt();
+                String year = scanner.nextLine();
                 scanner.nextLine();
 
                 out.print("Введите новую цену: ");
-                double price = scanner.nextDouble();
+                String price = scanner.nextLine();
                 scanner.nextLine();
 
                 out.print("Введите новое состояние: ");
@@ -269,11 +250,16 @@ public class ConsoleInterface {
 
                 car = new Car(brand, model, year, price, condition);
 
-                carService.removeCar(car);
-                carService.addCar(car);
-                auditLogger.logAction("Отредактирован автомобиль: " + car);
+                if (carService.isValidCarValues(car)) {
+                    carService.removeCar(car);
+                    carService.addCar(car);
 
-                out.println("Информация об автомобиле обновлена");
+                    auditLogger.logAction("Отредактирован автомобиль: " + car);
+
+                    out.println("Информация об автомобиле обновлена");
+                } else {
+                    out.println("Год и цена должны быть целыми числами! Введите еще раз!");
+                }
                 return;
             }
         }
@@ -307,53 +293,32 @@ public class ConsoleInterface {
      * Метод для отображения меню управления запросами по заказам
      */
     private void manageOrders() {
-        if (!authorizationService.isAuthorized(currentUser, Role.MANAGER)
-                && !authorizationService.isAuthorized(currentUser, Role.ADMIN)) {
+        if (authorizationService.isAuthorized(currentUser, Role.CLIENT)) {
             out.println("У вас нет прав для управления заказами!");
             return;
         }
 
         while (true) {
-            out.println("1. Просмотр списка заказов");
-            out.println("2. Создание нового заказа");
-            out.println("3. Изменение статуса заказа");
-            out.println("4. Удаление заказа");
-            out.println("5. Назад");
-            out.print("Выберите действие: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            String ordersMenuText = """
+                    
+                    1. Просмотр списка заказов
+                    2. Создание нового заказа
+                    3. Изменение статуса заказа
+                    4. Удаление заказа
+                    5. Назад
+                    
+                    Выберите действие:
+                    """;
 
-            switch (choice) {
-                case 1:
-                    viewOrders();
-                    break;
-                case 2:
-                    createOrder();
-                    break;
-                case 3:
-                    changeOrderStatus();
-                    break;
-                case 4:
-                    removeOrder();
-                    break;
-                case 5:
+            switch (sendMenuAndGetChoice(ordersMenuText)) {
+                case "1" -> orderService.viewOrders();
+                case "2" -> createOrder();
+                case "3" -> changeOrderStatus();
+                case "4" -> removeOrder();
+                case "5" -> {
                     return;
-                default:
-                    out.println("Неверный выбор. Попробуйте снова!");
-            }
-        }
-    }
-
-    /**
-     * Метод для отображения всех заказов
-     */
-    private void viewOrders() {
-        List<Order> orders = orderService.getAllOrders();
-        if (orders.isEmpty()) {
-            out.println("Список заказов пуст");
-        } else {
-            for (Order order : orders) {
-                out.println(order);
+                }
+                default -> out.println("Неверный выбор. Попробуйте снова!");
             }
         }
     }

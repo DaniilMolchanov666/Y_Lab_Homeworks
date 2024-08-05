@@ -5,6 +5,8 @@ import com.ylab.entity.Order;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.System.out;
+
 /**
  * Класс управляет заказами на покупку автомобилей.
  */
@@ -36,5 +38,18 @@ public class OrderService {
      */
     public void removeOrder(Order order) {
         orders.remove(order);
+    }
+
+    /**
+     * Вывод всех заказов или сообщения в случае отсутствия заказов
+     */
+    public void viewOrders() {
+        if (orders.isEmpty()) {
+            out.println("Список заказов пуст");
+        } else {
+            for (Order order : orders) {
+                out.println(order);
+            }
+        }
     }
 }

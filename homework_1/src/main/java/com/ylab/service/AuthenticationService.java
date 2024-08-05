@@ -6,6 +6,7 @@ import com.ylab.entity.User;
  * Класс обеспечивает аутентификацию пользователей.
  */
 public class AuthenticationService {
+
     private UserService userService;
 
     /**

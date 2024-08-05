@@ -1,17 +1,15 @@
+
 .DEFAULT_GOAL := build
+
+run:
+	gradle run
 
 build:
 	gradle build
 
-start:
-	gradle run
+test:
+	gradle test
 
-report:
-	make -C app report
-
-lint:
-	make -C app lint
-
-build-run: build run
+build-run: build
 
 .PHONY: build
