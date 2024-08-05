@@ -14,7 +14,7 @@ public class AuthenticationService {
      * @param userService Менеджер пользователей.
      */
     public AuthenticationService(UserService userService) {
-        this.userService = this.userService;
+        this.userService = userService;
     }
 
     /**

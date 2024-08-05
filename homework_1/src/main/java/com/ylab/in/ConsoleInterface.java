@@ -19,28 +19,40 @@ import java.util.Scanner;
  * Класс обеспечивает консольный интерфейс для взаимодействия с пользователем.
  */
 public class ConsoleInterface {
-    private final Scanner scanner = new Scanner(System.in);
-    private final AuthenticationService authenticationService;
-    private final AuthorizationService authorizationService;
-    private final UserService userService;
-    private final CarService carService;
-    private final OrderService orderService;
-    private final ServiceRequestService serviceRequestService;
-    private final AuditLogger auditLogger;
+
+    private Scanner scanner;
+    private AuthenticationService authenticationService;
+    private AuthorizationService authorizationService;
+    private UserService userService;
+    private CarService carService;
+    private OrderService orderService;
+    private ServiceRequestService serviceRequestService;
+    private AuditLogger auditLogger;
     private User currentUser;
 
-    public ConsoleInterface(AuthenticationService authenticationService, AuthorizationService authorizationService,
-                            UserService userManager, CarService carManager, OrderService orderManager,
-                            ServiceRequestService serviceRequestManager, AuditLogger auditLogger) {
-        this.authenticationService = authenticationService;
-        this.authorizationService = authorizationService;
-        this.userService = userManager;
-        this.carService = carManager;
-        this.orderService = orderManager;
-        this.serviceRequestService = serviceRequestManager;
-        this.auditLogger = auditLogger;
+
+    public ConsoleInterface() {
+        injectAllDependency();
     }
 
+    /**
+     * Метод, вызывающийся при создании экземпляра,
+     * загружающий все необходимые для работы приложения зависимости
+     */
+    private void injectAllDependency() {
+        this.scanner = new Scanner(System.in);
+        this.userService = new UserService();
+        this.authenticationService = new AuthenticationService(userService);
+        this.authorizationService = new AuthorizationService();
+        this.carService = new CarService();
+        this.orderService = new OrderService();
+        this.serviceRequestService = new ServiceRequestService();
+        this.auditLogger = new AuditLogger();
+    }
+
+    /**
+     * Метод для начала работы приложения в консоли
+     */
     public void start() {
         while (true) {
             System.out.println("1. Регистрация");
@@ -66,6 +78,9 @@ public class ConsoleInterface {
         }
     }
 
+    /**
+     * Метод для отображения меню регистрации пользователя
+     */
     private void registerUser() {
         System.out.print("Введите имя пользователя: ");
         String username = scanner.nextLine();
@@ -81,6 +96,9 @@ public class ConsoleInterface {
         System.out.println("Пользователь зарегистрирован.");
     }
 
+    /**
+     * Метод для отображения меню авторизации пользователя
+     */
     private void loginUser() {
         System.out.print("Введите имя пользователя: ");
         String username = scanner.nextLine();
@@ -96,6 +114,9 @@ public class ConsoleInterface {
         }
     }
 
+    /**
+     * Метод для отображения главного меню
+     */
     private void showMainMenu() {
         while (true) {
             System.out.println("1. Управление автомобилями");
@@ -133,6 +154,9 @@ public class ConsoleInterface {
         }
     }
 
+    /**
+     * Метод для отображения меню для запросов по автомобилям
+     */
     private void manageCars() {
         if (!authorizationService.isAuthorized(currentUser, Role.MANAGER) && !authorizationService.isAuthorized(currentUser, Role.ADMIN)) {
             System.out.println("У вас нет прав для управления автомобилями.");
@@ -170,6 +194,9 @@ public class ConsoleInterface {
         }
     }
 
+    /**
+     * Метод для отображения всех автомобилей из базы данных
+     */
     private void viewCars() {
         List<Car> cars = carService.getAllCars();
         if (cars.isEmpty()) {
@@ -181,26 +208,37 @@ public class ConsoleInterface {
         }
     }
 
+    /**
+     * Метод для добавления нового автомобиля в базу данных
+     */
     private void addCar() {
         System.out.print("Введите марку: ");
         String brand = scanner.nextLine();
+
         System.out.print("Введите модель: ");
         String model = scanner.nextLine();
+
         System.out.print("Введите год выпуска: ");
         int year = scanner.nextInt();
         scanner.nextLine();
+
         System.out.print("Введите цену: ");
         double price = scanner.nextDouble();
         scanner.nextLine();
+
         System.out.print("Введите состояние: ");
         String condition = scanner.nextLine();
 
         Car car = new Car(brand, model, year, price, condition);
         carService.addCar(car);
         auditLogger.logAction("Добавлен новый автомобиль: " + car);
+
         System.out.println("Автомобиль добавлен.");
     }
 
+    /**
+     * Метод для редактирования автомобиля
+     */
     private void editCar() {
         System.out.print("Введите марку автомобиля для редактирования: ");
         String brand = scanner.nextLine();
@@ -230,6 +268,9 @@ public class ConsoleInterface {
         System.out.println("Автомобиль не найден.");
     }
 
+    /**
+     * Метод для удаления автомобиля
+     */
     private void removeCar() {
         System.out.print("Введите марку автомобиля для удаления: ");
         String brand = scanner.nextLine();
@@ -248,6 +289,9 @@ public class ConsoleInterface {
         System.out.println("Автомобиль не найден.");
     }
 
+    /**
+     * Метод для отображения меню управления запросами по заказам
+     */
     private void manageOrders() {
         if (!authorizationService.isAuthorized(currentUser, Role.MANAGER) && !authorizationService.isAuthorized(currentUser, Role.ADMIN)) {
             System.out.println("У вас нет прав для управления заказами.");
@@ -285,6 +329,9 @@ public class ConsoleInterface {
         }
     }
 
+    /**
+     * Метод для отображения всех заказов
+     */
     private void viewOrders() {
         List<Order> orders = orderService.getAllOrders();
         if (orders.isEmpty()) {
@@ -296,6 +343,9 @@ public class ConsoleInterface {
         }
     }
 
+    /**
+     * Метод для создания заказа
+     */
     private void createOrder() {
         System.out.print("Введите марку автомобиля для заказа: ");
         String brand = scanner.nextLine();
@@ -315,6 +365,9 @@ public class ConsoleInterface {
         System.out.println("Автомобиль не найден.");
     }
 
+    /**
+     * Метод для изменения статуса заказа
+     */
     private void changeOrderStatus() {
         System.out.print("Введите марку автомобиля заказа для изменения статуса: ");
         String brand = scanner.nextLine();
@@ -335,6 +388,9 @@ public class ConsoleInterface {
         System.out.println("Заказ не найден.");
     }
 
+    /**
+     * Метод для удаления заказа
+     */
     private void removeOrder() {
         System.out.print("Введите марку автомобиля заказа для удаления: ");
         String brand = scanner.nextLine();
@@ -353,6 +409,9 @@ public class ConsoleInterface {
         System.out.println("Заказ не найден.");
     }
 
+    /**
+     * Метод для отображения всех пользователей из базы данных
+     */
     private void viewUsers() {
         if (!authorizationService.isAuthorized(currentUser, Role.ADMIN)) {
             System.out.println("У вас нет прав для просмотра информации о пользователях.");
@@ -369,6 +428,9 @@ public class ConsoleInterface {
         }
     }
 
+    /**
+     * Метод для отображения меню управления запросами по поиску автомобилей и заказов
+     */
     private void filterAndSearch() {
         System.out.println("1. Поиск автомобилей");
         System.out.println("2. Поиск заказов");
@@ -388,6 +450,9 @@ public class ConsoleInterface {
         }
     }
 
+    /**
+     * Метод для поиска автомобиля
+     */
     private void searchCars() {
         System.out.print("Введите марку автомобиля для поиска: ");
         String brand = scanner.nextLine();
@@ -407,6 +472,9 @@ public class ConsoleInterface {
         }
     }
 
+    /**
+     * Метод для поиска заказа
+     */
     private void searchOrders() {
         System.out.print("Введите марку автомобиля заказа для поиска: ");
         String brand = scanner.nextLine();
@@ -426,20 +494,24 @@ public class ConsoleInterface {
         }
     }
 
+    /**
+     * Метод для выгрузки логов действий пользователей,
+     * а также записи всех логов в файл 'logs' в папке resources
+     */
     private void viewAuditLog() {
         if (!authorizationService.isAuthorized(currentUser, Role.ADMIN)) {
             System.out.println("У вас нет прав для просмотра журнала действий.");
             return;
         }
 
-        List<String> log = auditLogger.getLog();
+        List<String> log = auditLogger.getListOfLogs();
         if (log.isEmpty()) {
             System.out.println("Журнал действий пуст.");
         } else {
             for (String entry : log) {
                 System.out.println(entry);
             }
-            auditLogger.exportLogToFile("logs");
+            auditLogger.exportLogToFile();
         }
     }
 }

@@ -9,6 +9,7 @@ import java.util.List;
  * Класс управляет заявками на обслуживание автомобилей.
  */
 public class ServiceRequestService {
+
     private List<ServiceRequest> serviceRequests = new ArrayList<>();
 
     /**

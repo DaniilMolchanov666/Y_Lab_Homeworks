@@ -6,13 +6,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Класс обеспечивает логирование действий пользователей.
  */
 public class AuditLogger {
 
-    private List<String> log = new ArrayList<>();
+    private List<String> listOfLogs = new ArrayList<>();
+
+    private final String PATH_TO_FILE_FOR_LOGS = "./homework_1/src/main/resources/logs";
 
     /**
      * Логирует действие пользователя.
@@ -20,7 +23,7 @@ public class AuditLogger {
      * @param action Действие для логирования.
      */
     public void logAction(String action) {
-        log.add(action);
+        listOfLogs.add(action);
     }
 
     /**
@@ -28,20 +31,19 @@ public class AuditLogger {
      *
      * @return Журнал действий.
      */
-    public List<String> getLog() {
-        return new ArrayList<>(log);
+    public List<String> getListOfLogs() {
+        return new ArrayList<>(listOfLogs);
     }
 
-    public void exportLogToFile(String filename) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
-            List<String> listOfLogs = log.stream().peek(i -> {
-                try {
-                    writer.write(new Date() + " - " + i);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }).toList();
-            writer.newLine();
+    /**
+     * Экспортирует журнал действий в текстовый файл.
+     */
+    public void exportLogToFile() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(PATH_TO_FILE_FOR_LOGS, true))) {
+            String logs = listOfLogs.stream()
+                    .map(i -> new Date() + i + "\n")
+                    .collect(Collectors.joining());
+            writer.write(logs);
         } catch (IOException e) {
             System.out.println("Ошибка файла!");
         }

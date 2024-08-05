@@ -1,6 +1,6 @@
 package com.ylab.entity;
 
-import java.util.Date;
+import java.util.Objects;
 
 /**
  * Класс представляет заказ на покупку автомобиля.
@@ -46,6 +46,19 @@ public class Order {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Order order = (Order) object;
+        return Objects.equals(car, order.car);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(car);
     }
 
     @Override

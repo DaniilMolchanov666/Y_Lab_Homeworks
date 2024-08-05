@@ -1,5 +1,7 @@
 package com.ylab.entity;
 
+import java.util.Objects;
+
 /**
  * Класс представляет автомобиль в автосалоне.
  */
@@ -66,6 +68,19 @@ public class Car {
 
     public void setCondition(String condition) {
         this.condition = condition;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Car car = (Car) object;
+        return Objects.equals(brand, car.brand) && Objects.equals(model, car.model);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(brand, model);
     }
 
     @Override
