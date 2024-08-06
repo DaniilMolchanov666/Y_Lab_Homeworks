@@ -8,6 +8,7 @@ import com.ylab.in.ConsoleInterface;
 public class Main {
 
     public static void main(String[] args) {
-        new ConsoleInterface().start();
+        System.out.println("Hello");
+        new ConsoleInterface().startMenu();
     }
 }

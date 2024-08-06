@@ -1,6 +1,7 @@
 package com.ylab.service;
 
 import com.ylab.entity.User;
+import com.ylab.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  */
 public class UserService {
 
-    private List<User> users = new ArrayList<>();
+    private final UserRepository userRepository = new UserRepository();
 
     /**
      * Добавляет нового пользователя в систему.
@@ -18,7 +19,7 @@ public class UserService {
      * @param user Пользователь для добавления.
      */
     public void addUser(User user) {
-        users.add(user);
+        userRepository.add(user);
     }
 
     /**
@@ -28,7 +29,7 @@ public class UserService {
      * @return Пользователь с указанным именем или null, если пользователь не найден.
      */
     public User getUserByUsername(String username) {
-        for (User user : users) {
+        for (User user : userRepository.getAll()) {
             if (user.getUsername().equals(username)) {
                 return user;
             }
@@ -42,6 +43,7 @@ public class UserService {
      * @return Список всех пользователей.
      */
     public List<User> getAllUsers() {
-        return new ArrayList<>(users);
+        return new ArrayList<>(userRepository.getAll());
     }
+
 }

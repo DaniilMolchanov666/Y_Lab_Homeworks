@@ -1,8 +1,11 @@
 package com.ylab.service;
 
 import com.ylab.entity.Car;
+import com.ylab.repository.CarRepository;
 
+import java.time.Year;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.System.out;
@@ -12,10 +15,34 @@ import static java.lang.System.out;
  */
 public class CarService {
 
-    private List<Car> cars = new ArrayList<>();
+    private final CarRepository carRepository = new CarRepository();
 
+    /**
+     * Метод для проверки валидности цены и года выпуска автомобиля
+     * - цена должна быть числом
+     * - год должен быть числом, размер не менее 4 символа и входить в промежуток от 1970 до нынешнего года
+     *
+     * @param car - проверяемый автомобиль
+     * @return результат проверки на валидность
+     */
     public boolean isValidCarValues(Car car) {
-        return Character.isDigit(car.getYear().charAt(0)) && Character.isDigit(car.getPrice().charAt(0));
+
+        var price = car.getPrice().split("");
+        var year = car.getYear().split("");
+
+        int currentYear = Year.now().getValue();
+        int minSizeOfYearValue = 4;
+        int minYear = 1970;
+
+        boolean isDigitPrice = Arrays.stream(price)
+                .allMatch(i -> Character.isDigit(i.charAt(0)));
+
+        boolean isValidYear = Arrays.stream(year).allMatch(i -> Character.isDigit(i.charAt(0)))
+                && year.length == minSizeOfYearValue
+                && ((Integer.parseInt(car.getYear()) >= minYear
+                && Integer.parseInt(car.getYear()) <= currentYear));
+
+        return isValidYear && isDigitPrice;
     }
 
     /**
@@ -24,7 +51,7 @@ public class CarService {
      * @param car Автомобиль для добавления.
      */
     public void addCar(Car car) {
-        cars.add(car);
+        carRepository.add(car);
     }
 
     /**
@@ -33,7 +60,7 @@ public class CarService {
      * @return Список всех автомобилей.
      */
     public List<Car> getAllCars() {
-        return new ArrayList<>(cars);
+        return new ArrayList<>(carRepository.getAll());
     }
 
     /**
@@ -42,14 +69,14 @@ public class CarService {
      * @param car Автомобиль для удаления.
      */
     public void removeCar(Car car) {
-        cars.remove(car);
+        carRepository.remove(car);
     }
 
     public void viewCars() {
-        if (cars.isEmpty()) {
+        if (carRepository.getAll().isEmpty()) {
             out.println("Список автомобилей пуст");
         } else {
-            cars.forEach(out::println);
+            carRepository.getAll().forEach(out::println);
         }
     }
 }

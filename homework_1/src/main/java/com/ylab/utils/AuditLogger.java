@@ -9,13 +9,28 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Класс обеспечивает логирование действий пользователей.
+ * Класс обеспечивает логирование действий пользователей
  */
 public class AuditLogger {
+
+    private static AuditLogger auditLogger;
 
     private List<String> listOfLogs = new ArrayList<>();
 
     private final String PATH_TO_FILE_FOR_LOGS = "./homework_1/src/main/resources/logs";
+
+    /**
+     * Метод, который создает один экземпляр класса для всего приложения
+     * @return экземпляр данного класса
+     */
+    public static AuditLogger getInstance() {
+        if (auditLogger == null) {
+            auditLogger = new AuditLogger();
+        }
+        return auditLogger;
+    }
+
+    private AuditLogger() {}
 
     /**
      * Логирует действие пользователя.
