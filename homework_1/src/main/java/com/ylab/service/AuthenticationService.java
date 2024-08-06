@@ -7,7 +7,7 @@ import com.ylab.entity.User;
  */
 public class AuthenticationService {
 
-    private UserService userService;
+    private final UserService userService;
 
     /**
      * Конструктор для создания нового сервиса аутентификации.

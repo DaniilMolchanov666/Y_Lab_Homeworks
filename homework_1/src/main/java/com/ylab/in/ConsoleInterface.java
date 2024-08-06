@@ -7,7 +7,6 @@ import com.ylab.controller.UsersController;
 import com.ylab.entity.*;
 import com.ylab.service.*;
 
-import java.util.Objects;
 import java.util.Scanner;
 
 import static java.lang.System.*;
@@ -19,7 +18,7 @@ public class ConsoleInterface {
 
     private final Scanner scanner = new Scanner(in);
     private AuthenticationService authenticationService;
-    private AuthorizationService authorizationService;
+    private AccessService accessService;
     private UserService userService;
     private User currentUser;
     private CarController carController;
@@ -41,13 +40,13 @@ public class ConsoleInterface {
     private void injectAllDependency() {
         this.userService = new UserService();
         this.authenticationService = new AuthenticationService(userService);
-        this.authorizationService = new AuthorizationService();
+        this.accessService = new AccessService();
         CarService carService = new CarService();
         OrderService orderService = new OrderService();
         this.carController = new CarController(carService);
         this.orderController = new OrderController(orderService, carService);
-        this.auditController = new AuditController(authorizationService);
-        this.usersController = new UsersController(userService, authorizationService);
+        this.auditController = new AuditController(accessService);
+        this.usersController = new UsersController(userService, accessService);
     }
 
     /**
@@ -82,6 +81,7 @@ public class ConsoleInterface {
         out.println(menuText);
         return scanner.nextLine();
     }
+
 
     /**
      * Метод для отображения меню регистрации пользователя
@@ -142,7 +142,7 @@ public class ConsoleInterface {
                     1. Управление автомобилями
                     2. Обработка заказов
                     3. Просмотр информации о клиентах и сотрудниках
-                    4. Фильтрация и поиск
+                    4. Поиск
                     5. Аудит действий
                     6. Выход
                     
@@ -152,9 +152,17 @@ public class ConsoleInterface {
             switch (sendMenuAndGetChoice(mainMenuText)) {
                 case "1" -> manageCars();
                 case "2" -> manageOrders();
-                case "3" -> usersController.viewUsers(currentUser);
+                case "3" -> {
+                    if (accessService.isAdmin(currentUser)) {
+                        usersController.viewUsers(currentUser);
+                    }
+                }
                 case "4" -> filterAndSearchMenu();
-                case "5" -> auditController.viewAuditLog(currentUser);
+                case "5" -> {
+                    if (accessService.isManagerOrAdmin(currentUser)) {
+                        auditController.viewAuditLog(currentUser);
+                    }
+                }
                 case "6" -> {
                     currentUser = null;
                     return;
@@ -168,11 +176,6 @@ public class ConsoleInterface {
      * Метод для отображения меню для запросов по автомобилям
      */
     private void manageCars() {
-
-        if (Objects.equals(currentUser.getRole(), Role.CLIENT)) {
-            out.println("У вас нет прав для управления автомобилями.");
-            return;
-        }
 
         while (true) {
             String carsMenuText = """
@@ -188,9 +191,21 @@ public class ConsoleInterface {
 
             switch (sendMenuAndGetChoice(carsMenuText)) {
                 case "1" -> carController.viewCars();
-                case "2" -> carController.addCar();
-                case "3" -> carController.editCar();
-                case "4" -> carController.removeCar();
+                case "2" -> {
+                    if (accessService.isManagerOrAdmin(currentUser)) {
+                        carController.addCar();
+                    }
+                }
+                case "3" -> {
+                    if (accessService.isManagerOrAdmin(currentUser)) {
+                        carController.editCar();
+                    }
+                }
+                case "4" -> {
+                    if (accessService.isManagerOrAdmin(currentUser)) {
+                        carController.removeCar();
+                    }
+                }
                 case "5" -> {
                     return;
                 }
@@ -203,10 +218,6 @@ public class ConsoleInterface {
      * Метод для отображения меню управления запросами по заказам
      */
     private void manageOrders() {
-        if (authorizationService.isAuthorized(currentUser, Role.CLIENT)) {
-            out.println("У вас нет прав для управления заказами!");
-            return;
-        }
 
         while (true) {
             String ordersMenuText = """
@@ -237,21 +248,25 @@ public class ConsoleInterface {
      * Метод для отображения меню управления запросами по поиску автомобилей и заказов
      */
     private void filterAndSearchMenu() {
-        out.println("1. Поиск автомобилей");
-        out.println("2. Поиск заказов");
-        out.print("Выберите действие: ");
-        int choice = scanner.nextInt();
-        scanner.nextLine();
 
-        switch (choice) {
-            case 1:
-                carController.searchCars();
-                break;
-            case 2:
-                orderController.searchOrders();
-                break;
-            default:
-                out.println("Неверный выбор. Попробуйте снова!");
+        String ordersMenuText = """
+                
+                1. Поиск автомобилей
+                2. Поиск заказов
+                3. Назад
+                
+                 Выберите действие:
+                """;
+
+        while (true) {
+            switch (sendMenuAndGetChoice(ordersMenuText)) {
+                case "1" -> carController.searchCars();
+                case "2" -> orderController.searchOrders();
+                case "3" -> {
+                    return;
+                }
+                default -> out.println("Неверный выбор. Попробуйте снова!");
+            }
         }
     }
 }

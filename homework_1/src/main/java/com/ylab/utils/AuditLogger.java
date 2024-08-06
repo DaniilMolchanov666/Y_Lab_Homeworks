@@ -17,7 +17,7 @@ public class AuditLogger {
 
     private List<String> listOfLogs = new ArrayList<>();
 
-    private final String PATH_TO_FILE_FOR_LOGS = "./homework_1/src/main/resources/logs";
+    private final String PATH_TO_FILE_FOR_LOGS = "./src/main/resources/logs";
 
     /**
      * Метод, который создает один экземпляр класса для всего приложения

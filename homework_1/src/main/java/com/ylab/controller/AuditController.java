@@ -2,7 +2,7 @@ package com.ylab.controller;
 
 import com.ylab.entity.Role;
 import com.ylab.entity.User;
-import com.ylab.service.AuthorizationService;
+import com.ylab.service.AccessService;
 import com.ylab.utils.AuditLogger;
 
 import java.util.List;
@@ -16,14 +16,14 @@ public class AuditController {
 
     private final AuditLogger auditLogger = AuditLogger.getInstance();
 
-    private final AuthorizationService authorizationService;
+    private final AccessService authorizationService;
 
     /**
      * Конструктор, где происходит внедрение нужных зависимостей
      *
      * @param authorizationService сервис авторизации
      */
-    public AuditController(AuthorizationService authorizationService) {
+    public AuditController(AccessService authorizationService) {
         this.authorizationService = authorizationService;
     }
 
@@ -32,7 +32,7 @@ public class AuditController {
      * а также записи всех логов в файл 'logs' в папке resources
      */
     public void viewAuditLog(User currentUser) {
-        if (!authorizationService.isAuthorized(currentUser, Role.ADMIN)) {
+        if (!authorizationService.hasSuitableRole(currentUser, Role.ADMIN)) {
             out.println("У вас нет прав для просмотра журнала действий!");
             return;
         }
@@ -44,6 +44,7 @@ public class AuditController {
                 out.println(entry);
             }
             auditLogger.exportLogToFile();
+            out.println("Журнал был успешно переписан в файл 'logs'!");
         }
     }
 }

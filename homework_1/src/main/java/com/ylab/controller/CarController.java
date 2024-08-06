@@ -59,9 +59,9 @@ public class CarController {
         if (carService.isValidCarValues(car)) {
             carService.addCar(car);
             auditLogger.logAction("Добавлен новый автомобиль: " + car);
-            out.println("Автомобиль добавлен");
+            out.println("\nАвтомобиль добавлен!");
         } else {
-            out.println("Год и цена должны быть целыми числами! Введите еще раз!");
+            out.println("\nГод и цена должны быть целыми числами! Введите еще раз!");
         }
     }
 
@@ -102,9 +102,9 @@ public class CarController {
 
                     auditLogger.logAction("Отредактирован автомобиль: " + car);
 
-                    out.println("Информация об автомобиле обновлена");
+                    out.println("\nИнформация об автомобиле обновлена");
                 } else {
-                    out.println("Год и цена должны быть целыми числами! Введите еще раз!");
+                    out.println("\nГод и цена должны быть целыми числами! Введите еще раз!");
                 }
                 return;
             }
@@ -128,11 +128,11 @@ public class CarController {
                 carService.removeCar(car);
                 auditLogger.logAction("Удален автомобиль: " + car);
 
-                out.println("Автомобиль удален");
+                out.println("\nАвтомобиль удален");
                 return;
             }
         }
-        out.println("Автомобиль не найден!");
+        out.println("\nАвтомобиль не найден!");
     }
     /**
      * Обработка запросов на просмотр всех автомобилей
@@ -159,7 +159,7 @@ public class CarController {
             }
         }
         if (!found) {
-            out.println("Автомобиль не найден!");
+            out.println("\nАвтомобиль не найден!");
         }
     }
 }

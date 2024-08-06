@@ -2,7 +2,7 @@ package com.ylab.controller;
 
 import com.ylab.entity.Role;
 import com.ylab.entity.User;
-import com.ylab.service.AuthorizationService;
+import com.ylab.service.AccessService;
 import com.ylab.service.UserService;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public class UsersController {
 
     private final UserService userService;
 
-    private final AuthorizationService authorizationService;
+    private final AccessService authorizationService;
 
     /**
      * Конструктор, где происходит внедрение нужных зависимостей
@@ -24,7 +24,7 @@ public class UsersController {
      * @param userService сервис для работы с пользователями
      * @param authorizationService сервис авторизации
      */
-    public UsersController(UserService userService, AuthorizationService authorizationService) {
+    public UsersController(UserService userService, AccessService authorizationService) {
         this.userService = userService;
         this.authorizationService = authorizationService;
     }
@@ -33,7 +33,7 @@ public class UsersController {
      * Обработка запросов отображения всех пользователей из базы данных
      */
     public void viewUsers(User currentUser) {
-        if (!authorizationService.isAuthorized(currentUser, Role.ADMIN)) {
+        if (!authorizationService.hasSuitableRole(currentUser, Role.ADMIN)) {
             out.println("У вас нет прав для просмотра информации о пользователях!");
             return;
         }

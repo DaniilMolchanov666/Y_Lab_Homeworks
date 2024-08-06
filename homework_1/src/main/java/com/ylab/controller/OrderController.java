@@ -53,11 +53,11 @@ public class OrderController {
                 Order order = new Order(currentUser, car, "Новый");
                 orderService.addOrder(order);
                 auditLogger.logAction("Создан новый заказ: " + order);
-                out.println("Заказ создан");
+                out.println("\nЗаказ создан");
                 return;
             }
         }
-        out.println("Автомобиль не найден!");
+        out.println("\nЗаказ не найден!");
     }
 
     /**
@@ -76,11 +76,11 @@ public class OrderController {
                 String status = scanner.nextLine();
                 order.setStatus(status);
                 auditLogger.logAction("Изменен статус заказа: " + order);
-                out.println("Статус заказа изменен");
+                out.println("\nСтатус заказа изменен");
                 return;
             }
         }
-        out.println("Заказ не найден!");
+        out.println("\nЗаказ не найден!");
     }
 
     /**
@@ -97,11 +97,11 @@ public class OrderController {
             if (order.getCar().getBrand().equals(brand) && order.getCar().getModel().equals(model)) {
                 orderService.removeOrder(order);
                 auditLogger.logAction("Удален заказ: " + order);
-                out.println("Заказ удален!");
+                out.println("\nЗаказ удален!");
                 return;
             }
         }
-        out.println("Заказ не найден!");
+        out.println("\nЗаказ не найден!");
     }
 
     /**
@@ -122,7 +122,7 @@ public class OrderController {
             }
         }
         if (!found) {
-            out.println("Заказ не найден!");
+            out.println("\nЗаказ не найден!");
         }
     }
 
