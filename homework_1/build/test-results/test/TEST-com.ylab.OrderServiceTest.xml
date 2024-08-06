@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.ylab.OrderServiceTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-08-06T15:47:58" hostname="CottonPads" time="1.504">
-  <properties/>
-  <testcase name="testCreateOrder()" classname="com.ylab.OrderServiceTest" time="1.339"/>
-  <testcase name="testRemoveOrder()" classname="com.ylab.OrderServiceTest" time="0.011"/>
-  <testcase name="testGetAllOrders()" classname="com.ylab.OrderServiceTest" time="0.138"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
