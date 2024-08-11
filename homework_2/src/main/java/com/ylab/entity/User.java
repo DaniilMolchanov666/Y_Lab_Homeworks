@@ -9,7 +9,7 @@ import lombok.ToString;
  */
 @Data
 @AllArgsConstructor
-@ToString(exclude = "id")
+@ToString(exclude = {"id", "password"})
 public class User implements CarShopEntity{
 
     public User(String username, String password, Role role) {
