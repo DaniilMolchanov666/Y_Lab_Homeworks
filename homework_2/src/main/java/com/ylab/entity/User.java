@@ -2,12 +2,14 @@ package com.ylab.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * Класс-сущность представляет пользователя системы.
  */
 @Data
 @AllArgsConstructor
+@ToString(exclude = "id")
 public class User implements CarShopEntity{
 
     public User(String username, String password, Role role) {

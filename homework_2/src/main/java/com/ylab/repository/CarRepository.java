@@ -1,7 +1,9 @@
 package com.ylab.repository;
 
 import com.ylab.entity.Car;
+import com.ylab.out.LiquibaseConfig;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,9 +16,16 @@ import java.util.List;
  */
 public class CarRepository implements CarShopRepository<Car> {
 
+    private Connection connection = LiquibaseConfig.dbConnection;
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+
     @Override
-    public void add(Car car) {
-        String sql = "INSERT INTO car_shop_schema.cars(brand, model, year, price, condition) VALUES (?, ?, ?, ?, ?)";
+    public boolean add(Car car) {
+        String sql = "INSERT INTO car_shop_schema.cars(brand, model, year, price, condition) "
+                + "VALUES (?, ?, ?, ?, ?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, car.getBrand());
@@ -25,9 +34,11 @@ public class CarRepository implements CarShopRepository<Car> {
             preparedStatement.setString(4, car.getPrice());
             preparedStatement.setString(5, car.getCondition());
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return true;
+        } catch (SQLException e1) {
+            System.out.println(e1.getMessage());
         }
+        return false;
     }
 
     @Override
@@ -37,8 +48,8 @@ public class CarRepository implements CarShopRepository<Car> {
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
-            while(resultSet.next()) {
-                var car =Car.builder().id(resultSet.getInt("id"))
+            while (resultSet.next()) {
+                var car = Car.builder().id(resultSet.getInt("id"))
                         .model(resultSet.getString("model"))
                         .brand(resultSet.getString("brand"))
                         .year(resultSet.getString("year"))
@@ -48,7 +59,7 @@ public class CarRepository implements CarShopRepository<Car> {
                 listOfCars.add(car);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
         return listOfCars;
     }
@@ -61,7 +72,27 @@ public class CarRepository implements CarShopRepository<Car> {
             preparedStatement.setInt(1, car.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
+    }
+
+    @Override
+    public boolean edit(Car car) {
+        String sql = "UPDATE car_shop_schema.cars SET year = ?, price = ?, condition = ? WHERE id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, car.getYear());
+            preparedStatement.setString(2, car.getPrice());
+            preparedStatement.setString(3, car.getCondition());
+            preparedStatement.setInt(4, car.getId());
+
+            preparedStatement.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 }

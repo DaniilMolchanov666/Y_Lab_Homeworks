@@ -51,10 +51,13 @@ public class OrderController {
         for (Car car : cars) {
             if (car.getBrand().equals(brand) && car.getModel().equals(model)) {
                 Order order = new Order(currentUser, car, "Новый");
-                orderService.addOrder(order);
-                auditLogger.logAction("Создан новый заказ: " + order);
-                out.println("\nЗаказ создан");
-                return;
+                if (orderService.addOrder(order)) {
+                    auditLogger.logAction("Создан новый заказ: " + order);
+                    out.println("\nЗаказ создан");
+                    return;
+                } else {
+                    out.println("\nЗаказ не создан");
+                }
             }
         }
         out.println("\nЗаказ не найден!");
@@ -74,9 +77,16 @@ public class OrderController {
             if (order.getCar().getBrand().equals(brand) && order.getCar().getModel().equals(model)) {
                 out.print("Введите новый статус заказа: ");
                 String status = scanner.nextLine();
+
                 order.setStatus(status);
-                auditLogger.logAction("Изменен статус заказа: " + order);
-                out.println("\nСтатус заказа изменен");
+
+                if (orderService.editOrder(order)) {
+                    auditLogger.logAction("Статус заказа обновлен! " + order);
+                    out.println("\nЗаказ обновлен!");
+                    return;
+                } else {
+                    out.println("\nЗаказ не обновлен!");
+                }
                 return;
             }
         }

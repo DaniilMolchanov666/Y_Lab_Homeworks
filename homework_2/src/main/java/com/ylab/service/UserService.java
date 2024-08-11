@@ -19,8 +19,8 @@ public class UserService {
      *
      * @param user Пользователь для добавления.
      */
-    public void addUser(User user) {
-        userRepository.add(user);
+    public boolean addUser(User user) {
+        return userRepository.add(user);
     }
 
     /**

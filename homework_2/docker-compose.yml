@@ -1,17 +1,8 @@
 version: '2.29.1'
 services:
-#  car_shop_application:
-#    restart: always
-#    build:
-#      context: ./
-#      dockerfile: Dockerfile
-#    ports:
-#      - "8080:8080"
-#    depends_on:
-#      - car_shop_db
   car_shop_db:
     restart: always
-    image: mirror.gcr.io/postgres:alpine3.19
+    image: postgres:alpine3.19
     environment:
       - POSTGRES_DB=cottonpads
       - POSTGRES_USER=daniilmolchanov

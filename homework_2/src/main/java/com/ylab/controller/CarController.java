@@ -58,9 +58,12 @@ public class CarController {
                 .build();
 
         if (carService.isValidCarValues(car)) {
-            carService.addCar(car);
-            auditLogger.logAction("Добавлен новый автомобиль: " + car);
-            out.println("\nАвтомобиль добавлен!");
+            if (carService.addCar(car)) {
+                auditLogger.logAction("Добавлен новый автомобиль: " + car);
+                out.println("\nАвтомобиль добавлен!");
+            } else {
+                out.println("\nАвтомобиль не был добавлен!");
+            }
         } else {
             out.println("\nГод и цена должны быть целыми числами! Введите еще раз!");
         }
@@ -77,7 +80,7 @@ public class CarController {
         String model = scanner.nextLine();
 
         List<Car> cars = carService.getAllCars();
-        for (Car car: cars) {
+        for (Car car : cars) {
             if (car.getBrand().equals(brand) && car.getModel().equals(model)) {
                 out.print("Введите новый год выпуска: ");
                 String year = scanner.nextLine();
@@ -89,6 +92,7 @@ public class CarController {
                 String condition = scanner.nextLine();
 
                 Car updatedCar = Car.builder()
+                        .id(car.getId())
                         .model(model)
                         .brand(brand)
                         .condition(condition)
@@ -96,16 +100,11 @@ public class CarController {
                         .year(year)
                         .build();
 
-                if (carService.isValidCarValues(car)) {
-
-                    carService.removeCar(car);
-                    carService.addCar(updatedCar);
-
-                    auditLogger.logAction("Отредактирован автомобиль: " + car);
-
-                    out.println("\nИнформация об автомобиле обновлена");
+                if (carService.editCar(updatedCar)) {
+                    auditLogger.logAction("Обновлен автомобиль: " + car);
+                    out.println("\nАвтомобиль обновлен!");
                 } else {
-                    out.println("\nГод и цена должны быть целыми числами! Введите еще раз!");
+                    out.println("\nАвтомобиль не был обновлен!");
                 }
                 return;
             }
@@ -124,7 +123,7 @@ public class CarController {
         String model = scanner.nextLine();
 
         List<Car> cars = carService.getAllCars();
-        for (Car car: cars) {
+        for (Car car : cars) {
             if (car.getBrand().equals(brand) && car.getModel().equals(model)) {
                 carService.removeCar(car);
                 auditLogger.logAction("Удален автомобиль: " + car);
@@ -135,6 +134,7 @@ public class CarController {
         }
         out.println("\nАвтомобиль не найден!");
     }
+
     /**
      * Обработка запросов на просмотр всех автомобилей
      */
@@ -153,7 +153,7 @@ public class CarController {
 
         List<Car> cars = carService.getAllCars();
         boolean found = false;
-        for (Car car: cars) {
+        for (Car car : cars) {
             if (car.getBrand().equals(brand) && car.getModel().equals(model)) {
                 out.println(car);
                 found = true;

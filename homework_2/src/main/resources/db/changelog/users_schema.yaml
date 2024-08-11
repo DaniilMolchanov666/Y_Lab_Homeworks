@@ -27,6 +27,8 @@ databaseChangeLog:
                   name: username
                   type: varchar(50)
                   remarks: Имя пользователя
+                  constraints:
+                    unique: true
               - column:
                   name: password
                   type: text
@@ -35,3 +37,4 @@ databaseChangeLog:
                   name: role
                   type: varchar(10)
                   remarks: Роль пользователя
+

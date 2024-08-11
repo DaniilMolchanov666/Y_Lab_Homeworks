@@ -2,7 +2,9 @@ package com.ylab.repository;
 
 import com.ylab.entity.Role;
 import com.ylab.entity.User;
+import com.ylab.out.LiquibaseConfig;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,8 +17,10 @@ import java.util.List;
  */
 public class UserRepository implements CarShopRepository<User> {
 
+    Connection connection = LiquibaseConfig.dbConnection;
+
     @Override
-    public void add(User user) {
+    public boolean add(User user) {
         String sql = "INSERT INTO car_shop_schema.users(username, password, role) VALUES (?, ?, ?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -24,9 +28,11 @@ public class UserRepository implements CarShopRepository<User> {
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setString(3, user.getRole().name());
             preparedStatement.executeUpdate();
+            return true;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
+        return false;
     }
 
     @Override
@@ -60,5 +66,25 @@ public class UserRepository implements CarShopRepository<User> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public boolean edit(User user) {
+        String sql = "UPDATE car_shop_schema.users SET username = ?, password = ?, role = ? WHERE id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, user.getPassword());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, user.getRole().name());
+            preparedStatement.setInt(4, user.getId());
+
+            preparedStatement.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 }

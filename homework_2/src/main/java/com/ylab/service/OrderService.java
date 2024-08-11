@@ -1,5 +1,6 @@
 package com.ylab.service;
 
+import com.ylab.entity.Car;
 import com.ylab.entity.Order;
 import com.ylab.repository.OrderRepository;
 
@@ -20,8 +21,8 @@ public class OrderService {
      *
      * @param order Заказ для добавления.
      */
-    public void addOrder(Order order) {
-        orderRepository.add(order);
+    public boolean addOrder(Order order) {
+        return orderRepository.add(order);
     }
 
     /**
@@ -31,6 +32,15 @@ public class OrderService {
      */
     public List<Order> getAllOrders() {
         return new ArrayList<>(orderRepository.getAll());
+    }
+
+    /**
+     * Обновляет информацию о заказе
+     *
+     * @return true - заказ был обновлен, false - произошла ошибка
+     */
+    public boolean editOrder(Order order) {
+        return orderRepository.edit(order);
     }
 
     /**

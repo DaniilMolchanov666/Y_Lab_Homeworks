@@ -3,13 +3,10 @@ package com.ylab.service;
 import com.ylab.entity.Car;
 import com.ylab.repository.CarRepository;
 
-import java.sql.Connection;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static java.lang.System.out;
 
@@ -53,8 +50,8 @@ public class CarService {
      *
      * @param car Автомобиль для добавления.
      */
-    public void addCar(Car car) {
-        carRepository.add(car);
+    public boolean addCar(Car car) {
+        return carRepository.add(car);
     }
 
     /**
@@ -64,6 +61,15 @@ public class CarService {
      */
     public List<Car> getAllCars() {
         return new ArrayList<>(carRepository.getAll());
+    }
+
+    /**
+     * Обновляет информацию об автомобиле
+     *
+     * @return true - автомобиль был обновлен, false - произошла ошибка
+     */
+    public boolean editCar(Car car) {
+        return carRepository.edit(car);
     }
 
     /**

@@ -34,7 +34,7 @@ databaseChangeLog:
                   remarks: Название модели автомобиля
               - column:
                   name: year
-                  type: varchar(10)
+                  type: varchar(4)
                   remarks: Год выпуска автомобиля
               - column:
                   name: price

@@ -2,12 +2,14 @@ package com.ylab.entity;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * Класс-сущность представляет автомобиль в автосалоне.
  */
 @Data
 @Builder
+@ToString(exclude = "id")
 public class Car implements CarShopEntity{
 
     private Integer id;

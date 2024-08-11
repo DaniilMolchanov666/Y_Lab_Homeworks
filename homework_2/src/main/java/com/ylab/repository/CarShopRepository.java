@@ -12,13 +12,11 @@ import java.util.List;
  */
 public interface CarShopRepository <T extends CarShopEntity>{
 
-    Connection connection = LiquibaseConfig.dbConnection;
-
     /**
      * Метод для добавления обьекта в коллекицю
      * @param t обьект для добавления
      */
-    void add(T t);
+    boolean add(T t);
 
     /**
      * Метод для получения всех обьектов из коллекции
@@ -32,4 +30,7 @@ public interface CarShopRepository <T extends CarShopEntity>{
      * @param t обьект для удаления
      */
     void remove(T t);
+
+    boolean edit(T t);
+
 }

@@ -3,6 +3,7 @@ package com.ylab.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * Класс-сущность представляет заказ на покупку автомобиля.
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = "id")
 public class Order implements CarShopEntity{
 
     public Order(User customer, Car car, String status) {
@@ -22,5 +24,6 @@ public class Order implements CarShopEntity{
     private User customer;
     private Car car;
     private String status;
+
 
 }

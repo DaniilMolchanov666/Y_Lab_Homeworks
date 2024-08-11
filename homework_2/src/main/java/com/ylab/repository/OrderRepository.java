@@ -4,7 +4,10 @@ import com.ylab.entity.Car;
 import com.ylab.entity.Order;
 import com.ylab.entity.Role;
 import com.ylab.entity.User;
+import com.ylab.out.LiquibaseConfig;
+import org.postgresql.util.PSQLException;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,8 +20,10 @@ import java.util.List;
  */
 public class OrderRepository implements CarShopRepository<Order> {
 
+    Connection connection = LiquibaseConfig.dbConnection;
+
     @Override
-    public void add(Order order) {
+    public boolean add(Order order) {
         String sql = "INSERT INTO car_shop_schema.orders(user_id, car_id, status) VALUES (?, ?, ?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -26,10 +31,13 @@ public class OrderRepository implements CarShopRepository<Order> {
             preparedStatement.setInt(2, order.getCar().getId());
             preparedStatement.setString(3, order.getStatus());
             preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return true;
+        } catch (PSQLException e1) {
+            System.out.println("Уже существует заказ с таким автомобилем!");
+        } catch (SQLException e2) {
+            System.out.println(e2.getMessage());
         }
+        return false;
     }
 
     @Override
@@ -39,15 +47,19 @@ public class OrderRepository implements CarShopRepository<Order> {
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
+            connection.setAutoCommit(false);
+
             while (resultSet.next()) {
                 listOfOrders.add(new Order(
-                        findUser(resultSet.getInt(2)),
-                        findCar(resultSet.getInt(3)),
+                        resultSet.getInt("id"),
+                        findUser(resultSet.getInt("user_id")),
+                        findCar(resultSet.getInt("car_id")),
                         resultSet.getString("status")
                 ));
             }
+            connection.commit();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
         return listOfOrders;
     }
@@ -63,7 +75,7 @@ public class OrderRepository implements CarShopRepository<Order> {
                         Role.valueOf(resultSet.getString("role")));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
         return null;
     }
@@ -83,7 +95,7 @@ public class OrderRepository implements CarShopRepository<Order> {
                         .build();
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
         return null;
     }
@@ -96,7 +108,25 @@ public class OrderRepository implements CarShopRepository<Order> {
             preparedStatement.setInt(1, order.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
+    }
+
+    @Override
+    public boolean edit(Order order) {
+        String sql = "UPDATE car_shop_schema.orders SET status = ? WHERE id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, order.getStatus());
+            preparedStatement.setInt(2, order.getId());
+
+            preparedStatement.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 }
