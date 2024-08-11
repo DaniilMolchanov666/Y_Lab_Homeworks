@@ -1,0 +1,88 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: daniilmolchanov
+      schemaName: car_shop_schema
+  - changeSet:
+      id: 2
+      author: daniilmolchanov
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            tableExists:
+              tableName: cars
+      changes:
+        - createTable:
+            schemaName: car_shop_schema
+            tableName: cars
+            remarks: Таблица автомобилей
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: brand
+                  type: varchar(100)
+                  remarks: Название брэнда автомобиля
+              - column:
+                  name: model
+                  type: varchar(100)
+                  remarks: Название модели автомобиля
+              - column:
+                  name: year
+                  type: varchar(10)
+                  remarks: Год выпуска автомобиля
+              - column:
+                  name: price
+                  type: text
+                  remarks: Стоимость автомобиля
+              - column:
+                  name: condition
+                  type: text
+                  remarks: Статус
+  - changeSet:
+      id: 3
+      author: daniilmolchanov
+      changes:
+        - insert:
+            schemaName: car_shop_schema
+            tableName: cars
+            columns:
+              - column:
+                  name: brand
+                  value: AUDI
+              - column:
+                  name: model
+                  value: AUDI Q8
+              - column:
+                  name: year
+                  value: 2010
+              - column:
+                  name: price
+                  value: 1234567
+              - column:
+                  name: condition
+                  value: SALE
+        - insert:
+            schemaName: car_shop_schema
+            tableName: cars
+            columns:
+              - column:
+                  name: brand
+                  value: MAZDA
+              - column:
+                  name: model
+                  value: MAZDA 3
+              - column:
+                  name: year
+                  value: 2005
+              - column:
+                  name: price
+                  value: 1234569
+              - column:
+                  name: condition
+                  value: GOOD

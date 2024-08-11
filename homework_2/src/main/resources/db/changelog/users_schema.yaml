@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: daniilmolchanov
+  - changeSet:
+      id: 2
+      author: daniilmolchanov
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            tableExists:
+              tableName: users
+      changes:
+        - createTable:
+            schemaName: car_shop_schema
+            tableName: users
+            remarks: Таблица пользователей
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(50)
+                  remarks: Имя пользователя
+              - column:
+                  name: password
+                  type: text
+                  remarks: Пароль пользователя
+              - column:
+                  name: role
+                  type: varchar(10)
+                  remarks: Роль пользователя
