@@ -4,7 +4,93 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="454ce6b9-d336-4b69-9378-f0d9bf7a94d7" name="Changes" comment="" />
+    <list default="true" id="454ce6b9-d336-4b69-9378-f0d9bf7a94d7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/8.2/checksums/checksums.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/8.2/dependencies-accessors/dependencies-accessors.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/8.2/dependencies-accessors/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/8.2/executionHistory/executionHistory.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/8.2/executionHistory/executionHistory.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/8.2/fileChanges/last-build.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/8.2/fileHashes/fileHashes.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/8.2/fileHashes/fileHashes.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/8.2/fileHashes/resourceHashesCache.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/8.2/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/8.8/checksums/checksums.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/8.8/checksums/md5-checksums.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/8.8/checksums/sha1-checksums.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/8.8/dependencies-accessors/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/8.8/executionHistory/executionHistory.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/8.8/executionHistory/executionHistory.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/8.8/fileChanges/last-build.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/8.8/fileHashes/fileHashes.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/8.8/fileHashes/fileHashes.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/8.8/fileHashes/resourceHashesCache.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/8.8/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/file-system.probe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.gradle/vcs-1/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.idea/modules/homework_1.main.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/Makefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/build/distributions/homework_1-1.0-SNAPSHOT.tar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/build/reports/tests/test/css/base-style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/build/reports/tests/test/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/build/reports/tests/test/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/build/reports/tests/test/js/report.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/build/reports/tests/test/packages/com.ylab.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/build/resources/main/logs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/build/scripts/homework_1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/build/scripts/homework_1.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/build/test-results/test/binary/output.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/build/test-results/test/binary/output.bin.idx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/build/test-results/test/binary/results.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/build/tmp/compileTestJava/previous-compilation-data.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/build/tmp/jar/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/settings.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/main/java/com/ylab/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/main/java/com/ylab/controller/AuditController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/main/java/com/ylab/controller/CarController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/main/java/com/ylab/controller/OrderController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/main/java/com/ylab/controller/UsersController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/main/java/com/ylab/entity/Car.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/main/java/com/ylab/entity/CarShopEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/main/java/com/ylab/entity/Order.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/main/java/com/ylab/entity/Role.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/main/java/com/ylab/entity/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/main/java/com/ylab/in/ConsoleInterface.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/main/java/com/ylab/repository/CarRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/main/java/com/ylab/repository/CarShopRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/main/java/com/ylab/repository/OrderRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/main/java/com/ylab/repository/UserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/main/java/com/ylab/service/AccessService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/main/java/com/ylab/service/AuthenticationService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/main/java/com/ylab/service/CarService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/main/java/com/ylab/service/OrderService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/main/java/com/ylab/service/UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/main/java/com/ylab/utils/AuditLogger.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/main/resources/logs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/test/java/com/ylab/AccessServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/test/java/com/ylab/AuthenticationServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/test/java/com/ylab/CarServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/test/java/com/ylab/OrderServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_1/src/test/java/com/ylab/UserServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/homework_2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/homework_2/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -151,7 +237,7 @@
     &quot;Gradle.homework_1 [wrapper].executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;#6 on homework__1&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;homework__2&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/daniilmolchanov/Рабочий стол/Y_Lab_Homeworks&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
