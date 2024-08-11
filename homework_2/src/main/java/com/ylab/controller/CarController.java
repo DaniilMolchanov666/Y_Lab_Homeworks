@@ -4,8 +4,6 @@ import com.ylab.entity.Car;
 import com.ylab.service.CarService;
 import com.ylab.utils.AuditLogger;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 import static java.lang.System.out;
@@ -79,37 +77,35 @@ public class CarController {
         out.print("Введите модель автомобиля для редактирования: ");
         String model = scanner.nextLine();
 
-        List<Car> cars = carService.getAllCars();
-        for (Car car : cars) {
-            if (car.getBrand().equals(brand) && car.getModel().equals(model)) {
-                out.print("Введите новый год выпуска: ");
-                String year = scanner.nextLine();
+        var car = carService.getCarByModelAndBrand(brand, model);
+        if (car != null) {
+            out.print("Введите новый год выпуска: ");
+            String year = scanner.nextLine();
 
-                out.print("Введите новую цену: ");
-                String price = scanner.nextLine();
+            out.print("Введите новую цену: ");
+            String price = scanner.nextLine();
 
-                out.print("Введите новое состояние: ");
-                String condition = scanner.nextLine();
+            out.print("Введите новое состояние: ");
+            String condition = scanner.nextLine();
 
-                Car updatedCar = Car.builder()
-                        .id(car.getId())
-                        .model(model)
-                        .brand(brand)
-                        .condition(condition)
-                        .price(price)
-                        .year(year)
-                        .build();
+            Car updatedCar = Car.builder()
+                    .id(car.getId())
+                    .model(model)
+                    .brand(brand)
+                    .condition(condition)
+                    .price(price)
+                    .year(year)
+                    .build();
 
-                if (carService.editCar(updatedCar)) {
-                    auditLogger.logAction("Обновлен автомобиль: " + car);
-                    out.println("\nАвтомобиль обновлен!");
-                } else {
-                    out.println("\nАвтомобиль не был обновлен!");
-                }
-                return;
+            if (carService.editCar(updatedCar)) {
+                auditLogger.logAction("Обновлен автомобиль: " + car);
+                out.println("\nАвтомобиль обновлен!");
+            } else {
+                out.println("\nАвтомобиль не был обновлен!");
             }
+        } else {
+            out.println("Автомобиль не найден!");
         }
-        out.println("Автомобиль не найден!");
     }
 
     /**
@@ -122,15 +118,13 @@ public class CarController {
         out.print("Введите модель автомобиля для удаления: ");
         String model = scanner.nextLine();
 
-        List<Car> cars = carService.getAllCars();
-        for (Car car : cars) {
-            if (car.getBrand().equals(brand) && car.getModel().equals(model)) {
+        var car = carService.getCarByModelAndBrand(brand, model);
+        if (car != null) {
                 carService.removeCar(car);
                 auditLogger.logAction("Удален автомобиль: " + car);
 
                 out.println("\nАвтомобиль удален");
                 return;
-            }
         }
         out.println("\nАвтомобиль не найден!");
     }
@@ -151,13 +145,11 @@ public class CarController {
         out.print("Введите модель автомобиля для поиска: ");
         String model = scanner.nextLine();
 
-        List<Car> cars = carService.getAllCars();
         boolean found = false;
-        for (Car car : cars) {
-            if (car.getBrand().equals(brand) && car.getModel().equals(model)) {
+        var car = carService.getCarByModelAndBrand(brand, model);
+        if (car != null) {
                 out.println(car);
                 found = true;
-            }
         }
         if (!found) {
             out.println("\nАвтомобиль не найден!");

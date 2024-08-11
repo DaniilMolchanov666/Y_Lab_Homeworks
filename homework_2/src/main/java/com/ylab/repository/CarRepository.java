@@ -1,9 +1,8 @@
 package com.ylab.repository;
 
 import com.ylab.entity.Car;
-import com.ylab.out.LiquibaseConfig;
+import lombok.Setter;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,18 +13,14 @@ import java.util.List;
 /**
  * Репозиторий для хранения автомобилей
  */
-public class CarRepository implements CarShopRepository<Car> {
-
-    private Connection connection = LiquibaseConfig.dbConnection;
-
-    public void setConnection(Connection connection) {
-        this.connection = connection;
-    }
+@Setter
+public class CarRepository extends CarShopRepository<Car> {
 
     @Override
     public boolean add(Car car) {
         String sql = "INSERT INTO car_shop_schema.cars(brand, model, year, price, condition) "
                 + "VALUES (?, ?, ?, ?, ?)";
+
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, car.getBrand());
@@ -34,6 +29,7 @@ public class CarRepository implements CarShopRepository<Car> {
             preparedStatement.setString(4, car.getPrice());
             preparedStatement.setString(5, car.getCondition());
             preparedStatement.executeUpdate();
+
             return true;
         } catch (SQLException e1) {
             System.out.println(e1.getMessage());
@@ -62,6 +58,26 @@ public class CarRepository implements CarShopRepository<Car> {
             System.out.println(e.getMessage());
         }
         return listOfCars;
+    }
+
+    public Car getCarByModelAndBrand(String brand, String model) {
+        String sql = "SELECT * FROM car_shop_schema.cars WHERE brand = '" + brand + "' AND model = '" + model + "'";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                return Car.builder().id(resultSet.getInt("id"))
+                        .model(resultSet.getString("model"))
+                        .brand(resultSet.getString("brand"))
+                        .year(resultSet.getString("year"))
+                        .price(resultSet.getString("price"))
+                        .condition(resultSet.getString("condition"))
+                        .build();
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
     @Override

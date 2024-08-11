@@ -7,30 +7,45 @@ import java.sql.Connection;
 import java.util.List;
 
 /**
- * Общий интерфейс для хранения сущностей автосалона
+ * Абстрактный класс для взаимодействия с таблицами баз данных
  * @param <T> сущность автосалона, реализующая интерфейс CarShopEntity
  */
-public interface CarShopRepository <T extends CarShopEntity>{
+public abstract class CarShopRepository <T extends CarShopEntity>{
 
     /**
-     * Метод для добавления обьекта в коллекицю
+     * Подключение к БД, общее для всех репозиториев, которое задается по умолчанию
+     */
+    Connection connection = LiquibaseConfig.dbConnection;
+    /**
+     * Метод для добавления обьекта
      * @param t обьект для добавления
      */
-    boolean add(T t);
+    abstract boolean add(T t);
 
     /**
-     * Метод для получения всех обьектов из коллекции
+     * Метод для получения всех обьектов
      *
      * @return коллекцию всех обьектов
      */
-    List<T> getAll();
+    abstract List<T> getAll();
 
     /**
-     * Метод для удаления обьекта из коллекции
+     * Метод для удаления обьекта
      * @param t обьект для удаления
      */
-    void remove(T t);
+    abstract void remove(T t);
 
-    boolean edit(T t);
+    /**
+     * Метод для обновления обьекта
+     * @param t обьект для обновления
+     */
+    abstract boolean edit(T t);
 
+    /**
+     * Метод для обновления подключения к базе данных
+     * @param con обьект типа Connection для задания подключения к другой базе данных (используется в тестах)
+     */
+    public void setNewConnection(Connection con) {
+        connection = con;
+    }
 }

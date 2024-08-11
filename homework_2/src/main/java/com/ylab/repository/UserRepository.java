@@ -2,9 +2,8 @@ package com.ylab.repository;
 
 import com.ylab.entity.Role;
 import com.ylab.entity.User;
-import com.ylab.out.LiquibaseConfig;
+import lombok.Setter;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,9 +14,8 @@ import java.util.List;
 /**
  * Репозиторий для хранения пользователей
  */
-public class UserRepository implements CarShopRepository<User> {
-
-    Connection connection = LiquibaseConfig.dbConnection;
+@Setter
+public class UserRepository extends CarShopRepository<User> {
 
     @Override
     public boolean add(User user) {
@@ -57,7 +55,7 @@ public class UserRepository implements CarShopRepository<User> {
 
     @Override
     public void remove(User user) {
-        String sql = "DELETE FROM users WHERE id = ?";
+        String sql = "DELETE FROM car_shop_schema.users WHERE id = ?";
         try {
             PreparedStatement preparedStatement =
                     connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -74,7 +72,7 @@ public class UserRepository implements CarShopRepository<User> {
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, user.getPassword());
+            preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setString(3, user.getRole().name());
             preparedStatement.setInt(4, user.getId());

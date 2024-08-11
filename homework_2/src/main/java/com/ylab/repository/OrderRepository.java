@@ -4,10 +4,8 @@ import com.ylab.entity.Car;
 import com.ylab.entity.Order;
 import com.ylab.entity.Role;
 import com.ylab.entity.User;
-import com.ylab.out.LiquibaseConfig;
 import org.postgresql.util.PSQLException;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,9 +16,7 @@ import java.util.List;
 /**
  * Репозиторий для хранения заказов
  */
-public class OrderRepository implements CarShopRepository<Order> {
-
-    Connection connection = LiquibaseConfig.dbConnection;
+public class OrderRepository extends CarShopRepository<Order> {
 
     @Override
     public boolean add(Order order) {

@@ -72,6 +72,10 @@ public class CarService {
         return carRepository.edit(car);
     }
 
+    public Car getCarByModelAndBrand(String brand, String model) {
+        return carRepository.getCarByModelAndBrand(brand, model);
+    }
+
     /**
      * Удаляет автомобиль из автосалона.
      *
