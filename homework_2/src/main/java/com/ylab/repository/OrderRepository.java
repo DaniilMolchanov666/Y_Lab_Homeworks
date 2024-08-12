@@ -60,6 +60,11 @@ public class OrderRepository extends CarShopRepository<Order> {
         return listOfOrders;
     }
 
+    /**
+     * Поиск пользователя по внешнему ключу
+     * @param id - id внешнего ключа, ссылающегося на таблицу Users
+     * @return искомый пользователь
+     */
     private User findUser(Integer id) {
         String sql = "SELECT * FROM car_shop_schema.users WHERE id = " + id;
         try {
@@ -76,6 +81,11 @@ public class OrderRepository extends CarShopRepository<Order> {
         return null;
     }
 
+    /**
+     * Поиск автомобиля по внешнему ключу
+     * @param id - id внешнего ключа, ссылающегося на таблицу Cars
+     * @return искомый автомобиль
+     */
     private Car findCar(Integer id) {
         String sql = "SELECT * FROM car_shop_schema.cars WHERE id = " + id;
         try {

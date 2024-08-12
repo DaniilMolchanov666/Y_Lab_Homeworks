@@ -5,7 +5,6 @@ import com.ylab.entity.User;
 import com.ylab.repository.UserRepository;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,18 +39,15 @@ public class UsersRepositoryTests {
     public static void setUp() throws SQLException {
         postgresContainer.start();
 
-        var connection = DriverManager.getConnection(postgresContainer.getJdbcUrl(),
-                postgresContainer.getUsername(), postgresContainer.getPassword());
+        var connection = DriverManager.getConnection(
+                postgresContainer.getJdbcUrl(),
+                postgresContainer.getUsername(),
+                postgresContainer.getPassword()
+        );
 
         userRepository.setNewConnection(connection);
         userRepository.add(new User("maria", "5678", Role.MANAGER));
     }
-
-//    @BeforeEach
-//    @DisplayName(value = "Добавление пользователя перед каждым тестом")
-//    public void insertStartValues() {
-//        userRepository.add(new User("maria", "5678", Role.MANAGER));
-//    }
 
     @Test
     @DisplayName(value = "Тест на проверку добавления нового пользователя")
@@ -79,7 +75,7 @@ public class UsersRepositoryTests {
 
     @Test
     @DisplayName(value = "Тест на обновление информации о пользователе")
-    public void testUpdateCar() throws SQLException {
+    public void testUpdateUser() throws SQLException {
         var user = new User(1, "dan", "4321", Role.MANAGER);
 
         userRepository.edit(user);
@@ -95,6 +91,7 @@ public class UsersRepositoryTests {
     @AfterAll
     @DisplayName(value = "Закрытие подключения к БД после прохождения всех тестов")
     public static void closeConnection() {
+        postgresContainer.stop();
         postgresContainer.close();
     }
 }

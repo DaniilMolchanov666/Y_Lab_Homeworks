@@ -60,6 +60,11 @@ public class CarRepository extends CarShopRepository<Car> {
         return listOfCars;
     }
 
+    /**
+     * Поиск автомобиля по бренду и модели
+     * @param brand, model - поля, по которым идет поиск
+     * @return искомый автомобиль
+     */
     public Car getCarByModelAndBrand(String brand, String model) {
         String sql = "SELECT * FROM car_shop_schema.cars WHERE brand = '" + brand + "' AND model = '" + model + "'";
         try {

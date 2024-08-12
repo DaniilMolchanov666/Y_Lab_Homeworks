@@ -4,7 +4,6 @@ import com.ylab.entity.Car;
 import com.ylab.repository.CarRepository;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,8 +39,11 @@ public class CarRepositoryTest {
     public static void setUp() throws SQLException {
         postgresContainer.start();
 
-        var connection = DriverManager.getConnection(postgresContainer.getJdbcUrl(),
-                postgresContainer.getUsername(), postgresContainer.getPassword());
+        var connection = DriverManager.getConnection(
+                postgresContainer.getJdbcUrl(),
+                postgresContainer.getUsername(),
+                postgresContainer.getPassword()
+        );
 
         carRepository.setNewConnection(connection);
         var car = Car.builder()
@@ -53,19 +55,6 @@ public class CarRepositoryTest {
                 .build();
         carRepository.add(car);
     }
-
-//    @BeforeEach
-//    @DisplayName(value = "Добавление автомобиля перед каждым тестом")
-//    public void insertStartValues() {
-//        var car = Car.builder()
-//                .model("MAZDA 3")
-//                .brand("MAZDA")
-//                .condition("SALE")
-//                .price("18000000")
-//                .year("2018")
-//                .build();
-//        carRepository.add(car);
-//    }
 
     @Test
     @DisplayName(value = "Тест на проверку добавления автомобиля в базу данных")
@@ -133,6 +122,7 @@ public class CarRepositoryTest {
     @AfterAll
     @DisplayName(value = "Закрытие подключения к БД после прохождения всех тестов")
     public static void closeConnection() {
+        postgresContainer.stop();
         postgresContainer.close();
     }
 }

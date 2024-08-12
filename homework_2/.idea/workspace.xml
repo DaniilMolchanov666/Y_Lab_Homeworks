@@ -6,90 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="15ebe78b-cfa2-4a94-b3fb-26fd5821daf0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/8.2/checksums/checksums.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/8.2/dependencies-accessors/dependencies-accessors.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/8.2/dependencies-accessors/gc.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/8.2/executionHistory/executionHistory.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/8.2/executionHistory/executionHistory.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/8.2/fileChanges/last-build.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/8.2/fileHashes/fileHashes.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/8.2/fileHashes/fileHashes.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/8.2/fileHashes/resourceHashesCache.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/8.2/gc.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/8.8/checksums/checksums.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/8.8/checksums/md5-checksums.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/8.8/checksums/sha1-checksums.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/8.8/dependencies-accessors/gc.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/8.8/executionHistory/executionHistory.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/8.8/executionHistory/executionHistory.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/8.8/fileChanges/last-build.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/8.8/fileHashes/fileHashes.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/8.8/fileHashes/fileHashes.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/8.8/fileHashes/resourceHashesCache.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/8.8/gc.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/file-system.probe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.gradle/vcs-1/gc.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.idea/modules/homework_1.main.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/Makefile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/build/distributions/homework_1-1.0-SNAPSHOT.tar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/build/reports/tests/test/css/base-style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/build/reports/tests/test/css/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/build/reports/tests/test/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/build/reports/tests/test/js/report.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/build/reports/tests/test/packages/com.ylab.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/build/resources/main/logs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/build/scripts/homework_1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/build/scripts/homework_1.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/build/test-results/test/binary/output.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/build/test-results/test/binary/output.bin.idx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/build/test-results/test/binary/results.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/build/tmp/compileTestJava/previous-compilation-data.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/build/tmp/jar/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/settings.gradle.kts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/main/java/com/ylab/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/main/java/com/ylab/controller/AuditController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/main/java/com/ylab/controller/CarController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/main/java/com/ylab/controller/OrderController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/main/java/com/ylab/controller/UsersController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/main/java/com/ylab/entity/Car.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/main/java/com/ylab/entity/CarShopEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/main/java/com/ylab/entity/Order.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/main/java/com/ylab/entity/Role.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/main/java/com/ylab/entity/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/main/java/com/ylab/in/ConsoleInterface.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/main/java/com/ylab/repository/CarRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/main/java/com/ylab/repository/CarShopRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/main/java/com/ylab/repository/OrderRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/main/java/com/ylab/repository/UserRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/main/java/com/ylab/service/AccessService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/main/java/com/ylab/service/AuthenticationService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/main/java/com/ylab/service/CarService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/main/java/com/ylab/service/OrderService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/main/java/com/ylab/service/UserService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/main/java/com/ylab/utils/AuditLogger.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/main/resources/logs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/test/java/com/ylab/AccessServiceTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/test/java/com/ylab/AuthenticationServiceTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/test/java/com/ylab/CarServiceTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/test/java/com/ylab/OrderServiceTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../homework_1/src/test/java/com/ylab/UserServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/../Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ylab/repository/CarRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ylab/repository/CarRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ylab/repository/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ylab/repository/OrderRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/ylab/testcontainer/CarRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/ylab/testcontainer/CarRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/ylab/testcontainer/OrderRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/ylab/testcontainer/OrderRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/ylab/testcontainer/UsersRepositoryTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/ylab/testcontainer/UsersRepositoryTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,6 +54,18 @@
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="build" type="c8890929:TasksNode$1" />
               </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="homework_2" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="homework_2" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="verification" type="c8890929:TasksNode$1" />
+              </path>
             </expand>
             <select />
           </tree_state>
@@ -168,46 +103,63 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Docker.Dockerfile (1).executor&quot;: &quot;Run&quot;,
-    &quot;Docker.Dockerfile.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.yml: Compose Deployment (1).executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.yml: Compose Deployment (2).executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.AccessServiceTest.testSameRole.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.AuthenticationServiceTest.testAuthenticateUser.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CarServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CarServiceTest.testCreateOrder.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CarServiceTest.testGetAllOrders.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.DataBaseTest (1).executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.DataBaseTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.DataBaseTest.testCarsTable.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.UserServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.homework_1 [:com.ylab.Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.homework_1 [run].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.homework_1 [test].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.homework_2 [:com.ylab.Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.homework_2 [build].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.homework_2 [jar].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;homework__2&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/daniilmolchanov/Рабочий стол/Y_Lab_Homeworks/homework_2&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.Java&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Docker.Dockerfile (1).executor": "Run",
+    "Docker.Dockerfile.executor": "Run",
+    "Docker.docker-compose.yml: Compose Deployment (1).executor": "Run",
+    "Docker.docker-compose.yml: Compose Deployment (2).executor": "Run",
+    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
+    "Gradle.AccessServiceTest.testSameRole.executor": "Run",
+    "Gradle.AuthenticationServiceTest.testAuthenticateUser.executor": "Run",
+    "Gradle.CarRepositoryTest.executor": "Run",
+    "Gradle.CarRepositoryTest.testFindCar.executor": "Run",
+    "Gradle.CarServiceTest.executor": "Run",
+    "Gradle.CarServiceTest.testCreateOrder.executor": "Run",
+    "Gradle.CarServiceTest.testGetAllOrders.executor": "Run",
+    "Gradle.DataBaseTest (1).executor": "Run",
+    "Gradle.DataBaseTest.executor": "Run",
+    "Gradle.DataBaseTest.testCarsTable.executor": "Run",
+    "Gradle.DataBaseTest.testGetAllCars.executor": "Run",
+    "Gradle.DataBaseTest.testRemoveCar.executor": "Run",
+    "Gradle.DataBaseTest.testUpdateCar.executor": "Run",
+    "Gradle.OrderRepositoryTest.executor": "Run",
+    "Gradle.OrderRepositoryTest.testAddNewOrderInTable.executor": "Run",
+    "Gradle.OrderRepositoryTest.testAddNewUserInTable.executor": "Run",
+    "Gradle.OrderRepositoryTest.testRemoveOrder.executor": "Run",
+    "Gradle.OrderRepositoryTest.testUpdateOrder.executor": "Run",
+    "Gradle.TestSuit.executor": "Run",
+    "Gradle.UserServiceTest.executor": "Run",
+    "Gradle.UsersRepositoryTests.executor": "Run",
+    "Gradle.UsersRepositoryTests.testGetAllUsers.executor": "Run",
+    "Gradle.UsersRepositoryTests.testRemoveUser.executor": "Run",
+    "Gradle.UsersRepositoryTests.testUpdateCar.executor": "Run",
+    "Gradle.homework_1 [:com.ylab.Main.main()].executor": "Run",
+    "Gradle.homework_1 [run].executor": "Run",
+    "Gradle.homework_1 [test].executor": "Run",
+    "Gradle.homework_2 [:com.ylab.Main.main()].executor": "Run",
+    "Gradle.homework_2 [build].executor": "Run",
+    "Gradle.homework_2 [check].executor": "Run",
+    "Gradle.homework_2 [jar].executor": "Run",
+    "Gradle.homework_2 [test].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "homework__2",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/daniilmolchanov/Рабочий стол/Y_Lab_Homeworks/homework_2",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.sourceCode.Java"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources/properties" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.DataBaseTest.testCarsTable">
-    <configuration name="DataBaseTest (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.OrderRepositoryTest.testUpdateOrder">
+    <configuration name="OrderRepositoryTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -220,7 +172,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;com.ylab.testcontainer.DataBaseTest&quot;" />
+            <option value="&quot;com.ylab.testcontainer.OrderRepositoryTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -231,7 +183,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="DataBaseTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="OrderRepositoryTest.testAddNewOrderInTable" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -244,7 +196,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;com.ylab.DataBaseTest&quot;" />
+            <option value="&quot;com.ylab.testcontainer.OrderRepositoryTest.testAddNewOrderInTable&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -255,7 +207,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="DataBaseTest.testCarsTable" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="OrderRepositoryTest.testRemoveOrder" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -268,7 +220,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;com.ylab.testcontainer.DataBaseTest.testCarsTable&quot;" />
+            <option value="&quot;com.ylab.testcontainer.OrderRepositoryTest.testRemoveOrder&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -279,7 +231,31 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="homework_2 [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="OrderRepositoryTest.testUpdateOrder" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.ylab.testcontainer.OrderRepositoryTest.testUpdateOrder&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="homework_2 [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -290,7 +266,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="jar" />
+            <option value="test" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -313,21 +289,13 @@
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration name="docker-compose.yml: Compose Deployment (1)" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker3">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="sourceFilePath" value="docker-compose.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.DataBaseTest.testCarsTable" />
-        <item itemvalue="Gradle.DataBaseTest (1)" />
-        <item itemvalue="Docker.docker-compose.yml: Compose Deployment (1)" />
-        <item itemvalue="Gradle.DataBaseTest" />
-        <item itemvalue="Gradle.homework_2 [jar]" />
+        <item itemvalue="Gradle.OrderRepositoryTest.testUpdateOrder" />
+        <item itemvalue="Gradle.OrderRepositoryTest" />
+        <item itemvalue="Gradle.OrderRepositoryTest.testRemoveOrder" />
+        <item itemvalue="Gradle.homework_2 [test]" />
+        <item itemvalue="Gradle.OrderRepositoryTest.testAddNewOrderInTable" />
       </list>
     </recent_temporary>
   </component>
