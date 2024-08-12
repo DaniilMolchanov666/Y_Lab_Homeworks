@@ -8,11 +8,6 @@
       <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/../Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ylab/repository/CarRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ylab/repository/CarRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ylab/repository/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ylab/repository/OrderRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/ylab/testcontainer/CarRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/ylab/testcontainer/CarRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/ylab/testcontainer/OrderRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/ylab/testcontainer/OrderRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/ylab/testcontainer/UsersRepositoryTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/ylab/testcontainer/UsersRepositoryTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,7 +153,7 @@
       <recent name="$PROJECT_DIR$/src/main/resources/properties" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.OrderRepositoryTest.testUpdateOrder">
+  <component name="RunManager" selected="Gradle.homework_2 [test]">
     <configuration name="OrderRepositoryTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -291,10 +286,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.homework_2 [test]" />
         <item itemvalue="Gradle.OrderRepositoryTest.testUpdateOrder" />
         <item itemvalue="Gradle.OrderRepositoryTest" />
         <item itemvalue="Gradle.OrderRepositoryTest.testRemoveOrder" />
-        <item itemvalue="Gradle.homework_2 [test]" />
         <item itemvalue="Gradle.OrderRepositoryTest.testAddNewOrderInTable" />
       </list>
     </recent_temporary>
