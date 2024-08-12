@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.ylab.testcontainer.CarRepositoryTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2024-08-12T12:17:22" hostname="CottonPads" time="0.045">
+  <properties/>
+  <testcase name="Тест на проверку добавления автомобиля в базу данных" classname="com.ylab.testcontainer.CarRepositoryTest" time="0.008"/>
+  <testcase name="Тест на апдейт автомобиля" classname="com.ylab.testcontainer.CarRepositoryTest" time="0.015"/>
+  <testcase name="Тест на получение автомобиля по наименованию модели и брэнда" classname="com.ylab.testcontainer.CarRepositoryTest" time="0.004"/>
+  <testcase name="Тест на получение списка всех автомобилей" classname="com.ylab.testcontainer.CarRepositoryTest" time="0.004"/>
+  <testcase name="Тест удаления автомобиля" classname="com.ylab.testcontainer.CarRepositoryTest" time="0.009"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+]]></system-err>
+</testsuite>
