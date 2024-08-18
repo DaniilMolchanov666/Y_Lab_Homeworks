@@ -2,6 +2,7 @@ package com.ylab.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
@@ -10,6 +11,7 @@ import lombok.ToString;
 @Data
 @AllArgsConstructor
 @ToString(exclude = {"id", "password"})
+@NoArgsConstructor
 public class User implements CarShopEntity{
 
     public User(String username, String password, Role role) {

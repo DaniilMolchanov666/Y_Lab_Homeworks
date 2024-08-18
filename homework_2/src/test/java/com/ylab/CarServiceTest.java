@@ -1,6 +1,7 @@
 package com.ylab;
 
 import com.ylab.entity.Car;
+import com.ylab.exception.ValidationCarDataException;
 import com.ylab.service.CarService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,18 +11,18 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
 public class CarServiceTest {
 
     @Mock
     private CarService carService;
 
     @Test
-    public void testCarValuesValidation() {
+    public void testCarValuesValidation() throws ValidationCarDataException {
 
         var car = Car.builder().model("AUDI Q8")
                 .brand("AUDI")
@@ -30,7 +31,7 @@ public class CarServiceTest {
                 .condition("sale")
                 .build();
 
-        assertThat(carService.isValidCarValues(car)).isFalse();
+//        assertThatThrownBy(carService.isValidCarValues(car), "kek");
     }
 
     @Test

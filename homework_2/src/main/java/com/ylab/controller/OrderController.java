@@ -47,18 +47,17 @@ public class OrderController {
         out.print("Введите модель автомобиля для заказа: ");
         String model = scanner.nextLine();
 
-        List<Car> cars = carService.getAllCars();
-        for (Car car : cars) {
-            if (car.getBrand().equals(brand) && car.getModel().equals(model)) {
-                Order order = new Order(currentUser, car, "Новый");
-                if (orderService.addOrder(order)) {
-                    auditLogger.logAction("Создан новый заказ: " + order);
-                    out.println("\nЗаказ создан");
-                    return;
-                } else {
-                    out.println("\nЗаказ не создан");
-                }
-            }
+        Car car = carService.getCarByModelAndBrand(brand, model);
+
+        Order order = new Order(currentUser, car, "Новый");
+
+        if (orderService.addOrder(order)) {
+            auditLogger.logAction("Создан новый заказ: " + order);
+            out.println("\nЗаказ создан");
+            return;
+        } else {
+            out.println("\nЗаказ не создан");
+
         }
         out.println("\nЗаказ не найден!");
     }
@@ -67,6 +66,34 @@ public class OrderController {
      * Обработка запроса изменения статуса заказа
      */
     public void changeOrderStatus() {
+        out.print("Введите марку автомобиля заказа для изменения статуса: ");
+        String brand = scanner.nextLine();
+        out.print("Введите модель автомобиля заказа для изменения статуса: ");
+        String model = scanner.nextLine();
+
+        List<Order> orders = orderService.getAllOrders();
+        for (Order order : orders) {
+            if (order.getCar().getBrand().equals(brand) && order.getCar().getModel().equals(model)) {
+                out.print("Введите новый статус заказа: ");
+                String status = scanner.nextLine();
+
+                order.setStatus(status);
+
+                if (orderService.editOrder(order)) {
+                    auditLogger.logAction("Статус заказа обновлен! " + order);
+                    out.println("\nЗаказ обновлен!");
+                    return;
+                } else {
+                    out.println("\nЗаказ не обновлен!");
+                }
+                return;
+            }
+        }
+        out.println("\nЗаказ не найден!");
+    }
+
+//TODO настроить метод для изменения автомобиля в заказе
+    public void changeOrder() {
         out.print("Введите марку автомобиля заказа для изменения статуса: ");
         String brand = scanner.nextLine();
         out.print("Введите модель автомобиля заказа для изменения статуса: ");

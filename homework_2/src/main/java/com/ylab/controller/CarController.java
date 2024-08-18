@@ -1,6 +1,9 @@
 package com.ylab.controller;
 
 import com.ylab.entity.Car;
+import com.ylab.entity.User;
+import com.ylab.exception.ValidationCarDataException;
+import com.ylab.service.AccessService;
 import com.ylab.service.CarService;
 import com.ylab.utils.AuditLogger;
 
@@ -55,15 +58,15 @@ public class CarController {
                 .year(year)
                 .build();
 
-        if (carService.isValidCarValues(car)) {
-            if (carService.addCar(car)) {
-                auditLogger.logAction("Добавлен новый автомобиль: " + car);
-                out.println("\nАвтомобиль добавлен!");
-            } else {
-                out.println("\nАвтомобиль не был добавлен!");
-            }
-        } else {
-            out.println("\nГод и цена должны быть целыми числами! Введите еще раз!");
+        try {
+            carService.isValidCarValues(car);
+            carService.addCar(car);
+            auditLogger.logAction("Добавлен новый автомобиль: " + car);
+            out.println("\nАвтомобиль добавлен!");
+        } catch (ValidationCarDataException e1) {
+            out.println(e1.getMessage());
+        } catch (Exception e) {
+            out.println("\nАвтомобиль не был добавлен!");
         }
     }
 
@@ -77,8 +80,8 @@ public class CarController {
         out.print("Введите модель автомобиля для редактирования: ");
         String model = scanner.nextLine();
 
-        var car = carService.getCarByModelAndBrand(brand, model);
-        if (car != null) {
+        try {
+            var car = carService.getCarByModelAndBrand(brand, model);
             out.print("Введите новый год выпуска: ");
             String year = scanner.nextLine();
 
@@ -97,14 +100,11 @@ public class CarController {
                     .year(year)
                     .build();
 
-            if (carService.editCar(updatedCar)) {
-                auditLogger.logAction("Обновлен автомобиль: " + car);
-                out.println("\nАвтомобиль обновлен!");
-            } else {
-                out.println("\nАвтомобиль не был обновлен!");
-            }
-        } else {
-            out.println("Автомобиль не найден!");
+            carService.editCar(updatedCar);
+            auditLogger.logAction("Обновлен автомобиль: " + car);
+            out.println("\nАвтомобиль обновлен!");
+        } catch (NullPointerException e) {
+            out.println("\nАвтомобиль не найден!");
         }
     }
 
@@ -118,15 +118,16 @@ public class CarController {
         out.print("Введите модель автомобиля для удаления: ");
         String model = scanner.nextLine();
 
-        var car = carService.getCarByModelAndBrand(brand, model);
-        if (car != null) {
-                carService.removeCar(car);
-                auditLogger.logAction("Удален автомобиль: " + car);
+        try {
+            var car = carService.getCarByModelAndBrand(brand, model);
 
-                out.println("\nАвтомобиль удален");
-                return;
+            carService.removeCar(car);
+            auditLogger.logAction("Удален автомобиль: " + car);
+            out.println("\nАвтомобиль удален");
+
+        } catch (NullPointerException e) {
+            out.println("\nАвтомобиль не найден!");
         }
-        out.println("\nАвтомобиль не найден!");
     }
 
     /**
@@ -145,13 +146,10 @@ public class CarController {
         out.print("Введите модель автомобиля для поиска: ");
         String model = scanner.nextLine();
 
-        boolean found = false;
-        var car = carService.getCarByModelAndBrand(brand, model);
-        if (car != null) {
-                out.println(car);
-                found = true;
-        }
-        if (!found) {
+        try {
+            var car = carService.getCarByModelAndBrand(brand, model);
+            out.println(car);
+        } catch (NullPointerException e) {
             out.println("\nАвтомобиль не найден!");
         }
     }

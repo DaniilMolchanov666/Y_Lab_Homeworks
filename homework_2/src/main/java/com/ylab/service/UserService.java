@@ -46,4 +46,15 @@ public class UserService {
         return new ArrayList<>(userRepository.getAll());
     }
 
+     public void editUser(User user) {
+        userRepository.edit(user);
+     }
+
+     public User getUserById(Integer id) {
+        return userRepository.findUserById(id);
+     }
+
+     public void remove(User user) {
+        userRepository.remove(user);
+     }
 }

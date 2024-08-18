@@ -1,7 +1,9 @@
 package com.ylab.service;
 
 import com.ylab.entity.Car;
+import com.ylab.exception.ValidationCarDataException;
 import com.ylab.repository.CarRepository;
+import com.ylab.utils.AuditLogger;
 
 import java.time.Year;
 import java.util.ArrayList;
@@ -15,7 +17,11 @@ import static java.lang.System.out;
  */
 public class CarService {
 
-    private final CarRepository carRepository = new CarRepository();
+    private final CarRepository carRepository;
+
+    public CarService(CarRepository carRepository) {
+        this.carRepository = carRepository;
+    }
 
     /**
      * Метод для проверки валидности цены и года выпуска автомобиля
@@ -25,7 +31,7 @@ public class CarService {
      * @param car - проверяемый автомобиль
      * @return результат проверки на валидность
      */
-    public boolean isValidCarValues(Car car) {
+    public boolean isValidCarValues(Car car) throws ValidationCarDataException {
 
         var price = car.getPrice().split("");
         var year = car.getYear().split("");
@@ -42,7 +48,10 @@ public class CarService {
                 && ((Integer.parseInt(car.getYear()) >= minYear
                 && Integer.parseInt(car.getYear()) <= currentYear));
 
-        return isValidYear && isDigitPrice;
+        if (isValidYear && isDigitPrice) return true;
+        else {
+            throw new ValidationCarDataException();
+        }
     }
 
     /**
@@ -50,8 +59,9 @@ public class CarService {
      *
      * @param car Автомобиль для добавления.
      */
-    public boolean addCar(Car car) {
-        return carRepository.add(car);
+    public boolean addCar(Car car) throws NullPointerException {
+            return carRepository.add(car);
+
     }
 
     /**
@@ -68,11 +78,11 @@ public class CarService {
      *
      * @return true - автомобиль был обновлен, false - произошла ошибка
      */
-    public boolean editCar(Car car) {
+    public boolean editCar(Car car) throws NullPointerException {
         return carRepository.edit(car);
     }
 
-    public Car getCarByModelAndBrand(String brand, String model) {
+    public Car getCarByModelAndBrand(String brand, String model) throws NullPointerException {
         return carRepository.getCarByModelAndBrand(brand, model);
     }
 
@@ -81,7 +91,7 @@ public class CarService {
      *
      * @param car Автомобиль для удаления.
      */
-    public void removeCar(Car car) {
+    public void removeCar(Car car) throws NullPointerException {
         carRepository.remove(car);
     }
 

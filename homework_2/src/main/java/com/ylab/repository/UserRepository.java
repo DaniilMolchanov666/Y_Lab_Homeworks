@@ -1,5 +1,6 @@
 package com.ylab.repository;
 
+import com.ylab.entity.Order;
 import com.ylab.entity.Role;
 import com.ylab.entity.User;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,7 +42,7 @@ public class UserRepository extends CarShopRepository<User> {
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 var user = new User(resultSet.getInt("id"),
                         resultSet.getString("username"),
                         resultSet.getString("password"),
@@ -84,5 +86,23 @@ public class UserRepository extends CarShopRepository<User> {
             System.out.println(e.getMessage());
         }
         return false;
+    }
+
+    public User findUserById(Integer id) {
+        String sql = "SELECT * FROM car_shop_schema.users WHERE id = " + id;
+
+        User user = new User();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                user.setUsername(resultSet.getString("username"));
+                user.setPassword(resultSet.getString("password"));
+                user.setRole(Role.valueOf(resultSet.getString("role")));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return user;
     }
 }

@@ -19,9 +19,6 @@ public class AuthenticationServiceTest {
     @Mock
     private UserService userService;
 
-    @InjectMocks
-    private AuthenticationService authenticationService;
-
     @Test
     public void testAuthenticateUser() {
 

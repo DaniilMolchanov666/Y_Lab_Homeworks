@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -134,5 +135,41 @@ public class OrderRepository extends CarShopRepository<Order> {
             System.out.println(e.getMessage());
         }
         return false;
+    }
+
+    public List<Order> findOrdersByUserId(Integer id) {
+        String sql = "SELECT * FROM car_shop_schema.orders WHERE user_id = " + id;
+        List<Order> listOfOrders = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                listOfOrders.add(new Order(findUser(resultSet.getInt("user_id")),
+                        findCar(resultSet.getInt("car_id")),
+                        resultSet.getString("status")));
+            }
+            return listOfOrders;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return Collections.emptyList();
+    }
+
+    public List<Order> findOrdersByCar(Integer id) {
+        String sql = "SELECT * FROM car_shop_schema.orders WHERE user_id = " + id;
+        List<Order> listOfOrders = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                listOfOrders.add(new Order(findUser(resultSet.getInt("user_id")),
+                        findCar(resultSet.getInt("car_id")),
+                        resultSet.getString("status")));
+            }
+            return listOfOrders;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return Collections.emptyList();
     }
 }

@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Testcontainers
-@ExtendWith(MockitoExtension.class)
 public class CarRepositoryTest {
 
     private static final CarRepository carRepository = new CarRepository();
@@ -46,14 +45,6 @@ public class CarRepositoryTest {
         );
 
         carRepository.setNewConnection(connection);
-        var car = Car.builder()
-                .model("MAZDA 3")
-                .brand("MAZDA")
-                .condition("SALE")
-                .price("18000000")
-                .year("2018")
-                .build();
-        carRepository.add(car);
     }
 
     @Test

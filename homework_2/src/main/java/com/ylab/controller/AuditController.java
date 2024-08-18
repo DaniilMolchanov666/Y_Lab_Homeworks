@@ -32,7 +32,7 @@ public class AuditController {
      * а также записи всех логов в файл 'logs' в папке resources
      */
     public void viewAuditLog(User currentUser) {
-        if (!authorizationService.hasSuitableRole(currentUser, Role.ADMIN)) {
+        if (!authorizationService.isManagerOrAdmin(currentUser)) {
             out.println("У вас нет прав для просмотра журнала действий!");
             return;
         }
