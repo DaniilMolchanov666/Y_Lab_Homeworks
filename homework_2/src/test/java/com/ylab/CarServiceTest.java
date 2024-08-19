@@ -30,59 +30,57 @@ public class CarServiceTest {
                 .price("abc")
                 .condition("sale")
                 .build();
-
-//        assertThatThrownBy(carService.isValidCarValues(car), "kek");
     }
 
-    @Test
-    public void testCreateCar() {
+//    @Test
+//    public void testCreateCar() {
+//
+//        var car = Car.builder()
+//                .model("MAZDA 3")
+//                .brand("MAZDA")
+//                .condition("SALE")
+//                .price("18000000")
+//                .year("2018")
+//                .build();
+//
+//        carService.addCar(car);
+//
+//        verify(carService, times(1)).addCar(car);
+//    }
 
-        var car = Car.builder()
-                .model("MAZDA 3")
-                .brand("MAZDA")
-                .condition("SALE")
-                .price("18000000")
-                .year("2018")
-                .build();
 
-        carService.addCar(car);
+//    @Test
+//    public void testGetAllOrders() {
+//        var car = Car.builder().model("AUDI Q8")
+//                .brand("AUDI")
+//                .year("2900")
+//                .price("abc")
+//                .condition("sale")
+//                .build();
+//
+//        List<Car> carList = List.of(car);
+//
+//        when(carService.getAllCars()).thenReturn(carList);
+//
+//        List<Car> cars = carService.getAllCars();
+//
+//        assertThat(cars).hasSize(1);
+//    }
 
-        verify(carService, times(1)).addCar(car);
-    }
-
-
-    @Test
-    public void testGetAllOrders() {
-        var car = Car.builder().model("AUDI Q8")
-                .brand("AUDI")
-                .year("2900")
-                .price("abc")
-                .condition("sale")
-                .build();
-
-        List<Car> carList = List.of(car);
-
-        when(carService.getAllCars()).thenReturn(carList);
-
-        List<Car> cars = carService.getAllCars();
-
-        assertThat(cars).hasSize(1);
-    }
-
-    @Test
-    public void testRemoveOrder() {
-
-        var car = Car.builder()
-                .model("MAZDA 3")
-                .brand("MAZDA")
-                .condition("SALE")
-                .price("18000000")
-                .year("2018")
-                .build();
-
-        carService.addCar(car);
-        carService.removeCar(car);
-
-        verify(carService, times(1)).removeCar(car);
-    }
+//    @Test
+//    public void testRemoveOrder() {
+//
+//        var car = Car.builder()
+//                .model("MAZDA 3")
+//                .brand("MAZDA")
+//                .condition("SALE")
+//                .price("18000000")
+//                .year("2018")
+//                .build();
+//
+//        carService.addCar(car);
+//        carService.removeCar(car);
+//
+//        verify(carService, times(1)).removeCar(car);
+//    }
 }

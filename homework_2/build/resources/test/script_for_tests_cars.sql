@@ -11,4 +11,5 @@ CREATE TABLE IF NOT EXISTS car_shop_schema.cars (
 
 INSERT INTO car_shop_schema.cars(brand, model, year, price, condition)  VALUES
 ('AUDI', 'AUDI Q8', '2010', '1234567', 'GOOD'),
-('BMV', 'X6', '2018', '5234568', 'BAD');
+('BMV', 'X6', '2018', '5234568', 'BAD'),
+('MAZDA 3', 'MAZDA', '2018', '18000000', 'SALE');

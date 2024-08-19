@@ -43,11 +43,11 @@ set JAVA_EXE=java.exe
 %JAVA_EXE% -version >NUL 2>&1
 if %ERRORLEVEL% equ 0 goto execute
 
-echo. 1>&2
-echo ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH. 1>&2
-echo. 1>&2
-echo Please set the JAVA_HOME variable in your environment to match the 1>&2
-echo location of your Java installation. 1>&2
+echo.
+echo ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
+echo.
+echo Please set the JAVA_HOME variable in your environment to match the
+echo location of your Java installation.
 
 goto fail
 
@@ -57,18 +57,18 @@ set JAVA_EXE=%JAVA_HOME%/bin/java.exe
 
 if exist "%JAVA_EXE%" goto execute
 
-echo. 1>&2
-echo ERROR: JAVA_HOME is set to an invalid directory: %JAVA_HOME% 1>&2
-echo. 1>&2
-echo Please set the JAVA_HOME variable in your environment to match the 1>&2
-echo location of your Java installation. 1>&2
+echo.
+echo ERROR: JAVA_HOME is set to an invalid directory: %JAVA_HOME%
+echo.
+echo Please set the JAVA_HOME variable in your environment to match the
+echo location of your Java installation.
 
 goto fail
 
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\homework_2-1.0-SNAPSHOT.jar;%APP_HOME%\lib\postgresql-42.7.2.jar;%APP_HOME%\lib\liquibase-commercial-4.29.1.jar;%APP_HOME%\lib\liquibase-core-4.29.1.jar;%APP_HOME%\lib\checker-qual-3.42.0.jar;%APP_HOME%\lib\opencsv-5.9.jar;%APP_HOME%\lib\snakeyaml-2.2.jar;%APP_HOME%\lib\jaxb-api-2.3.1.jar;%APP_HOME%\lib\commons-io-2.16.1.jar;%APP_HOME%\lib\commons-collections4-4.4.jar;%APP_HOME%\lib\commons-text-1.12.0.jar;%APP_HOME%\lib\commons-lang3-3.14.0.jar
+set CLASSPATH=%APP_HOME%\lib\homework_2-1.0-SNAPSHOT.jar;%APP_HOME%\lib\tomcat-catalina-11.0.0-M24.jar;%APP_HOME%\lib\tomcat-embed-jasper-9.0.56.jar;%APP_HOME%\lib\tomcat-embed-core-11.0.0-M24.jar;%APP_HOME%\lib\tomcat-jsp-api-11.0.0-M24.jar;%APP_HOME%\lib\tomcat-util-scan-11.0.0-M24.jar;%APP_HOME%\lib\tomcat-api-11.0.0-M24.jar;%APP_HOME%\lib\tomcat-coyote-11.0.0-M24.jar;%APP_HOME%\lib\tomcat-servlet-api-11.0.0-M24.jar;%APP_HOME%\lib\lombok-mapstruct-binding-0.2.0.jar;%APP_HOME%\lib\mapstruct-1.6.0.jar;%APP_HOME%\lib\jjwt-api-0.12.6.jar;%APP_HOME%\lib\tomcat-embed-logging-juli-9.0.0.M6.jar;%APP_HOME%\lib\postgresql-42.7.2.jar;%APP_HOME%\lib\liquibase-commercial-4.29.1.jar;%APP_HOME%\lib\liquibase-core-4.29.1.jar;%APP_HOME%\lib\tomcat-util-11.0.0-M24.jar;%APP_HOME%\lib\tomcat-juli-11.0.0-M24.jar;%APP_HOME%\lib\tomcat-annotations-api-11.0.0-M24.jar;%APP_HOME%\lib\tomcat-jni-11.0.0-M24.jar;%APP_HOME%\lib\tomcat-jaspic-api-11.0.0-M24.jar;%APP_HOME%\lib\tomcat-embed-el-9.0.56.jar;%APP_HOME%\lib\ecj-3.18.0.jar;%APP_HOME%\lib\checker-qual-3.42.0.jar;%APP_HOME%\lib\opencsv-5.9.jar;%APP_HOME%\lib\snakeyaml-2.2.jar;%APP_HOME%\lib\jaxb-api-2.3.1.jar;%APP_HOME%\lib\commons-io-2.16.1.jar;%APP_HOME%\lib\commons-collections4-4.4.jar;%APP_HOME%\lib\commons-text-1.12.0.jar;%APP_HOME%\lib\commons-lang3-3.14.0.jar;%APP_HOME%\lib\tomcat-el-api-11.0.0-M24.jar
 
 
 @rem Execute homework_2

@@ -20,25 +20,25 @@ public class OrderServiceTest {
 
     @Mock
     private OrderService orderService;
-//
-//    @Test
-//    public void testCreateOrder() {
-//
-//        var user2 = new User("Mark", "5678", Role.MANAGER);
-//        var car = Car.builder()
-//                .model("MAZDA 3")
-//                .brand("MAZDA")
-//                .condition("SALE")
-//                .price("18000000")
-//                .year("2018")
-//                .build();
-//        var order = new Order(user2, car, "sale");
-//        orderService.addOrder(order);
-//
-//        verify(orderService, times(1)).addOrder(order);
-//    }
-//
-//
+
+    @Test
+    public void testCreateOrder() {
+
+        var user2 = new User("Mark", "5678", Role.MANAGER);
+        var car = Car.builder()
+                .model("MAZDA 3")
+                .brand("MAZDA")
+                .condition("SALE")
+                .price("18000000")
+                .year("2018")
+                .build();
+        var order = new Order(user2, car, "sale");
+        orderService.addOrder(order);
+
+        verify(orderService, times(1)).addOrder(order);
+    }
+
+
 //    @Test
 //    public void testGetAllOrders() {
 //

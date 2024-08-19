@@ -1,6 +1,7 @@
 package com.ylab.repository;
 
 import com.ylab.entity.Car;
+import com.ylab.out.LiquibaseConfig;
 import lombok.Setter;
 
 import java.sql.PreparedStatement;
@@ -15,6 +16,10 @@ import java.util.List;
  */
 @Setter
 public class CarRepository extends CarShopRepository<Car> {
+
+    static {
+        LiquibaseConfig.getConnectionWithLiquiBase();
+    }
 
     @Override
     public boolean add(Car car) {

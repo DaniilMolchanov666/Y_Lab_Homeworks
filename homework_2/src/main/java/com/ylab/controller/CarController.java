@@ -1,13 +1,17 @@
 package com.ylab.controller;
 
 import com.ylab.entity.Car;
-import com.ylab.entity.User;
-import com.ylab.exception.ValidationCarDataException;
-import com.ylab.service.AccessService;
+import com.ylab.entity.dto.CarDto;
+import com.ylab.mapper.CarMapper;
 import com.ylab.service.CarService;
 import com.ylab.utils.AuditLogger;
+import org.apache.commons.lang3.ObjectUtils;
+import org.mapstruct.factory.Mappers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import static java.lang.System.out;
 
@@ -22,6 +26,8 @@ public class CarController {
 
     private final AuditLogger auditLogger = AuditLogger.getInstance();
 
+    private CarMapper carMapper;
+
     /**
      * Конструктор, где происходит внедрение нужных зависимостей
      *
@@ -34,107 +40,40 @@ public class CarController {
     /**
      * Обработка запросов на добавление нового автомобиля в базу данных
      */
-    public void addCar() {
-        out.print("Введите марку: ");
-        String brand = scanner.nextLine();
+    public void addCar(CarDto carDto) throws Exception {
 
-        out.print("Введите модель: ");
-        String model = scanner.nextLine();
+        var car = carMapper.toCar(carDto);
 
-        out.print("Введите год выпуска: ");
-        String year = scanner.nextLine();
+        carService.isValidCarValues(car);
+        carService.addCar(car);
 
-        out.print("Введите цену: ");
-        String price = scanner.nextLine();
-
-        out.print("Введите состояние: ");
-        String condition = scanner.nextLine();
-
-        Car car = Car.builder()
-                .model(model)
-                .brand(brand)
-                .condition(condition)
-                .price(price)
-                .year(year)
-                .build();
-
-        try {
-            carService.isValidCarValues(car);
-            carService.addCar(car);
-            auditLogger.logAction("Добавлен новый автомобиль: " + car);
-            out.println("\nАвтомобиль добавлен!");
-        } catch (ValidationCarDataException e1) {
-            out.println(e1.getMessage());
-        } catch (Exception e) {
-            out.println("\nАвтомобиль не был добавлен!");
-        }
     }
 
     /**
      * Обработка запросов на редактирование автомобиля
      */
-    public void editCar() {
-        out.print("Введите марку автомобиля для редактирования: ");
-        String brand = scanner.nextLine();
+    public void editCar(CarDto carDto) throws Exception {
+        var findCar = carService.getCarByModelAndBrand(carDto.getBrand(), carDto.getModel());
+        carMapper.update(carDto, findCar);
+        carService.editCar(findCar);
 
-        out.print("Введите модель автомобиля для редактирования: ");
-        String model = scanner.nextLine();
-
-        try {
-            var car = carService.getCarByModelAndBrand(brand, model);
-            out.print("Введите новый год выпуска: ");
-            String year = scanner.nextLine();
-
-            out.print("Введите новую цену: ");
-            String price = scanner.nextLine();
-
-            out.print("Введите новое состояние: ");
-            String condition = scanner.nextLine();
-
-            Car updatedCar = Car.builder()
-                    .id(car.getId())
-                    .model(model)
-                    .brand(brand)
-                    .condition(condition)
-                    .price(price)
-                    .year(year)
-                    .build();
-
-            carService.editCar(updatedCar);
-            auditLogger.logAction("Обновлен автомобиль: " + car);
-            out.println("\nАвтомобиль обновлен!");
-        } catch (NullPointerException e) {
-            out.println("\nАвтомобиль не найден!");
-        }
     }
 
     /**
      * Обработка запросов на удаление автомобиля
      */
-    public void removeCar() {
-        out.print("Введите марку автомобиля для удаления: ");
-        String brand = scanner.nextLine();
-
-        out.print("Введите модель автомобиля для удаления: ");
-        String model = scanner.nextLine();
-
-        try {
-            var car = carService.getCarByModelAndBrand(brand, model);
-
-            carService.removeCar(car);
-            auditLogger.logAction("Удален автомобиль: " + car);
-            out.println("\nАвтомобиль удален");
-
-        } catch (NullPointerException e) {
-            out.println("\nАвтомобиль не найден!");
-        }
+    public void removeCar(String brand, String model) throws NullPointerException {
+        var car = carService.getCarByModelAndBrand(brand, model);
+        carService.removeCar(car);
     }
 
     /**
      * Обработка запросов на просмотр всех автомобилей
      */
-    public void viewCars() {
-        carService.viewCars();
+    public List<Car> viewCars() {
+//        List<CarDto> carDtoList = new ArrayList<>();
+//        carService.viewCars().forEach(i -> carDtoList.add(carMapper.toCarDto(i)));
+        return carService.viewCars();
     }
 
     /**

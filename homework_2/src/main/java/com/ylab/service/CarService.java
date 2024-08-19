@@ -1,6 +1,7 @@
 package com.ylab.service;
 
 import com.ylab.entity.Car;
+import com.ylab.entity.dto.CarDto;
 import com.ylab.exception.ValidationCarDataException;
 import com.ylab.repository.CarRepository;
 import com.ylab.utils.AuditLogger;
@@ -8,6 +9,7 @@ import com.ylab.utils.AuditLogger;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static java.lang.System.out;
@@ -60,7 +62,7 @@ public class CarService {
      * @param car Автомобиль для добавления.
      */
     public boolean addCar(Car car) throws NullPointerException {
-            return carRepository.add(car);
+        return carRepository.add(car);
 
     }
 
@@ -95,11 +97,10 @@ public class CarService {
         carRepository.remove(car);
     }
 
-    public void viewCars() {
+    public List<Car> viewCars() {
         if (carRepository.getAll().isEmpty()) {
-            out.println("Список автомобилей пуст");
-        } else {
-            carRepository.getAll().forEach(out::println);
+            return Collections.emptyList();
         }
+        return carRepository.getAll();
     }
 }
