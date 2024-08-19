@@ -1,0 +1,13 @@
+#!/bin/bash
+export JRE_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+cd ~/'Рабочий стол'/apache-tomcat-10.1.28/bin
+./shutdown.sh
+cd ~/'Рабочий стол'/Y_Lab_Homeworks/homework_2
+gradle build
+gradle war
+rm -r ~/'Рабочий стол'/apache-tomcat-10.1.28/webapps/carshop.war
+rm -r ~/'Рабочий стол'/apache-tomcat-10.1.28/webapps/carshop
+cp build/libs/carshop.war ~/'Рабочий стол'/apache-tomcat-10.1.28/webapps/
+cd ~/'Рабочий стол'/apache-tomcat-10.1.28/bin
+./startup.sh
+
