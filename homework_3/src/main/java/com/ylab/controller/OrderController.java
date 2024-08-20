@@ -65,13 +65,12 @@ public class OrderController {
     /**
      * Обработка запроса изменения статуса заказа
      */
-    public void changeOrderStatus() {
+    public void changeOrderStatus(String status, String brand, String model) {
 
         List<Order> orders = orderService.getAllOrders();
         for (Order order : orders) {
             if (order.getCar().getBrand().equals(brand) && order.getCar().getModel().equals(model)) {
                 out.print("Введите новый статус заказа: ");
-                String status = scanner.nextLine();
 
                 order.setStatus(status);
 

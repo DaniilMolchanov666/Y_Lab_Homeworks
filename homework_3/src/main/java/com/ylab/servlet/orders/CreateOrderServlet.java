@@ -2,17 +2,12 @@ package com.ylab.servlet.orders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.ylab.annotation.Logging;
-import com.ylab.controller.CarController;
 import com.ylab.controller.OrderController;
-import com.ylab.entity.OrderStatus;
 import com.ylab.entity.Role;
 import com.ylab.entity.User;
 import com.ylab.entity.dto.CarDto;
-import com.ylab.entity.dto.UserForShowDto;
 import com.ylab.exception.NotAccessOperationException;
 import com.ylab.exception.NotAuthException;
-import com.ylab.exception.ValidationCarDataException;
 import com.ylab.repository.CarRepository;
 import com.ylab.service.AccessService;
 import com.ylab.service.AuthenticationService;
@@ -52,7 +47,6 @@ public class CreateOrderServlet extends HttpServlet implements CarShopServlet {
         this.orderController = new OrderController(orderService, carService);
     }
 
-    @Logging
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var car = objectMapper.readValue(getJson(req.getReader()), CarDto.class);
@@ -69,13 +63,13 @@ public class CreateOrderServlet extends HttpServlet implements CarShopServlet {
                     Role.valueOf(httpSession.getAttribute("role").toString())
             );
             orderController.createOrder(currentUser, car.getBrand(), car.getModel());
-            createResponse(HttpServletResponse.SC_CREATED, "\nАвтомобиль " + car + " добавлен!", resp);
+            createResponse(HttpServletResponse.SC_CREATED, "Заказ " + car + " создан!", resp);
         } catch (NotAccessOperationException e2) {
             createResponse(HttpServletResponse.SC_CONFLICT, e2.getMessage(), resp);
         } catch (NotAuthException e) {
             createResponse(HttpServletResponse.SC_NOT_FOUND, e.getMessage(), resp);
         } catch (Exception e) {
-            createResponse(HttpServletResponse.SC_NOT_FOUND, "Автомобиль не был добавлен!", resp);
+            createResponse(HttpServletResponse.SC_NOT_FOUND, "Заказ не был добавлен!", resp);
         }
     }
 

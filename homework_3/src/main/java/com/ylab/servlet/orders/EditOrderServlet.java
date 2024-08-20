@@ -2,12 +2,9 @@ package com.ylab.servlet.orders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.ylab.annotation.Logging;
-import com.ylab.controller.CarController;
 import com.ylab.controller.OrderController;
 import com.ylab.entity.dto.CarDto;
 import com.ylab.exception.NotAccessOperationException;
-import com.ylab.exception.ValidationCarDataException;
 import com.ylab.repository.CarRepository;
 import com.ylab.service.AccessService;
 import com.ylab.service.AuthenticationService;
@@ -48,7 +45,6 @@ public class EditOrderServlet extends HttpServlet implements CarShopServlet {
         this.orderController = new OrderController(orderService, carService);
     }
 
-    @Logging
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var car = objectMapper.readValue(getJson(req.getReader()), CarDto.class);

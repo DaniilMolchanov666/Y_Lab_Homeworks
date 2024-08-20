@@ -1,0 +1,31 @@
+Wed Aug 21 02:33:08 MSK 2024
+Calling method: void com.ylab.servlet.RegistrationServlet.init(ServletConfig)
+Duration: 1 msWed Aug 21 02:33:08 MSK 2024Request: POST/carshop/registerWed Aug 21 02:33:08 MSK 2024
+Calling method: void com.ylab.servlet.RegistrationServlet.doPost(HttpServletRequest, HttpServletResponse)
+Duration: 84 msWed Aug 21 02:33:08 MSK 2024Response: 201nullWed Aug 21 02:33:22 MSK 2024Request: POST/carshop/registerWed Aug 21 02:33:22 MSK 2024
+Calling method: void com.ylab.servlet.RegistrationServlet.doPost(HttpServletRequest, HttpServletResponse)
+Duration: 3 msWed Aug 21 02:33:22 MSK 2024Response: 200nullWed Aug 21 02:34:04 MSK 2024
+Calling method: void com.ylab.servlet.RegistrationServlet.init(ServletConfig)
+Duration: 2 msWed Aug 21 02:34:04 MSK 2024Request: POST/carshop/registerWed Aug 21 02:34:04 MSK 2024
+Calling method: void com.ylab.servlet.RegistrationServlet.doPost(HttpServletRequest, HttpServletResponse)
+Duration: 167 msWed Aug 21 02:34:04 MSK 2024Response: 201nullWed Aug 21 02:34:09 MSK 2024Request: POST/carshop/registerWed Aug 21 02:34:09 MSK 2024
+Calling method: void com.ylab.servlet.RegistrationServlet.doPost(HttpServletRequest, HttpServletResponse)
+Duration: 1 msWed Aug 21 02:34:09 MSK 2024Response: 200nullWed Aug 21 02:41:45 MSK 2024Time: 84msWed Aug 21 02:41:45 MSK 2024
+Request: /carshop/registerWed Aug 21 02:41:45 MSK 2024
+Response: 201Wed Aug 21 02:41:47 MSK 2024Time: 2msWed Aug 21 02:41:47 MSK 2024
+Request: /carshop/registerWed Aug 21 02:41:47 MSK 2024
+Response: 406Wed Aug 21 02:43:25 MSK 2024Duration: 80 ms
+Wed Aug 21 02:43:25 MSK 2024
+Request: /carshop/register
+Wed Aug 21 02:43:25 MSK 2024
+Response: 201
+Wed Aug 21 02:43:33 MSK 2024Duration: 2 ms
+Wed Aug 21 02:43:33 MSK 2024
+Request: /carshop/register
+Wed Aug 21 02:43:33 MSK 2024
+Response: 406
+Wed Aug 21 02:43:52 MSK 2024Duration: 3 ms
+Wed Aug 21 02:43:52 MSK 2024
+Request: /carshop/register
+Wed Aug 21 02:43:52 MSK 2024
+Response: 406

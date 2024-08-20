@@ -2,7 +2,6 @@ package com.ylab.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.ylab.annotation.Logging;
 import com.ylab.entity.dto.UserUpdateDto;
 import com.ylab.exception.NoAuthenticatedException;
 import com.ylab.out.LiquibaseConfig;
@@ -36,7 +35,6 @@ public class AuthorizationServlet extends HttpServlet implements CarShopServlet 
         LiquibaseConfig.getConnectionWithLiquiBase();
     }
 
-    @Logging
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var user = objectMapper.readValue(getJson(req.getReader()), UserUpdateDto.class);

@@ -2,7 +2,6 @@ package com.ylab.servlet.cars.staff;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.ylab.annotation.Logging;
 import com.ylab.controller.CarController;
 import com.ylab.entity.dto.CarDto;
 import com.ylab.exception.NotAccessOperationException;
@@ -44,7 +43,6 @@ public class EditCarServlet extends HttpServlet implements CarShopServlet {
         this.carController = new CarController(new CarService(new CarRepository()));
     }
 
-    @Logging
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var car = objectMapper.readValue(getJson(req.getReader()), CarDto.class);
@@ -52,8 +50,6 @@ public class EditCarServlet extends HttpServlet implements CarShopServlet {
         try {
             accessService.isManagerOrAdmin(req.getSession().getAttribute("role").toString());
             carController.editCar(car);
-//            auditLogger.logAction("Обновлен автомобиль: " + car);
-            out.println("\nАвтомобиль обновлен!");
             resp.setStatus(HttpServletResponse.SC_CREATED);
             resp.getWriter().println("\nАвтомобиль " + car + " Обновлен!");
         } catch (ValidationCarDataException e1) {

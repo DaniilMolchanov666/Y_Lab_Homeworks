@@ -2,7 +2,6 @@ package com.ylab.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.ylab.annotation.Logging;
 import com.ylab.entity.User;
 import com.ylab.exception.AlreadyRegistrationUserException;
 import com.ylab.out.LiquibaseConfig;
@@ -35,7 +34,7 @@ public class RegistrationServlet extends HttpServlet implements CarShopServlet {
         this.authenticationService = new AuthenticationService(userService);
     }
 
-    @Logging
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
        var user = objectMapper.readValue(getJson(req.getReader()), User.class);
@@ -47,11 +46,11 @@ public class RegistrationServlet extends HttpServlet implements CarShopServlet {
            resp.getWriter().println("Регистрация успешно пройдена!");
 
        } catch (AlreadyRegistrationUserException e) {
+           resp.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
            resp.getWriter().println(e.getMessage());
        }
     }
 
-    @Logging
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/plain");

@@ -2,7 +2,6 @@ package com.ylab.servlet.cars.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.ylab.annotation.Logging;
 import com.ylab.controller.CarController;
 import com.ylab.repository.CarRepository;
 import com.ylab.service.CarService;
@@ -22,7 +21,6 @@ public class ShowAllCarsServlet extends HttpServlet {
 
     private CarController carController;
 
-    @Logging
     @Override
     public void init(ServletConfig config) throws ServletException {
         this.objectMapper = new ObjectMapper();
