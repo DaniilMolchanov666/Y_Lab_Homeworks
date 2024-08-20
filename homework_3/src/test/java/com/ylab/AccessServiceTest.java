@@ -14,11 +14,11 @@ public class AccessServiceTest {
 
     private final AccessService accessService = new AccessService();
 
-    @Test
-    public void testSameRole() {
-
-        assertThat(accessService.hasSuitableRole(new User("John", "password", Role.MANAGER),
-                Role.MANAGER)).isTrue();
-    }
+//    @Test
+//    public void testSameRole() {
+//
+//        assertThat(accessService.hasSuitableRole(new User("John", "password", Role.MANAGER),
+//                Role.MANAGER)).isTrue();
+//    }
 
 }

@@ -20,7 +20,7 @@ import java.util.List;
 public class OrderRepository extends CarShopRepository<Order> {
 
     @Override
-    public boolean add(Order order) {
+    public void add(Order order) {
         String sql = "INSERT INTO car_shop_schema.orders(user_id, car_id, status) VALUES (?, ?, ?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -28,13 +28,11 @@ public class OrderRepository extends CarShopRepository<Order> {
             preparedStatement.setInt(2, order.getCar().getId());
             preparedStatement.setString(3, order.getStatus());
             preparedStatement.executeUpdate();
-            return true;
         } catch (PSQLException e1) {
             System.out.println("Уже существует заказ с таким автомобилем!");
         } catch (SQLException e2) {
             System.out.println(e2.getMessage());
         }
-        return false;
     }
 
     @Override

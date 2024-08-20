@@ -11,7 +11,7 @@ import lombok.ToString;
 @JsonSerialize
 @JsonDeserialize
 @ToString
-public class CarForEditDto {
+public class CarFindDto {
     private String brand;
     private String model;
 }

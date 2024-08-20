@@ -20,7 +20,7 @@ import java.util.List;
 public class UserRepository extends CarShopRepository<User> {
 
     @Override
-    public boolean add(User user) {
+    public void add(User user) {
         String sql = "INSERT INTO car_shop_schema.users(username, password, role) VALUES (?, ?, ?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -28,11 +28,9 @@ public class UserRepository extends CarShopRepository<User> {
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setString(3, user.getRole().name());
             preparedStatement.executeUpdate();
-            return true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return false;
     }
 
     @Override
@@ -43,10 +41,12 @@ public class UserRepository extends CarShopRepository<User> {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                var user = new User(resultSet.getInt("id"),
+                var user = new User(
+                        resultSet.getInt("id"),
                         resultSet.getString("username"),
                         resultSet.getString("password"),
-                        Role.valueOf(resultSet.getString("role")));
+                        Role.valueOf(resultSet.getString("role"))
+                );
                 listOfUsers.add(user);
             }
         } catch (SQLException e) {
@@ -68,16 +68,27 @@ public class UserRepository extends CarShopRepository<User> {
         }
     }
 
+    public void removeById(Integer id) {
+        String sql = "DELETE FROM car_shop_schema.users WHERE id = ?";
+        try {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public boolean edit(User user) {
-        String sql = "UPDATE car_shop_schema.users SET username = ?, password = ?, role = ? WHERE id = ?";
+        String sql = "UPDATE car_shop_schema.users SET username = ?, password = ? WHERE id = ?";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setString(3, user.getRole().name());
-            preparedStatement.setInt(4, user.getId());
+            preparedStatement.setInt(3, user.getId());
 
             preparedStatement.executeUpdate();
             return true;
@@ -88,21 +99,53 @@ public class UserRepository extends CarShopRepository<User> {
         return false;
     }
 
+    public void editRole(User user) {
+        String sql = "UPDATE car_shop_schema.users SET role = ? WHERE username = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, user.getRole().name());
+            preparedStatement.setString(2, user.getUsername());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public User findUserById(Integer id) {
         String sql = "SELECT * FROM car_shop_schema.users WHERE id = " + id;
 
-        User user = new User();
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                user.setUsername(resultSet.getString("username"));
-                user.setPassword(resultSet.getString("password"));
-                user.setRole(Role.valueOf(resultSet.getString("role")));
+                return new User(resultSet.getInt("id"),
+                        resultSet.getString("username"),
+                        resultSet.getString("password"),
+                        Role.valueOf(resultSet.getString("role")));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return user;
+        return null;
+    }
+
+    public User findUserByUserName(String username) {
+        String sql = "SELECT * FROM car_shop_schema.users WHERE username = '" + username + "'";
+
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                return new User(resultSet.getInt("id"),
+                        resultSet.getString("username"),
+                        resultSet.getString("password"),
+                        Role.valueOf(resultSet.getString("role")));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }

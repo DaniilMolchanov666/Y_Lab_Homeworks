@@ -1,4 +1,4 @@
 package com.ylab.servlet.orders;
 
-public class RemoveServlet {
+public class RemoveOrderServlet {
 }

@@ -12,11 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonSerialize
 @JsonDeserialize
-public class OrderDto {
+public class UserUpdateDto {
     @JsonProperty
-    private UserForShowDto customer;
+    private String username;
     @JsonProperty
-    private CarDto car;
-    @JsonProperty
-    private String status;
+    private String password;
 }

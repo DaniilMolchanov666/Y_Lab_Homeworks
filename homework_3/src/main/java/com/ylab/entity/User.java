@@ -10,7 +10,6 @@ import lombok.ToString;
  */
 @Data
 @AllArgsConstructor
-@ToString(exclude = {"id", "password"})
 @NoArgsConstructor
 public class User implements CarShopEntity{
 

@@ -10,4 +10,3 @@ rm -r ~/'Рабочий стол'/apache-tomcat-10.1.28/webapps/carshop
 cp build/libs/carshop.war ~/'Рабочий стол'/apache-tomcat-10.1.28/webapps/
 cd ~/'Рабочий стол'/apache-tomcat-10.1.28/bin
 ./startup.sh
-

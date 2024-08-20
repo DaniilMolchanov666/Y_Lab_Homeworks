@@ -1,11 +1,9 @@
-package com.ylab.servlet.cars;
+package com.ylab.servlet.cars.client;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.ylab.annotation.Logging;
 import com.ylab.controller.CarController;
-import com.ylab.entity.Car;
-import com.ylab.out.LiquibaseConfig;
 import com.ylab.repository.CarRepository;
 import com.ylab.service.CarService;
 import jakarta.servlet.ServletConfig;
@@ -16,7 +14,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet("/show_cars")
 public class ShowAllCarsServlet extends HttpServlet {
@@ -25,9 +22,9 @@ public class ShowAllCarsServlet extends HttpServlet {
 
     private CarController carController;
 
+    @Logging
     @Override
     public void init(ServletConfig config) throws ServletException {
-        LiquibaseConfig.getConnectionWithLiquiBase();
         this.objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         this.carController = new CarController(new CarService(new CarRepository()));
@@ -35,8 +32,9 @@ public class ShowAllCarsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        List<Car> car = objectMapper.readValue(carController.viewCars().toString(), new TypeReference<>() { });
-        resp.getWriter().println("Доступные для продажи автомобили: \n" + car);
+        String listOfCars = objectMapper.writeValueAsString(carController.viewCars());
+        resp.setStatus(HttpServletResponse.SC_OK);
+        resp.setContentType("text/plain");
+        resp.getWriter().println("Доступные для продажи автомобили: \n" + listOfCars);
     }
 }

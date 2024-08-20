@@ -1,8 +1,10 @@
 package com.ylab.entity.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ylab.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,11 +14,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonSerialize
 @JsonDeserialize
-public class OrderDto {
+public class UserForShowDto {
+
     @JsonProperty
-    private UserForShowDto customer;
+    private String username;
     @JsonProperty
-    private CarDto car;
-    @JsonProperty
-    private String status;
+    private Role role;
 }

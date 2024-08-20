@@ -6,6 +6,7 @@ import com.ylab.exception.ValidationCarDataException;
 import com.ylab.repository.CarRepository;
 import com.ylab.utils.AuditLogger;
 
+import java.sql.SQLException;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,9 +62,8 @@ public class CarService {
      *
      * @param car Автомобиль для добавления.
      */
-    public boolean addCar(Car car) throws NullPointerException {
-        return carRepository.add(car);
-
+    public void addCar(Car car) throws NullPointerException {
+        carRepository.add(car);
     }
 
     /**

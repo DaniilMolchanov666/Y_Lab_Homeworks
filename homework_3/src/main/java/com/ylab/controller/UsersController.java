@@ -1,14 +1,15 @@
 package com.ylab.controller;
 
-import com.ylab.entity.Role;
-import com.ylab.entity.User;
+import com.ylab.entity.dto.UserForShowDto;
+import com.ylab.entity.dto.UserUpdateDto;
+import com.ylab.mapper.UserMapper;
 import com.ylab.service.AccessService;
 import com.ylab.service.UserService;
+import org.mapstruct.factory.Mappers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import static java.lang.System.out;
 
 /**
  * Контроллер для обработки запросов, связанных с пользователями
@@ -19,9 +20,9 @@ public class UsersController {
 
     private final AccessService authorizationService;
 
-    private final User user;
-
     private final Scanner scanner = new Scanner(System.in);
+
+    private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 
     /**
      * Конструктор, где происходит внедрение нужных зависимостей
@@ -29,45 +30,37 @@ public class UsersController {
      * @param userService сервис для работы с пользователями
      * @param authorizationService сервис авторизации
      */
-    public UsersController(UserService userService, AccessService authorizationService, User user) {
+    public UsersController(UserService userService, AccessService authorizationService) {
         this.userService = userService;
         this.authorizationService = authorizationService;
-        this.user = user;
     }
 
     /**
      * Обработка запросов отображения всех пользователей из базы данных
      */
-    public void viewUsers() {
-        List<User> users = userService.getAllUsers();
-        if (users.isEmpty()) {
-            out.println("Список пользователей пуст!");
-        } else {
-            for (User user : users) {
-                out.println("Username: " + user.getUsername() + ", Role: " + user.getRole());
-            }
-        }
+    public List<UserForShowDto> viewUsers() {
+        List<UserForShowDto> users = new ArrayList<>();
+        userService.getAllUsers().forEach(i -> users.add(userMapper.toUserForShowDto(i)));
+        return users;
     }
 
-    public void getUserInfo() {
-        out.println("Username: " + user.getUsername() + ", Role: " + user.getRole());
+    public String getUserInfo(String username) {
+        return userMapper.toUserDto(userService.getUserByUsername(username)).toString();
     }
 
-    public void editUser() {
-        out.print("Введите новый логин: ");
-        String username = scanner.nextLine();
-
-        out.print("Введите новый пароль: ");
-        String password = scanner.nextLine();
-
-        out.print("Выберите новую роль (1 - ADMIN, 2 - MANAGER, 3 - CLIENT): ");
-        String role = scanner.nextLine();
-
-        userService.editUser(new User(username, password, Role.values()[Integer.parseInt(role) - 1]));
+    public void editUserById(Integer id, UserUpdateDto userDto) {
+        var foundedUser = userService.getUserById(id);
+        userMapper.updateOwnProfile(userDto, foundedUser);
+        userService.editUser(foundedUser);
     }
 
-    public void removeUser() {
-        userService.remove(user);
-        out.println("Ваш аккаунт удален!");
+    public void editRoleByUser(UserForShowDto userDto) {
+        var foundedUser = userService.getUserByUsername(userDto.getUsername());
+        userMapper.updateRole(userDto, foundedUser);
+        userService.editRoleUser(foundedUser);
+    }
+
+    public void removeUser(Integer id) throws Exception{
+        userService.removeById(id);
     }
 }

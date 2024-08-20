@@ -1,7 +1,6 @@
 package com.ylab.repository;
 
 import com.ylab.entity.Car;
-import com.ylab.out.LiquibaseConfig;
 import lombok.Setter;
 
 import java.sql.PreparedStatement;
@@ -17,12 +16,8 @@ import java.util.List;
 @Setter
 public class CarRepository extends CarShopRepository<Car> {
 
-    static {
-        LiquibaseConfig.getConnectionWithLiquiBase();
-    }
-
     @Override
-    public boolean add(Car car) {
+    public void add(Car car) {
         String sql = "INSERT INTO car_shop_schema.cars(brand, model, year, price, condition) "
                 + "VALUES (?, ?, ?, ?, ?)";
 
@@ -34,12 +29,9 @@ public class CarRepository extends CarShopRepository<Car> {
             preparedStatement.setString(4, car.getPrice());
             preparedStatement.setString(5, car.getCondition());
             preparedStatement.executeUpdate();
-
-            return true;
         } catch (SQLException e1) {
             System.out.println(e1.getMessage());
         }
-        return false;
     }
 
     @Override

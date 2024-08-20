@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Properties;
 
 public class LiquibaseConfig {
@@ -22,7 +23,7 @@ public class LiquibaseConfig {
 
         Properties properties = new Properties();
 
-        try (FileInputStream fis = new FileInputStream("./src/main/resources/properties/liquibase.properties")) {
+        try (FileInputStream fis = new FileInputStream("/home/daniilmolchanov/Рабочий стол/apache-tomcat-10.1.28/webapps/carshop/WEB-INF/classes/properties/liquibase.properties")) {
             properties.load(fis);
         } catch (IOException e) {
             System.out.println("Не найден файл liquibase.properties");
@@ -34,6 +35,7 @@ public class LiquibaseConfig {
         String changeLogFile = properties.getProperty("changeLogFile");
 
         try {
+            Class.forName("org.postgresql.Driver");
             Connection connection = DriverManager.getConnection(url, username, password);
             Database database =
                     DatabaseFactory.getInstance()
@@ -44,6 +46,9 @@ public class LiquibaseConfig {
             dbConnection = connection;
         } catch (SQLException | LiquibaseException e) {
             System.out.println("SQL Exception in migration " + e.getMessage());
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

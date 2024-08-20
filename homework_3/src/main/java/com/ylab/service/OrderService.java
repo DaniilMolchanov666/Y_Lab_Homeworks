@@ -5,6 +5,7 @@ import com.ylab.entity.Order;
 import com.ylab.repository.OrderRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static java.lang.System.out;
@@ -21,9 +22,10 @@ public class OrderService {
      *
      * @param order Заказ для добавления.
      */
-    public boolean addOrder(Order order) {
-        return orderRepository.add(order);
+    public void addOrder(Order order) {
+        orderRepository.add(order);
     }
+
 
     /**
      * Возвращает список всех заказов на покупку автомобилей.
@@ -55,13 +57,9 @@ public class OrderService {
     /**
      * Вывод всех заказов или сообщения в случае отсутствия заказов
      */
-    public void viewOrders() {
+    public List<Order> viewOrders() {
         if (orderRepository.getAll().isEmpty()) {
-            out.println("Список заказов пуст");
-        } else {
-            for (Order order : orderRepository.getAll()) {
-                out.println(order);
-            }
-        }
+            return Collections.emptyList();
+        } return orderRepository.getAll();
     }
 }

@@ -9,17 +9,64 @@
 - возможность редактирования заказов, автомобилей, информации о клиентах
 - логирование и запись логов в файл
 
-# Старт:
-```sh
-make run
-```
+# Основные запросы:
+
+# Регистрация пользователя
+`POST /carshop/register`
 
 ```sh
-docker compose up -d
-gradle run
+{
+    "username": "dan",
+    "password": "1234",
+    "role": "ADMIN"
+}
 ```
 
-# Запустить тесты:
+# Авторизация пользователя
+`POST /carshop/login`
 ```sh
-make test
+{
+    "username": "dan",
+    "password": "1234"
+}
 ```
+
+# Просмотр всех автомобилей
+`GET /carshop/show_cars`
+
+# Просмотр всех пользователей (только для администрации)
+`GET /carshop/admin/users`
+
+# Создание автомобиля (только для персонала)
+`POST /carshop/admin/create_car`
+```sh
+{
+    "brand": "LADA",
+    "model": "LADA SEDAN",
+    "price": "12929922",
+    "year": "1990",
+    "condition": "good"
+}
+```
+
+# Обновление автомобиля (только для персонала)
+`UPDATE /carshop/admin/edit_car`
+```sh
+{
+    "brand": "LADA",
+    "model": "LADA SEDAN",
+    "price": "1000000",
+    "year": "2000",
+    "condition": "good"
+}
+```
+
+# Удаление автомобиля (только для персонала)
+`DELETE /carshop/admin/remove_car`
+```sh
+{
+    "brand": "LADA",
+    "model": "LADA SEDAN"
+}
+```
+

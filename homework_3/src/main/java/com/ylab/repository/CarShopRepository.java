@@ -20,7 +20,7 @@ public abstract class CarShopRepository <T extends CarShopEntity>{
      * Метод для добавления обьекта
      * @param t обьект для добавления
      */
-    abstract boolean add(T t);
+    abstract void add(T t);
 
     /**
      * Метод для получения всех обьектов

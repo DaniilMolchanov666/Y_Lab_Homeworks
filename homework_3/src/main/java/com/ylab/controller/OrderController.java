@@ -2,11 +2,20 @@ package com.ylab.controller;
 
 import com.ylab.entity.Car;
 import com.ylab.entity.Order;
+import com.ylab.entity.OrderStatus;
 import com.ylab.entity.User;
+import com.ylab.entity.dto.CarDto;
+import com.ylab.entity.dto.OrderDto;
+import com.ylab.entity.dto.UserDto;
+import com.ylab.entity.dto.UserForShowDto;
+import com.ylab.mapper.CarMapper;
+import com.ylab.mapper.UserMapper;
 import com.ylab.service.CarService;
 import com.ylab.service.OrderService;
 import com.ylab.utils.AuditLogger;
+import org.mapstruct.factory.Mappers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,6 +34,10 @@ public class OrderController {
 
     private final AuditLogger auditLogger = AuditLogger.getInstance();
 
+    private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
+
+    private final CarMapper carMapper = CarMapper.carMapper;
+
     /**
      * Конструктор, где происходит внедрение нужных зависимостей
      *
@@ -39,37 +52,20 @@ public class OrderController {
     /**
      * Обработка запроса создания заказа
      *
-     * @param currentUser текущий пользователь данной сессии
      */
-    public void createOrder(User currentUser) {
-        out.print("Введите марку автомобиля для заказа: ");
-        String brand = scanner.nextLine();
-        out.print("Введите модель автомобиля для заказа: ");
-        String model = scanner.nextLine();
-
-        Car car = carService.getCarByModelAndBrand(brand, model);
-
-        Order order = new Order(currentUser, car, "Новый");
-
-        if (orderService.addOrder(order)) {
-            auditLogger.logAction("Создан новый заказ: " + order);
-            out.println("\nЗаказ создан");
-            return;
-        } else {
-            out.println("\nЗаказ не создан");
-
-        }
-        out.println("\nЗаказ не найден!");
+    public void createOrder(User user, String brand, String model) {
+        Order order = new Order(
+                user,
+                carService.getCarByModelAndBrand(brand, model), 
+                OrderStatus.CREATED.name()
+        );
+        orderService.addOrder(order);
     }
 
     /**
      * Обработка запроса изменения статуса заказа
      */
     public void changeOrderStatus() {
-        out.print("Введите марку автомобиля заказа для изменения статуса: ");
-        String brand = scanner.nextLine();
-        out.print("Введите модель автомобиля заказа для изменения статуса: ");
-        String model = scanner.nextLine();
 
         List<Order> orders = orderService.getAllOrders();
         for (Order order : orders) {
@@ -80,35 +76,6 @@ public class OrderController {
                 order.setStatus(status);
 
                 if (orderService.editOrder(order)) {
-                    auditLogger.logAction("Статус заказа обновлен! " + order);
-                    out.println("\nЗаказ обновлен!");
-                    return;
-                } else {
-                    out.println("\nЗаказ не обновлен!");
-                }
-                return;
-            }
-        }
-        out.println("\nЗаказ не найден!");
-    }
-
-//TODO настроить метод для изменения автомобиля в заказе
-    public void changeOrder() {
-        out.print("Введите марку автомобиля заказа для изменения статуса: ");
-        String brand = scanner.nextLine();
-        out.print("Введите модель автомобиля заказа для изменения статуса: ");
-        String model = scanner.nextLine();
-
-        List<Order> orders = orderService.getAllOrders();
-        for (Order order : orders) {
-            if (order.getCar().getBrand().equals(brand) && order.getCar().getModel().equals(model)) {
-                out.print("Введите новый статус заказа: ");
-                String status = scanner.nextLine();
-
-                order.setStatus(status);
-
-                if (orderService.editOrder(order)) {
-                    auditLogger.logAction("Статус заказа обновлен! " + order);
                     out.println("\nЗаказ обновлен!");
                     return;
                 } else {
@@ -133,7 +100,6 @@ public class OrderController {
         for (Order order : orders) {
             if (order.getCar().getBrand().equals(brand) && order.getCar().getModel().equals(model)) {
                 orderService.removeOrder(order);
-                auditLogger.logAction("Удален заказ: " + order);
                 out.println("\nЗаказ удален!");
                 return;
             }
@@ -166,7 +132,14 @@ public class OrderController {
     /**
      * Обработка запроса просмотра заказов
      */
-    public void viewOrders() {
-        orderService.viewOrders();
+    public List<OrderDto> viewOrders() {
+        List<OrderDto> orderDtoList = new ArrayList<>();
+        orderService.viewOrders().forEach(i -> {
+            orderDtoList.add(new OrderDto(
+                    userMapper.toUserForShowDto(i.getCustomer()),
+                    carMapper.toCarDto(i.getCar()),
+                    i.getStatus()));
+        });
+        return orderDtoList;
     }
 }
