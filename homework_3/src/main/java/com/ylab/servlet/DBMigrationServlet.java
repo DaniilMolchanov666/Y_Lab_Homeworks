@@ -5,6 +5,9 @@ import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 
+/**
+ * Класс для задания подключения к БД перед выполнением всех сервлетов
+ */
 @WebListener
 public class DBMigrationServlet implements ServletContextListener {
 

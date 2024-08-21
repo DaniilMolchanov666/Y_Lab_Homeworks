@@ -1,14 +1,11 @@
 package com.ylab.service;
 
-import com.ylab.entity.Car;
 import com.ylab.entity.Order;
 import com.ylab.repository.OrderRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static java.lang.System.out;
 
 /**
  * Класс управляет заказами на покупку автомобилей.
@@ -43,6 +40,14 @@ public class OrderService {
      */
     public boolean editOrder(Order order) {
         return orderRepository.edit(order);
+    }
+
+    public Order findOrderByCarName(String brand, String model) {
+        return orderRepository.findOrderByCar(brand, model);
+    }
+
+    public Order findOrderByIdAndCarName(Integer id, String brand, String model) {
+        return orderRepository.findCurrentUSerOrder(id, brand, model);
     }
 
     /**

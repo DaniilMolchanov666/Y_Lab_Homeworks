@@ -8,6 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * DTO для вывода и создания пользователя
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

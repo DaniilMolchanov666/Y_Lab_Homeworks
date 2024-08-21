@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.ylab.entity.User;
 import com.ylab.exception.AlreadyRegistrationUserException;
-import com.ylab.out.LiquibaseConfig;
 import com.ylab.service.AuthenticationService;
 import com.ylab.service.UserService;
 import jakarta.servlet.ServletConfig;
@@ -14,9 +13,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 
+/**
+ * Сервлет для регистрации
+ * POST /carshop/register
+ */
 @WebServlet("/register")
 public class RegistrationServlet extends HttpServlet implements CarShopServlet {
 
@@ -37,18 +39,15 @@ public class RegistrationServlet extends HttpServlet implements CarShopServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       var user = objectMapper.readValue(getJson(req.getReader()), User.class);
-       try {
-           authenticationService.registrationCheck(user.getUsername());
-           userService.addUser(user);
+        var user = objectMapper.readValue(getJson(req.getReader()), User.class);
+        try {
+            authenticationService.registrationCheck(user.getUsername());
+            userService.addUser(user);
 
-           resp.setStatus(HttpServletResponse.SC_CREATED);
-           resp.getWriter().println("Регистрация успешно пройдена!");
-
-       } catch (AlreadyRegistrationUserException e) {
-           resp.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
-           resp.getWriter().println(e.getMessage());
-       }
+            createResponse(HttpServletResponse.SC_OK, "Регистрация успешно пройдена!", resp);
+        } catch (AlreadyRegistrationUserException e) {
+            createResponse(HttpServletResponse.SC_FORBIDDEN, e.getMessage(), resp);
+        }
     }
 
     @Override

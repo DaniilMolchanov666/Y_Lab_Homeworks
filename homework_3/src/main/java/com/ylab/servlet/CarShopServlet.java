@@ -16,7 +16,7 @@ public interface CarShopServlet {
             }
             return stringBuilder.toString();
         } catch (IOException e) {
-            return "Не удалось прочитать!";
+            return "Не удалось прочитать данные!";
         }
     }
 

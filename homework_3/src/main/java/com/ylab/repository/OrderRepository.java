@@ -135,39 +135,86 @@ public class OrderRepository extends CarShopRepository<Order> {
         return false;
     }
 
-    public List<Order> findOrdersByUserId(Integer id) {
-        String sql = "SELECT * FROM car_shop_schema.orders WHERE user_id = " + id;
-        List<Order> listOfOrders = new ArrayList<>();
+    public Order findOrderByCar(String brand, String model) {
+        String sql = "SELECT *\n" +
+                "FROM car_shop_schema.orders AS orders\n" +
+                "JOIN car_shop_schema.cars AS cars ON orders.car_id = cars.id\n" +
+                "WHERE cars.brand = ? AND cars.model = ?;";
+
         try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            preparedStatement.setString(1, brand);
+            preparedStatement.setString(2, model);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
             while (resultSet.next()) {
-                listOfOrders.add(new Order(findUser(resultSet.getInt("user_id")),
+                return new Order(
+                        findUser(resultSet.getInt("user_id")),
                         findCar(resultSet.getInt("car_id")),
-                        resultSet.getString("status")));
+                        resultSet.getString("status")
+                );
             }
-            return listOfOrders;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return Collections.emptyList();
+        return null;
     }
 
-    public List<Order> findOrdersByCar(Integer id) {
-        String sql = "SELECT * FROM car_shop_schema.orders WHERE user_id = " + id;
-        List<Order> listOfOrders = new ArrayList<>();
+    public Order findCurrentUSerOrder(Integer id, String brand, String model) {
+        String sql = "SELECT *\n" +
+                "FROM car_shop_schema.orders AS orders\n" +
+                "JOIN car_shop_schema.cars AS cars ON orders.car_id = cars.id\n" +
+                "WHERE cars.brand = ? AND cars.model = ? AND orders.user_id = ?;";
+
         try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            preparedStatement.setString(1, brand);
+            preparedStatement.setString(2, model);
+            preparedStatement.setInt(3, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
             while (resultSet.next()) {
-                listOfOrders.add(new Order(findUser(resultSet.getInt("user_id")),
+                return new Order(
+                        findUser(resultSet.getInt("user_id")),
                         findCar(resultSet.getInt("car_id")),
-                        resultSet.getString("status")));
+                        resultSet.getString("status")
+                );
             }
-            return listOfOrders;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return Collections.emptyList();
+        return null;
+    }
+
+    public Order findOrderByUserWithCarData(Integer userId, String brand, String model) {
+            String sql = "SELECT o.*\n" +
+                    "FROM car_shop_schema.orders orders\n" +
+                    "JOIN car_shop_schema.cars cars ON orders.car_id = cars.id\n" +
+                    "JOIN car_shop_schema.users users ON orders.user_id = users.id\n" +
+                    "WHERE cars.brand = ? AND cars.model = ? AND users.username = ?;";
+
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+                preparedStatement.setString(1, brand);
+                preparedStatement.setString(2, model);
+
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                while (resultSet.next()) {
+                    return new Order(
+                            findUser(resultSet.getInt("user_id")),
+                            findCar(resultSet.getInt("car_id")),
+                            resultSet.getString("status")
+                    );
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+            return null;
     }
 }

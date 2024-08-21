@@ -17,6 +17,10 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
+/**
+ * Сервлет для авторизации (с сохранением информации и профиле в сессии)
+ * POST /carshop/login
+ */
 @WebServlet("/login")
 public class AuthorizationServlet extends HttpServlet implements CarShopServlet {
 
@@ -48,11 +52,10 @@ public class AuthorizationServlet extends HttpServlet implements CarShopServlet 
             httpSession.setAttribute("password", foundedUser.getPassword());
             httpSession.setAttribute("role", foundedUser.getRole().name());
 
-            resp.setStatus(HttpServletResponse.SC_CREATED);
-            resp.getWriter().println("Вы успешно зашли в сиcтему как " + foundedUser.getRole().name() + "!");
+            createResponse(HttpServletResponse.SC_OK, "Вы успешно зашли в сиcтему как "
+                    + foundedUser.getRole().name() + "!", resp);
         } catch (NoAuthenticatedException e) {
-            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            resp.getWriter().println(e.getMessage());
+            createResponse(HttpServletResponse.SC_FORBIDDEN, e.getMessage(), resp);
         }
     }
 }

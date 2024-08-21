@@ -7,16 +7,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * DTO для вывода и создания заказа
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonSerialize
 @JsonDeserialize
-public class OrderDto {
+public class OrderDto  {
     @JsonProperty
     private UserForShowDto customer;
     @JsonProperty
     private CarDto car;
     @JsonProperty
     private String status;
+
 }

@@ -1,5 +1,8 @@
 package com.ylab.exception;
 
+/**
+ * Исключение для ситуации попытки отправить невалидные данные автомобиля
+ */
 public class ValidationCarDataException extends Exception{
 
     @Override

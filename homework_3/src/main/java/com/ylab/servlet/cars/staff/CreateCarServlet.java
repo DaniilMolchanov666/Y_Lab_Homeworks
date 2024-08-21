@@ -8,9 +8,7 @@ import com.ylab.exception.NotAccessOperationException;
 import com.ylab.exception.ValidationCarDataException;
 import com.ylab.repository.CarRepository;
 import com.ylab.service.AccessService;
-import com.ylab.service.AuthenticationService;
 import com.ylab.service.CarService;
-import com.ylab.service.UserService;
 import com.ylab.servlet.CarShopServlet;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -22,12 +20,14 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
+/**
+ * Сервлет для создания автомобилей (только для персонала)
+ * POST /carshop/admin/create_car
+ */
 @WebServlet("/admin/create_car")
 public class CreateCarServlet extends HttpServlet implements CarShopServlet {
 
     private ObjectMapper objectMapper;
-
-    private AuthenticationService authenticationService;
 
     private AccessService accessService;
 
@@ -37,7 +37,6 @@ public class CreateCarServlet extends HttpServlet implements CarShopServlet {
     public void init(ServletConfig config) throws ServletException {
         this.objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        this.authenticationService = new AuthenticationService(new UserService());
         this.accessService = new AccessService();
         this.carController = new CarController(new CarService(new CarRepository()));
     }
@@ -51,11 +50,11 @@ public class CreateCarServlet extends HttpServlet implements CarShopServlet {
             carController.addCar(car);
             createResponse(HttpServletResponse.SC_CREATED, "\nАвтомобиль " + car.toString() + " добавлен!", resp);
         } catch (ValidationCarDataException e1) {
-            createResponse(HttpServletResponse.SC_BAD_GATEWAY, e1.getMessage(), resp);
+            createResponse(HttpServletResponse.SC_CONFLICT, e1.getMessage(), resp);
         } catch (NotAccessOperationException e2) {
             createResponse(HttpServletResponse.SC_CONFLICT, e2.getMessage(), resp);
         } catch (Exception e) {
-            createResponse(HttpServletResponse.SC_BAD_GATEWAY, "Автомобиль не был добавлен!", resp);
+            createResponse(HttpServletResponse.SC_NOT_FOUND, "Автомобиль не был добавлен!", resp);
         }
     }
 

@@ -15,6 +15,9 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Properties;
 
+/**
+ * Утилитарный класс для подключения к БД и создания таблиц через Liquibase
+ */
 public class LiquibaseConfig {
 
     public static Connection dbConnection;

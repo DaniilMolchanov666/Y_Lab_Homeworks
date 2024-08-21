@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * DTO для обновления и авторизации пользователя
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

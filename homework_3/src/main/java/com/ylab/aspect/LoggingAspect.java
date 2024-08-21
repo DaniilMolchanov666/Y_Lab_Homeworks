@@ -3,13 +3,13 @@ package com.ylab.aspect;
 import com.ylab.utils.AuditLogger;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 
+/**
+ * Аспект для логирования и вывода длительности выполнения сервлета
+ */
 @Aspect
 public class LoggingAspect {
 

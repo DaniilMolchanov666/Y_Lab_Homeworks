@@ -1,5 +1,8 @@
 package com.ylab.exception;
 
+/**
+ * Исключение при попытке сделать запрос в случае отсутствия авторизации
+ */
 public class NotAuthException extends Exception {
     @Override
     public String getMessage() {

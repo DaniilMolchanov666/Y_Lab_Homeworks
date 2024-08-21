@@ -1,13 +1,10 @@
 package com.ylab.controller;
 
-import com.ylab.entity.Car;
 import com.ylab.entity.Order;
 import com.ylab.entity.OrderStatus;
 import com.ylab.entity.User;
-import com.ylab.entity.dto.CarDto;
 import com.ylab.entity.dto.OrderDto;
-import com.ylab.entity.dto.UserDto;
-import com.ylab.entity.dto.UserForShowDto;
+import com.ylab.entity.dto.OrderFindDto;
 import com.ylab.mapper.CarMapper;
 import com.ylab.mapper.UserMapper;
 import com.ylab.service.CarService;
@@ -65,68 +62,21 @@ public class OrderController {
     /**
      * Обработка запроса изменения статуса заказа
      */
-    public void changeOrderStatus(String status, String brand, String model) {
-
-        List<Order> orders = orderService.getAllOrders();
-        for (Order order : orders) {
-            if (order.getCar().getBrand().equals(brand) && order.getCar().getModel().equals(model)) {
-                out.print("Введите новый статус заказа: ");
-
-                order.setStatus(status);
-
-                if (orderService.editOrder(order)) {
-                    out.println("\nЗаказ обновлен!");
-                    return;
-                } else {
-                    out.println("\nЗаказ не обновлен!");
-                }
-                return;
-            }
-        }
-        out.println("\nЗаказ не найден!");
+    public void changeOrderStatus(String status, String brand, String model) throws IllegalArgumentException {
+        var order = orderService.findOrderByCarName(brand, model);
+        OrderStatus.valueOf(status);
+        order.setStatus(status);
+        orderService.editOrder(order);
     }
 
     /**
      * Обработка запроса удаления заказа
      */
-    public void removeOrder() {
-        out.print("Введите марку автомобиля заказа для удаления: ");
-        String brand = scanner.nextLine();
-        out.print("Введите модель автомобиля заказа для удаления: ");
-        String model = scanner.nextLine();
-
-        List<Order> orders = orderService.getAllOrders();
-        for (Order order : orders) {
-            if (order.getCar().getBrand().equals(brand) && order.getCar().getModel().equals(model)) {
-                orderService.removeOrder(order);
-                out.println("\nЗаказ удален!");
-                return;
-            }
-        }
-        out.println("\nЗаказ не найден!");
+    public void removeOrder(Integer userId, String brand, String model) {
+       var order = orderService.findOrderByIdAndCarName(userId, brand, model);
+       orderService.removeOrder(order);
     }
 
-    /**
-     * Обработка запроса поиска заказа
-     */
-    public void searchOrders() {
-        out.print("Введите марку автомобиля заказа для поиска: ");
-        String brand = scanner.nextLine();
-        out.print("Введите модель автомобиля заказа для поиска: ");
-        String model = scanner.nextLine();
-
-        List<Order> orders = orderService.getAllOrders();
-        boolean found = false;
-        for (Order order : orders) {
-            if (order.getCar().getBrand().equals(brand) && order.getCar().getModel().equals(model)) {
-                out.println(order);
-                found = true;
-            }
-        }
-        if (!found) {
-            out.println("\nЗаказ не найден!");
-        }
-    }
 
     /**
      * Обработка запроса просмотра заказов

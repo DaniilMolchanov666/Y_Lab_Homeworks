@@ -16,6 +16,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+/**
+ * Сервлет для обновления данных пользователя (для всех)
+ * PUT /carshop/edit_profile
+ */
 @WebServlet("/edit_profile")
 public class EditUserServlet extends HttpServlet implements CarShopServlet {
 
@@ -31,7 +35,7 @@ public class EditUserServlet extends HttpServlet implements CarShopServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var user = objectMapper.readValue(getJson(req.getReader()), UserUpdateDto.class);
         try {
             int id  = (int) req.getSession().getAttribute("id");
@@ -39,8 +43,7 @@ public class EditUserServlet extends HttpServlet implements CarShopServlet {
             createResponse(HttpServletResponse.SC_CREATED, "Ваш профиль обновлен!"
                     + usersController.getUserInfo(user.getUsername()), resp);
         } catch (Exception e) {
-            resp.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
-            resp.getWriter().println("Пользователь не был обновлен!" + e.getMessage());
+            createResponse(HttpServletResponse.SC_CONFLICT, "Пользователь не был обновлен!", resp);
         }
     }
 }

@@ -16,6 +16,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+/**
+ * Сервлет для получения списка пользователей (только для персонала)
+ * GET /carshop//admin/users
+ */
 @WebServlet("/admin/users")
 public class ShowUsersServlet extends HttpServlet implements CarShopServlet {
 
@@ -38,8 +42,7 @@ public class ShowUsersServlet extends HttpServlet implements CarShopServlet {
         try {
             accessService.isManagerOrAdmin(req.getSession().getAttribute("role").toString());
             String listOfUsers = objectMapper.writeValueAsString(usersController.viewUsers());
-            resp.setStatus(HttpServletResponse.SC_OK);
-            resp.getWriter().println("Список пользователей: \n" + listOfUsers);
+            createResponse(HttpServletResponse.SC_OK, "Список пользователей: \n" + listOfUsers, resp);
         } catch (NotAccessOperationException e) {
             createResponse(HttpServletResponse.SC_CONFLICT, e.getMessage(), resp);
         }

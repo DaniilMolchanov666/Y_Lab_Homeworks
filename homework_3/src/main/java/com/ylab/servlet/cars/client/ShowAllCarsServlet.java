@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.ylab.controller.CarController;
 import com.ylab.repository.CarRepository;
 import com.ylab.service.CarService;
+import com.ylab.servlet.CarShopServlet;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,8 +15,12 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+/**
+ * Сервлет для получения всех автомобилей
+ * GET /carshop/show_cars
+ */
 @WebServlet("/show_cars")
-public class ShowAllCarsServlet extends HttpServlet {
+public class ShowAllCarsServlet extends HttpServlet implements CarShopServlet {
 
     private ObjectMapper objectMapper;
 
@@ -31,8 +36,6 @@ public class ShowAllCarsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String listOfCars = objectMapper.writeValueAsString(carController.viewCars());
-        resp.setStatus(HttpServletResponse.SC_OK);
-        resp.setContentType("text/plain");
-        resp.getWriter().println("Доступные для продажи автомобили: \n" + listOfCars);
+        createResponse(HttpServletResponse.SC_OK, "Доступные для продажи автомобили: \n" + listOfCars, resp);
     }
 }

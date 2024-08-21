@@ -67,7 +67,7 @@ public class CarController {
     /**
      * Обработка запросов на удаление автомобиля
      */
-    public void removeCar(String brand, String model) throws SQLException {
+    public void removeCar(String brand, String model) {
         var car = carService.getCarByModelAndBrand(brand, model);
         carService.removeCar(car);
     }

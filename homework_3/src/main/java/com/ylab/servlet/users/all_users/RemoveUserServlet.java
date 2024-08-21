@@ -15,6 +15,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+/**
+ * Сервлет для удаления профиля пользователем (для всех)
+ * DELETE /carshop/remove_profile
+ */
 @WebServlet("/remove_profile")
 public class RemoveUserServlet extends HttpServlet implements CarShopServlet {
 
@@ -30,7 +34,7 @@ public class RemoveUserServlet extends HttpServlet implements CarShopServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             usersController.removeUser((int) req.getSession().getAttribute("id"));
             createResponse(HttpServletResponse.SC_OK, "Ваш профиль удален!", resp);
