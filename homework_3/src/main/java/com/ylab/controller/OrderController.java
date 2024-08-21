@@ -4,19 +4,14 @@ import com.ylab.entity.Order;
 import com.ylab.entity.OrderStatus;
 import com.ylab.entity.User;
 import com.ylab.entity.dto.OrderDto;
-import com.ylab.entity.dto.OrderFindDto;
 import com.ylab.mapper.CarMapper;
 import com.ylab.mapper.UserMapper;
 import com.ylab.service.CarService;
 import com.ylab.service.OrderService;
-import com.ylab.utils.AuditLogger;
 import org.mapstruct.factory.Mappers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-
-import static java.lang.System.out;
 
 /**
  * Контроллер для обработки запросов, связанных с заказами
@@ -26,10 +21,6 @@ public class OrderController {
     private final OrderService orderService;
 
     private final CarService carService;
-
-    private final Scanner scanner = new Scanner(System.in);
-
-    private final AuditLogger auditLogger = AuditLogger.getInstance();
 
     private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 
@@ -80,6 +71,7 @@ public class OrderController {
 
     /**
      * Обработка запроса просмотра заказов
+     * @return список заказов
      */
     public List<OrderDto> viewOrders() {
         List<OrderDto> orderDtoList = new ArrayList<>();

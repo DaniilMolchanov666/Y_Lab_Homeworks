@@ -22,6 +22,9 @@ public class LiquibaseConfig {
 
     public static Connection dbConnection;
 
+    /**
+     * Подключение к базе данных и выполнение changelog файлов
+     */
     public static void getConnectionWithLiquiBase()  {
 
         Properties properties = new Properties();

@@ -1,21 +1,13 @@
 package com.ylab.controller;
 
-import com.ylab.entity.Car;
 import com.ylab.entity.dto.CarDto;
 import com.ylab.exception.ValidationCarDataException;
 import com.ylab.mapper.CarMapper;
-import com.ylab.service.AccessService;
 import com.ylab.service.CarService;
-import com.ylab.utils.AuditLogger;
-import org.apache.commons.lang3.ObjectUtils;
-import org.mapstruct.factory.Mappers;
 
-import java.nio.channels.AcceptPendingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Collectors;
 
 import static java.lang.System.out;
 
@@ -25,10 +17,6 @@ import static java.lang.System.out;
 public class CarController {
 
     private final CarService carService;
-
-    private final Scanner scanner = new Scanner(System.in);
-
-    private final AuditLogger auditLogger = AuditLogger.getInstance();
 
     private final CarMapper carMapper = CarMapper.carMapper;
 
@@ -73,7 +61,8 @@ public class CarController {
     }
 
     /**
-     * Обработка запросов на просмотр всех автомобилей
+     * Обработка запросов на просмотр всех автомобилей\
+     * @return список всех автомобилей
      */
     public List<CarDto> viewCars() {
         List<CarDto> carDtoList = new ArrayList<>();

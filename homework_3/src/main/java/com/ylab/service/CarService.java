@@ -1,19 +1,14 @@
 package com.ylab.service;
 
 import com.ylab.entity.Car;
-import com.ylab.entity.dto.CarDto;
 import com.ylab.exception.ValidationCarDataException;
 import com.ylab.repository.CarRepository;
-import com.ylab.utils.AuditLogger;
 
-import java.sql.SQLException;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import static java.lang.System.out;
 
 /**
  * Класс управляет автомобилями в автосалоне.
@@ -67,15 +62,6 @@ public class CarService {
     }
 
     /**
-     * Возвращает список всех автомобилей в автосалоне.
-     *
-     * @return Список всех автомобилей.
-     */
-    public List<Car> getAllCars() {
-        return new ArrayList<>(carRepository.getAll());
-    }
-
-    /**
      * Обновляет информацию об автомобиле
      *
      * @return true - автомобиль был обновлен, false - произошла ошибка
@@ -84,6 +70,10 @@ public class CarService {
         return carRepository.edit(car);
     }
 
+    /**
+     * Поиск автомобиля по модели и брэнду
+     * @return найденный автомобиль
+     */
     public Car getCarByModelAndBrand(String brand, String model) throws NullPointerException {
         return carRepository.getCarByModelAndBrand(brand, model);
     }
@@ -97,6 +87,10 @@ public class CarService {
         carRepository.remove(car);
     }
 
+    /**
+     * Показать все автомобили
+     *
+     */
     public List<Car> viewCars() {
         if (carRepository.getAll().isEmpty()) {
             return Collections.emptyList();

@@ -34,12 +34,20 @@ public class AuthenticationService {
         }
     }
 
+    /**
+     * Проверяет авторизован ли пользователь
+     * @param currentUser - пользователь, сохраненный в сессии
+     */
     public void authCheck (Object currentUser) throws NotAuthException {
         if (currentUser == null) {
             throw new NotAuthException();
         }
     }
 
+    /**
+     * Регистрация пользователя
+     * @param username Имя пользователя.
+     */
     public void registrationCheck(String username) throws AlreadyRegistrationUserException {
         if (userService.getUserByUsername(username) != null) {
             throw new AlreadyRegistrationUserException();

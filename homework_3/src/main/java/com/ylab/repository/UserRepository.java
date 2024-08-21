@@ -1,6 +1,5 @@
 package com.ylab.repository;
 
-import com.ylab.entity.Order;
 import com.ylab.entity.Role;
 import com.ylab.entity.User;
 import lombok.Setter;
@@ -10,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**

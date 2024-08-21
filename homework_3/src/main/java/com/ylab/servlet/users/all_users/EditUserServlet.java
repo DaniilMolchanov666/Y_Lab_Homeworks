@@ -31,7 +31,7 @@ public class EditUserServlet extends HttpServlet implements CarShopServlet {
     public void init(ServletConfig config) throws ServletException {
         this.objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        this.usersController = new UsersController(new UserService(), new AccessService());
+        this.usersController = new UsersController(new UserService());
     }
 
     @Override

@@ -11,18 +11,6 @@ import java.util.Objects;
  * MANAGER -
  */
 public class AccessService {
-    /**
-     * Проверяет, имеет ли пользователь необходимую роль.
-     *
-     * @param
-     * @param requiredRole Требуемая роль.
-     * @return true, если пользователь имеет необходимую роль, иначе false.
-     */
-    public void hasSuitableRole(String role, Role requiredRole) throws NotAccessOperationException {
-        if (!Objects.equals(role,requiredRole.name())) {
-            throw new NotAccessOperationException();
-        }
-    }
 
     public void isAdmin(String role) throws NotAccessOperationException {
         if (!Objects.equals(role, Role.ADMIN.name())) {

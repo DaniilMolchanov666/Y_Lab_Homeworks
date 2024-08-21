@@ -35,13 +35,16 @@ public class OrderService {
 
     /**
      * Обновляет информацию о заказе
-     *
-     * @return true - заказ был обновлен, false - произошла ошибка
      */
-    public boolean editOrder(Order order) {
-        return orderRepository.edit(order);
+    public void editOrder(Order order) {
+        orderRepository.edit(order);
     }
 
+    /**
+     * Находит заказа по данным автомобиля
+     * @param brand - марка автомобиля, model - модель автомобиля
+     * @return найденный заказ
+     */
     public Order findOrderByCarName(String brand, String model) {
         return orderRepository.findOrderByCar(brand, model);
     }
@@ -61,6 +64,7 @@ public class OrderService {
 
     /**
      * Вывод всех заказов или сообщения в случае отсутствия заказов
+     * @return список всех заказов
      */
     public List<Order> viewOrders() {
         if (orderRepository.getAll().isEmpty()) {

@@ -35,7 +35,7 @@ public class EditUserRoleServlet extends HttpServlet implements CarShopServlet {
         this.objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         this.accessService = new AccessService();
-        this.usersController = new UsersController(new UserService(), new AccessService());
+        this.usersController = new UsersController(new UserService());
     }
 
     @Override

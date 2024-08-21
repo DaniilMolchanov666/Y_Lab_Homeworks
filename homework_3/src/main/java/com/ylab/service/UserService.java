@@ -33,8 +33,7 @@ public class UserService {
     }
 
     /**
-     * Возвращает список всех пользователей в системе.
-     *
+     * Возвращает список всех пользователей в системе
      * @return Список всех пользователей.
      */
     public List<User> getAllUsers() {
@@ -45,18 +44,34 @@ public class UserService {
         return listOfUsers;
     }
 
+    /**
+     * Редактирование пользователем его же профиля
+     * @param user - текущий пользователь
+     */
      public void editUser(User user) {
         userRepository.edit(user);
      }
 
+    /**
+     * Редактирование администрацией роли пользователя
+     * @param user - искомый пользователь
+     */
      public void editRoleUser(User user) {
         userRepository.editRole(user);
      }
 
+    /**
+     * Получение пользователя по id (извлекается из сессии)
+     * @param id - id пользователя
+     */
      public User getUserById(Integer id) {
         return userRepository.findUserById(id);
      }
 
+    /**
+     * Удаление пользователя по id (извлекается из сессии)
+     * @param id - id пользователя
+     */
      public void removeById(Integer id) {
         userRepository.removeById(id);
      }

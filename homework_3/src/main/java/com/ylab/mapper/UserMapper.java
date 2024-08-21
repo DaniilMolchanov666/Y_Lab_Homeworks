@@ -9,6 +9,9 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
+/**
+ * Маппер для перевода сущностей, связанных с пользователями
+ */
 @Mapper(
         unmappedSourcePolicy = ReportingPolicy.IGNORE
 )
