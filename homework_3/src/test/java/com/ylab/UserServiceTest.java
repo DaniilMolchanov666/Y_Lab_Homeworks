@@ -17,18 +17,18 @@ public class UserServiceTest {
         userManager = new UserService();
     }
 
-//    @Test
-//    public void testAddUser() {
-//        User user = new User("testUser", "password", Role.CLIENT);
-//        userManager.addUser(user);
-//        assertEquals(user, userManager.getUserByUsername("testUser"));
-//    }
-//
-//    @Test
-//    public void testGetUserByUsername() {
-//        User user = new User("testUser", "password", Role.CLIENT);
-//        userManager.addUser(user);
-//        assertEquals(user, userManager.getUserByUsername("testUser"));
-//        assertNull(userManager.getUserByUsername("nonExistentUser"));
-//    }
+    @Test
+    public void testAddUser() {
+        User user = new User("testUser", "password", Role.CLIENT);
+        userManager.addUser(user);
+        assertEquals(user, userManager.getUserByUsername("testUser"));
+    }
+
+    @Test
+    public void testGetUserByUsername() {
+        User user = new User("testUser", "password", Role.CLIENT);
+        userManager.addUser(user);
+        assertEquals(user, userManager.getUserByUsername("testUser"));
+        assertNull(userManager.getUserByUsername("nonExistentUser"));
+    }
 }

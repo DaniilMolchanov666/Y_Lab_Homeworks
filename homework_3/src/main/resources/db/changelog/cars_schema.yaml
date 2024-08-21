@@ -85,4 +85,4 @@ databaseChangeLog:
                   value: 1234569
               - column:
                   name: condition
-                  value: GOOD
+                  value: READY

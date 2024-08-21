@@ -117,3 +117,12 @@ make run
     "status": "IN_PROGRESS"
 }
 ```
+
+# Удаление заказа (для клиента)
+`DELETE /carshop/remove_order`
+```sh
+{
+    "brand": "LADA",
+    "model": "LADA SEDAN",
+}
+```

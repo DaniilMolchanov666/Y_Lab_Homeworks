@@ -1,0 +1,13 @@
+export JRE_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+export CATALINA_OPTS="-javaagent:/home/daniilmolchanov/.m2/repository/org/aspectj/aspectjweaver/1.9.22.1/aspectjweaver-1.9.22.1.jar"
+export CLASSPATH="/home/daniilmolchanov/Рабочий стол/Y_Lab_Homeworks/homework_3/src/main/java/com/ylab/"
+cd ./apache-tomcat-10.1.28/bin
+./shutdown.sh
+cd ../..
+gradle build
+gradle war
+rm -r ./apache-tomcat-10.1.28/webapps/carshop.war
+rm -r ./apache-tomcat-10.1.28/webapps/carshop
+cp build/libs/carshop.war ./apache-tomcat-10.1.28/webapps/
+cd ./apache-tomcat-10.1.28/bin
+./startup.sh

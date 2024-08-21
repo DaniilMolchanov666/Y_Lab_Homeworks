@@ -36,6 +36,7 @@ public class ShowAllCarsServlet extends HttpServlet implements CarShopServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String listOfCars = objectMapper.writeValueAsString(carController.viewCars());
+        resp.setHeader("Content-Type", "text/plain; charset=UTF-8");
         createResponse(HttpServletResponse.SC_OK, "Доступные для продажи автомобили: \n" + listOfCars, resp);
     }
 }

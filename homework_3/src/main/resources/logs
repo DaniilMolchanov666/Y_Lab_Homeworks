@@ -203,3 +203,33 @@ Wed Aug 21 12:30:53 MSK 2024
 Request: /carshop/login
 Wed Aug 21 12:30:53 MSK 2024
 Response: 201
+Wed Aug 21 17:09:07 MSK 2024
+Duration: 258 ms
+Wed Aug 21 17:09:07 MSK 2024
+Request: /carshop//register
+Wed Aug 21 17:09:07 MSK 2024
+Response: 200
+Wed Aug 21 17:09:25 MSK 2024
+Duration: 3 ms
+Wed Aug 21 17:09:25 MSK 2024
+Request: /carshop//register
+Wed Aug 21 17:09:25 MSK 2024
+Response: 403
+Wed Aug 21 17:14:35 MSK 2024
+Duration: 27 ms
+Wed Aug 21 17:14:35 MSK 2024
+Request: /carshop//login
+Wed Aug 21 17:14:35 MSK 2024
+Response: 200
+Wed Aug 21 17:33:21 MSK 2024
+Duration: 24 ms
+Wed Aug 21 17:33:21 MSK 2024
+Request: /carshop/login
+Wed Aug 21 17:33:21 MSK 2024
+Response: 200
+Wed Aug 21 17:37:05 MSK 2024
+Duration: 3 ms
+Wed Aug 21 17:37:05 MSK 2024
+Request: /carshop/login
+Wed Aug 21 17:37:05 MSK 2024
+Response: 200
