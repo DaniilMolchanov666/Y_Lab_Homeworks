@@ -13,7 +13,6 @@ import com.ylab.servlet.CarShopServlet;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -24,7 +23,7 @@ import java.io.IOException;
  * PUT /carshop/admin/edit_order
  */
 @WebServlet("/admin/edit_order")
-public class EditOrderServlet extends HttpServlet implements CarShopServlet {
+public class EditOrderServlet extends CarShopServlet {
 
     private ObjectMapper objectMapper;
 
@@ -54,7 +53,7 @@ public class EditOrderServlet extends HttpServlet implements CarShopServlet {
         } catch (NotAccessOperationException e2) {
             createResponse(HttpServletResponse.SC_FORBIDDEN, e2.getMessage(), resp);
         } catch (Exception e) {
-            createResponse(HttpServletResponse.SC_CONFLICT, "Заказ не был обновлен!", resp);
+            createResponse(HttpServletResponse.SC_CONFLICT, "Заказ не был обновлен!\n" + e.getMessage(), resp);
         }
     }
 

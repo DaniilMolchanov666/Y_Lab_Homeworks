@@ -10,7 +10,6 @@ import com.ylab.servlet.CarShopServlet;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -21,7 +20,7 @@ import java.io.IOException;
  * GET /carshop//admin/users
  */
 @WebServlet("/admin/users")
-public class ShowUsersServlet extends HttpServlet implements CarShopServlet {
+public class ShowUsersServlet extends CarShopServlet {
 
     private ObjectMapper objectMapper;
 

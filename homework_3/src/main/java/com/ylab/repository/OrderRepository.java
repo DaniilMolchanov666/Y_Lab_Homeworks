@@ -138,7 +138,7 @@ public class OrderRepository extends CarShopRepository<Order> {
         String sql = "SELECT *\n" +
                 "FROM car_shop_schema.orders AS orders\n" +
                 "JOIN car_shop_schema.cars AS cars ON orders.car_id = cars.id\n" +
-                "WHERE cars.brand = ? AND cars.model = ?;";
+                "WHERE cars.brand = ? AND cars.model = ?";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -150,6 +150,7 @@ public class OrderRepository extends CarShopRepository<Order> {
 
             while (resultSet.next()) {
                 return new Order(
+                        resultSet.getInt("id"),
                         findUser(resultSet.getInt("user_id")),
                         findCar(resultSet.getInt("car_id")),
                         resultSet.getString("status")
@@ -162,10 +163,10 @@ public class OrderRepository extends CarShopRepository<Order> {
     }
 
     public Order findCurrentUSerOrder(Integer id, String brand, String model) {
-        String sql = "SELECT *\n" +
-                "FROM car_shop_schema.orders AS orders\n" +
-                "JOIN car_shop_schema.cars AS cars ON orders.car_id = cars.id\n" +
-                "WHERE cars.brand = ? AND cars.model = ? AND orders.user_id = ?;";
+        String sql = "SELECT * " +
+                "FROM car_shop_schema.orders AS orders " +
+                "JOIN car_shop_schema.cars AS cars ON orders.car_id = cars.id " +
+                "WHERE cars.brand = ? AND cars.model = ? AND orders.user_id = ?";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -178,6 +179,7 @@ public class OrderRepository extends CarShopRepository<Order> {
 
             while (resultSet.next()) {
                 return new Order(
+                        resultSet.getInt("id"),
                         findUser(resultSet.getInt("user_id")),
                         findCar(resultSet.getInt("car_id")),
                         resultSet.getString("status")
@@ -187,33 +189,5 @@ public class OrderRepository extends CarShopRepository<Order> {
             System.out.println(e.getMessage());
         }
         return null;
-    }
-
-    public Order findOrderByUserWithCarData(Integer userId, String brand, String model) {
-            String sql = "SELECT o.*\n" +
-                    "FROM car_shop_schema.orders orders\n" +
-                    "JOIN car_shop_schema.cars cars ON orders.car_id = cars.id\n" +
-                    "JOIN car_shop_schema.users users ON orders.user_id = users.id\n" +
-                    "WHERE cars.brand = ? AND cars.model = ? AND users.username = ?;";
-
-            try {
-                PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
-                preparedStatement.setString(1, brand);
-                preparedStatement.setString(2, model);
-
-                ResultSet resultSet = preparedStatement.executeQuery();
-
-                while (resultSet.next()) {
-                    return new Order(
-                            findUser(resultSet.getInt("user_id")),
-                            findCar(resultSet.getInt("car_id")),
-                            resultSet.getString("status")
-                    );
-                }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
-            return null;
     }
 }

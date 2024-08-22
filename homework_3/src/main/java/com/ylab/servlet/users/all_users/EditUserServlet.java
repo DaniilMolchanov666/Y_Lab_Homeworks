@@ -4,13 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.ylab.controller.UsersController;
 import com.ylab.entity.dto.UserUpdateDto;
-import com.ylab.service.AccessService;
 import com.ylab.service.UserService;
 import com.ylab.servlet.CarShopServlet;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -21,7 +19,7 @@ import java.io.IOException;
  * PUT /carshop/edit_profile
  */
 @WebServlet("/edit_profile")
-public class EditUserServlet extends HttpServlet implements CarShopServlet {
+public class EditUserServlet extends CarShopServlet {
 
     private ObjectMapper objectMapper;
 

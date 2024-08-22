@@ -7,7 +7,6 @@ import com.ylab.entity.Role;
 import com.ylab.entity.User;
 import com.ylab.entity.dto.CarFindDto;
 import com.ylab.exception.NotAccessOperationException;
-import com.ylab.exception.NotAuthException;
 import com.ylab.repository.CarRepository;
 import com.ylab.service.AccessService;
 import com.ylab.service.CarService;
@@ -16,7 +15,6 @@ import com.ylab.servlet.CarShopServlet;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -28,7 +26,7 @@ import java.io.IOException;
  * POSET /carshop/create_car
  */
 @WebServlet("/create_order")
-public class CreateOrderServlet extends HttpServlet implements CarShopServlet {
+public class CreateOrderServlet extends CarShopServlet {
 
     private ObjectMapper objectMapper;
 

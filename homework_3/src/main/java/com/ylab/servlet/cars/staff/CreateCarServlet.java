@@ -13,7 +13,6 @@ import com.ylab.servlet.CarShopServlet;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -25,7 +24,7 @@ import java.io.IOException;
  * POST /carshop/admin/create_car
  */
 @WebServlet("/admin/create_car")
-public class CreateCarServlet extends HttpServlet implements CarShopServlet {
+public class CreateCarServlet extends CarShopServlet {
 
     private ObjectMapper objectMapper;
 

@@ -1,13 +1,14 @@
 package com.ylab.servlet;
 
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 
-public interface CarShopServlet {
+public abstract class CarShopServlet extends HttpServlet {
 
-    default String getJson(BufferedReader bufferedReader) {
+    public String getJson(BufferedReader bufferedReader) {
         StringBuilder stringBuilder = new StringBuilder();
         String string;
         try {
@@ -20,7 +21,7 @@ public interface CarShopServlet {
         }
     }
 
-    default void createResponse(int status, String body, HttpServletResponse response) throws IOException {
+    public void createResponse(int status, String body, HttpServletResponse response) throws IOException {
         response.setStatus(status);
         response.getWriter().println(body);
     }

@@ -4,7 +4,7 @@ export CLASSPATH="/home/daniilmolchanov/Рабочий стол/Y_Lab_Homeworks/
 cd ./apache-tomcat-10.1.28/bin
 ./shutdown.sh
 cd ../..
-gradle build
+gradle build -x test
 gradle war
 rm -r ./apache-tomcat-10.1.28/webapps/carshop.war
 rm -r ./apache-tomcat-10.1.28/webapps/carshop

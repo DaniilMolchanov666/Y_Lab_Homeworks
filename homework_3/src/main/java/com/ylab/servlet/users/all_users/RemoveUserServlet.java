@@ -3,13 +3,11 @@ package com.ylab.servlet.users.all_users;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.ylab.controller.UsersController;
-import com.ylab.service.AccessService;
 import com.ylab.service.UserService;
 import com.ylab.servlet.CarShopServlet;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -20,7 +18,7 @@ import java.io.IOException;
  * DELETE /carshop/remove_profile
  */
 @WebServlet("/remove_profile")
-public class RemoveUserServlet extends HttpServlet implements CarShopServlet {
+public class RemoveUserServlet extends CarShopServlet {
 
     private ObjectMapper objectMapper;
 

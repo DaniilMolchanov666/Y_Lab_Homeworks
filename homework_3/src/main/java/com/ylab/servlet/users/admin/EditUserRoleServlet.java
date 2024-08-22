@@ -11,7 +11,6 @@ import com.ylab.servlet.CarShopServlet;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -22,7 +21,7 @@ import java.io.IOException;
  * PUT /carshop/admin/edit_role
  */
 @WebServlet("/admin/edit_role")
-public class EditUserRoleServlet extends HttpServlet implements CarShopServlet {
+public class EditUserRoleServlet extends CarShopServlet {
 
     private ObjectMapper objectMapper;
 

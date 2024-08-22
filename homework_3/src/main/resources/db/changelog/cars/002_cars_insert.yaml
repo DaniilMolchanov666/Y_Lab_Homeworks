@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: daniilmolchanov
+      schemaName: car_shop_schema
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            tableExists:
+              tableName: cars
+      changes:
+        - insert:
+            schemaName: car_shop_schema
+            tableName: cars
+            columns:
+              - column:
+                  name: brand
+                  value: AUDI
+              - column:
+                  name: model
+                  value: AUDI Q8
+              - column:
+                  name: year
+                  value: 2010
+              - column:
+                  name: price
+                  value: 1234567
+              - column:
+                  name: condition
+                  value: SALE

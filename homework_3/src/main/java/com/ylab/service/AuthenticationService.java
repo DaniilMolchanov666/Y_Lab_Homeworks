@@ -1,5 +1,6 @@
 package com.ylab.service;
 
+import com.ylab.entity.User;
 import com.ylab.exception.AlreadyRegistrationUserException;
 import com.ylab.exception.NoAuthenticatedException;
 import com.ylab.exception.NotAuthException;
@@ -27,11 +28,12 @@ public class AuthenticationService {
      * @param password Пароль пользователя.
      * @return true, если аутентификация прошла успешно, иначе false.
      */
-    public void authenticate(String username, String password) throws NoAuthenticatedException, NullPointerException {
+    public User authenticate(String username, String password) throws NoAuthenticatedException, NullPointerException {
         var user = userService.getUserByUsername(username);
         if (user == null || !(user.getPassword().equals(password))) {
             throw new NoAuthenticatedException();
         }
+        return user;
     }
 
     /**

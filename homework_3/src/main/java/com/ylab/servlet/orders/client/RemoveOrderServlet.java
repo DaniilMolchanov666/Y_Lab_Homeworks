@@ -7,15 +7,12 @@ import com.ylab.entity.dto.CarFindDto;
 import com.ylab.exception.NotAccessOperationException;
 import com.ylab.repository.CarRepository;
 import com.ylab.service.AccessService;
-import com.ylab.service.AuthenticationService;
 import com.ylab.service.CarService;
 import com.ylab.service.OrderService;
-import com.ylab.service.UserService;
 import com.ylab.servlet.CarShopServlet;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -26,7 +23,7 @@ import java.io.IOException;
  * DELETE /carshop/remove_order
  */
 @WebServlet("/remove_order")
-public class RemoveOrderServlet extends HttpServlet implements CarShopServlet {
+public class RemoveOrderServlet extends CarShopServlet {
 
     private ObjectMapper objectMapper;
 

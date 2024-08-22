@@ -8,9 +8,12 @@ databaseChangeLog:
         - sql:
             sql: CREATE SCHEMA IF NOT EXISTS service_schema
   - include:
-      file: /db/changelog/cars_schema.yaml
+      file: /db/changelog/cars/001_cars_create_table.yaml
   - include:
-      file: /db/changelog/users_schema.yaml
+      file: /db/changelog/cars/002_cars_insert.yaml
   - include:
-      file: /db/changelog/orders_schema.yaml
-
+      file: /db/changelog/cars/003_cars_insert.yaml
+  - include:
+      file: /db/changelog/users/001_users_create_table.yaml
+  - include:
+      file: /db/changelog/orders/001_orders_create_table.yaml
