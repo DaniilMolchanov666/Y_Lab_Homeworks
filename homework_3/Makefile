@@ -2,7 +2,7 @@
 .DEFAULT_GOAL := build
 
 run:
-	docker compose up -d && gradle war
+	docker compose up -d
 
 build:
 	gradle build
