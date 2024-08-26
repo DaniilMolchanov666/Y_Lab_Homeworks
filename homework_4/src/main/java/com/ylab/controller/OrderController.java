@@ -3,8 +3,11 @@ package com.ylab.controller;
 import com.ylab.entity.Order;
 import com.ylab.entity.OrderStatus;
 import com.ylab.entity.User;
+import com.ylab.entity.dto.CarDto;
+import com.ylab.entity.dto.OrderDto;
 import com.ylab.entity.dto.OrderFindDto;
 import com.ylab.mapper.CarMapper;
+import com.ylab.mapper.OrderMapper;
 import com.ylab.mapper.UserMapper;
 import com.ylab.service.CarService;
 import com.ylab.service.OrderService;
@@ -14,15 +17,18 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * Контроллер для обработки запросов, связанных с заказами
  */
-@RestController("/carshop")
+@RestController()
 @RequiredArgsConstructor
 @Log4j2
 public class OrderController {
@@ -33,9 +39,19 @@ public class OrderController {
 
     private final UserService userService;
 
-    private final UserMapper userMapper;
+//    private final UserMapper userMapper;
+//
+//    private final CarMapper carMapper;
 
-    private final CarMapper carMapper;
+    private final OrderMapper orderMapper;
+
+    @GetMapping(value = "/show_orders", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<OrderDto>> showCars() {
+        List<OrderDto> listOfOrders = orderService.viewOrders().stream()
+                .map(orderMapper::toOrderDto)
+                .toList();
+        return ResponseEntity.ok(listOfOrders);
+    }
 
     /**
      * Обработка запроса создания заказа

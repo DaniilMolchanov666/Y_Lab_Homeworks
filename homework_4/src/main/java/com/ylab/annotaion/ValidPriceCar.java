@@ -2,6 +2,7 @@ package com.ylab.annotaion;
 
 import com.ylab.utils.CarYearValidation;
 import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -13,4 +14,6 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = CarYearValidation.class)
 public @interface ValidPriceCar {
     String message() default "Invalid car price";
+    Class<?>[] groups() default {};
+    Class<? extends Payload>[] payload() default {};
 }

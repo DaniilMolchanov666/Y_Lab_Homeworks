@@ -22,7 +22,7 @@ public class OrderService {
     }
 
     public Order findOrder(String model, String brand) {
-        return orderRepository.findOrderByCarModelAndColor(model, brand);
+        return orderRepository.findOrderByModelAndBrand(model, brand);
     }
 
     /**
@@ -40,7 +40,7 @@ public class OrderService {
      * @return true - заказ был обновлен, false - произошла ошибка
      */
     public void editOrder(String brand, String model, Order order) {
-        Order foundedOrder = orderRepository.findOrderByCarModelAndColor(brand, model);
+        Order foundedOrder = orderRepository.findOrderByModelAndBrand(model, brand);
         orderRepository.delete(foundedOrder);
         orderRepository.save(order);
     }

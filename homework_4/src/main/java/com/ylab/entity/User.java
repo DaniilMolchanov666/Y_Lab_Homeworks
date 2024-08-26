@@ -5,29 +5,26 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 /**
  * Класс-сущность представляет пользователя системы.
  */
 @Entity
-@Table(name = "car_shop_schema.users")
+@Table(name = "users", schema = "car_shop_schema")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @JsonSerialize
-public class User implements CarShopEntity{
+public class User {
 
-    public User(String username, String password, Role role) {
+    public User(String username, String password, String role) {
         this.username = username;
         this.password = password;
         this.role = role;
@@ -43,10 +40,7 @@ public class User implements CarShopEntity{
     @NotNull
     private String password;
 
-    @OneToOne(mappedBy = "customer")
-    private Order orders;
-
     @NotNull
-    private Role role;
+    private String role;
 }
 

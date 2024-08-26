@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
-    @Query("SELECT o FROM car_shop_schema.order o JOIN o.car c WHERE c.model = :model AND c.color = :color")
-    Order findOrderByCarModelAndColor(@Param("model") String model, @Param("brand") String brand);
+    @Query("SELECT o FROM Order o JOIN o.car c " +
+            "WHERE c.model = :model AND c.brand = :brand")
+    Order findOrderByModelAndBrand(@Param("model") String model, @Param("brand") String brand);
 }

@@ -20,6 +20,9 @@ public class CarService {
     private final CarRepository carRepository;
 
     public void addCar(Car car) {
+        if (carRepository.existsById(car.getId())) {
+            throw new IllegalArgumentException("Автомобиль с такими данными уже существует!");
+        }
         carRepository.save(car);
     }
 
@@ -32,12 +35,12 @@ public class CarService {
     }
 
     public void editCar(String brand, String model, Car car) {
-        Car foundedCar = carRepository.findByModelAndBrand(model, brand).orElse(null);
+        Car foundedCar = carRepository.findByModelAndBrand(model, brand).orElseThrow(NullPointerException::new);
         carRepository.delete(foundedCar);
         carRepository.save(car);
     }
 
-    public Optional<Car> findByModelAndBrand(String brand, String model) {
+    public Optional<Car> findByModelAndBrand(String brand, String model) throws NullPointerException {
         return carRepository.findByModelAndBrand(model, brand);
     }
 }

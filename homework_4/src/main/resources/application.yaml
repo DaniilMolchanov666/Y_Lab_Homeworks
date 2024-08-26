@@ -6,14 +6,16 @@ spring:
       enabled: ALWAYS
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/cottonpads
+    url: jdbc:postgresql://localhost:5450/cottonpads
     username: daniilmolchanov
     password: microcuts1928
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        show_sql: false
+        show_sql: true
+        ddl-auto: create-drop
+        default_schema: car_shop_schema
         temp:
           use_jdbc_metadata_defaults: false
     open-in-view: false
@@ -21,6 +23,6 @@ spring:
       multipart:
         enable: false
   liquibase:
-    change-log: ./src/main/java/resource/db/changelog/changelog-master.yaml
+    change-log: /db/changelog/changelog-master.yaml
 port:
   9000

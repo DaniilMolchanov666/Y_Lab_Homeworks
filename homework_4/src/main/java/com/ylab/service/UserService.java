@@ -3,6 +3,7 @@ package com.ylab.service;
 import com.ylab.entity.User;
 import com.ylab.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,12 +17,15 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     /**
      * Добавляет нового пользователя в систему.
      *
      * @param user Пользователь для добавления.
      */
     public void addUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
@@ -32,7 +36,7 @@ public class UserService {
      * @return Пользователь с указанным именем или null, если пользователь не найден.
      */
     public User getUserByUsername(String username) {
-        return userRepository.findByUserName().orElse(new User());
+        return userRepository.findByUsername(username).orElse(new User());
     }
 
     /**

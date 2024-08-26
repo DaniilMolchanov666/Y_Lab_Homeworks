@@ -2,6 +2,7 @@ package com.ylab.mapper;
 
 import com.ylab.entity.Car;
 import com.ylab.entity.dto.CarDto;
+import com.ylab.entity.dto.CarFindDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
@@ -19,6 +20,8 @@ import org.mapstruct.ReportingPolicy;
 public interface CarMapper {
 
     Car toCar(CarDto carDto);
+
+    Car findCarDtoToCar(CarFindDto carFindDto);
 
     CarDto toCarDto(Car car);
 

@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Контроллер для обработки запросов, связанных с пользователями
  */
-@RestController("/carshop")
+@RestController()
 @AllArgsConstructor
 public class UsersController {
 
@@ -39,16 +39,16 @@ public class UsersController {
         return ResponseEntity.ok(users);
     }
 
-    /**
-     * Обработка запросов редактирования пользователя по его id, сохраненного в сессии
-     * @param id - id пользователя, userDto - пользователь
-     */
-    @PatchMapping(value = "/edit_profile", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void editUserById(Integer id, UserUpdateDto userDto) {
-        var foundedUser = userService.getUserById(id);
-        userMapper.updateOwnProfile(userDto, foundedUser);
-        userService.editUser(foundedUser);
-    }
+//    /**
+//     * Обработка запросов редактирования пользователя по его id, сохраненного в сессии
+//     * @param id - id пользователя, userDto - пользователь
+//     */
+//    @PatchMapping(value = "/edit_profile", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public void editUserById(Integer id, UserUpdateDto userDto) {
+//        var foundedUser = userService.getUserById(id);
+//        userMapper.updateOwnProfile(userDto, foundedUser);
+//        userService.editUser(foundedUser);
+//    }
 
     /**
      * Обработка запросов удаления пользователя
