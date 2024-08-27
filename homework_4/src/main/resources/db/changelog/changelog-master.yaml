@@ -17,3 +17,5 @@ databaseChangeLog:
       file: /db/changelog/users/001_users_create_table.yaml
   - include:
       file: /db/changelog/orders/001_orders_create_table.yaml
+  - include:
+      file: /db/changelog/logs/001_logs_create_table.yaml

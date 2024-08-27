@@ -1,32 +1,42 @@
 package com.ylab.aspect;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ylab.entity.LogEntry;
+import com.ylab.service.LogEntryService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import lombok.extern.log4j.Log4j2;
-import org.apache.logging.log4j.Level;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
+import lombok.Setter;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import java.time.LocalDateTime;
 
 /**
  * Аспект для логирования и вывода длительности выполнения сервлета
  */
 @Aspect
-@Log4j2
+@Component
+@Setter
 public class LoggingAspect {
 
-    @Around("execution(* com.ylab.servlet.*.*(..)) && args(request, response)")
-    public Object logRequestAndResponse(ProceedingJoinPoint joinPoint, HttpServletRequest request, HttpServletResponse response) throws Throwable {
-        long startTime = System.currentTimeMillis();
-        Object result = joinPoint.proceed();
-        long endTime = System.currentTimeMillis();
-        long executionTime = endTime - startTime;
+    private LogEntryService logEntryService;
 
+    private ObjectMapper objectMapper;
 
-        log.log(Level.INFO, "\nDuration: " + executionTime + " ms");
-        log.log(Level.INFO, "\nRequest: " + request.getRequestURI());
-        log.log(Level.INFO, "\nResponse: " + response.getStatus());
+    @AfterReturning(value = "execution(* com.ylab.controller.*.*(..))", returning = "result")
+    public void logControllerMethodCall(JoinPoint joinPoint, Object result) throws JsonProcessingException {
+        HttpServletRequest request = ((ServletRequestAttributes)
+                RequestContextHolder.currentRequestAttributes()).getRequest();
 
-        return result;
+        LogEntry logEntry = new LogEntry();
+        logEntry.setEndPoint(request.getRequestURI());
+        logEntry.setMessage(objectMapper.writeValueAsString(result));
+        logEntry.setCreatedAt(LocalDateTime.now());
+
+        logEntryService.save(logEntry);
     }
 }

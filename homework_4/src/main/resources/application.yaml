@@ -24,5 +24,3 @@ spring:
         enable: false
   liquibase:
     change-log: /db/changelog/changelog-master.yaml
-port:
-  9000

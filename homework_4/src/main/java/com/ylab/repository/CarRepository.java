@@ -18,4 +18,6 @@ public interface CarRepository extends CrudRepository<Car, Integer> {
     Optional<Car> findByModelAndBrand(String model, String brand);
 
     List<Car> findAll();
+
+    boolean existsByBrandAndModel(String brand, String model);
 }

@@ -2,8 +2,12 @@ package com.ylab.service;
 
 import com.ylab.entity.Order;
 import com.ylab.repository.OrderRepository;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +15,7 @@ import java.util.List;
 /**
  * Класс управляет заказами на покупку автомобилей.
  */
-@Repository
+@Service
 @AllArgsConstructor
 public class OrderService {
 
@@ -26,30 +30,20 @@ public class OrderService {
     }
 
     /**
-     * Возвращает список всех заказов на покупку автомобилей.
-     *
-     * @return Список всех заказов.
-     */
-    public List<Order> getAllOrders() {
-        return new ArrayList<>(orderRepository.findAll());
-    }
-
-    /**
      * Обновляет информацию о заказе
-     *
-     * @return true - заказ был обновлен, false - произошла ошибка
      */
-    public void editOrder(String brand, String model, Order order) {
-        Order foundedOrder = orderRepository.findOrderByModelAndBrand(model, brand);
-        orderRepository.delete(foundedOrder);
-        orderRepository.save(order);
+    public void editOrder(Integer id, Order order) {
+        var foundedOrder = orderRepository.findById(id).orElseThrow(() ->
+                new NullPointerException("Не существует такого заказа!"));
+        foundedOrder.setStatus(order.getStatus());
+        orderRepository.save(foundedOrder);
     }
 
     /**
      * Удаляет заказ на покупку автомобиля.
-     *
      * @param order Заказ для удаления.
      */
+    @Transactional
     public void removeOrder(Order order) {
         orderRepository.delete(order);
     }

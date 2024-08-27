@@ -3,15 +3,19 @@ package com.ylab.service;
 import com.ylab.entity.User;
 import com.ylab.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Класс управляет пользователями в системе.
  */
-@Repository
+@Service
 @AllArgsConstructor
 public class UserService {
 
@@ -25,8 +29,27 @@ public class UserService {
      * @param user Пользователь для добавления.
      */
     public void addUser(User user) {
+        if (userRepository.existsByUsername(user.getUsername())) {
+            throw new IllegalArgumentException("Пользователь с таким именем уже существует!");
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+    }
+
+    public void editUser(Integer id, User user) {
+        var foundedUser = userRepository.findById(id).orElseThrow(NullPointerException::new);
+        foundedUser.setUsername(user.getUsername());
+        foundedUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        foundedUser.setRole(user.getRole());
+        userRepository.save(user);
+    }
+
+    public UserDetails getCurrentAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            return (UserDetails) authentication.getPrincipal();
+        }
+        throw new NullPointerException("Нет пользователя с такими именем и паролем!");
     }
 
     /**
@@ -36,7 +59,8 @@ public class UserService {
      * @return Пользователь с указанным именем или null, если пользователь не найден.
      */
     public User getUserByUsername(String username) {
-        return userRepository.findByUsername(username).orElse(new User());
+        return userRepository.findByUsername(username).orElseThrow(() ->
+                new NullPointerException("Нет пользователя с таким именем!"));
     }
 
     /**
@@ -51,5 +75,4 @@ public class UserService {
     public void removeUser(User user) {
         userRepository.delete(user);
     }
-
 }

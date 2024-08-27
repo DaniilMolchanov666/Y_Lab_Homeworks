@@ -22,13 +22,11 @@ public interface UserMapper {
 
     User toUSer(UserDto userDto);
 
-    User toUSer(UserForShowDto userDto);
-
     UserDto toUserDto(User user);
-
-    UserForShowDto toUserForShowDto(User user);
 
     void updateOwnProfile(UserUpdateDto userDto, @MappingTarget User user);
 
-    void updateRole(UserForShowDto userDto, @MappingTarget User user);
+    void updateRole(UserForShowDto userForShowDto, @MappingTarget User user);
+
+    UserForShowDto toForShowDto(User user);
 }

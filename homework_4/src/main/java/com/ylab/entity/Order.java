@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +20,6 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Table(name = "orders", schema = "car_shop_schema")
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
