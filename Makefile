@@ -1,13 +1,13 @@
 .DEFAULT_GOAL := build
 
 run:
-	make -C homework_1 run
+	make -C homework_2 run
 
 build:
-	make -C homework_1 build
+	make -C homework_2 build
 
 test:
-	make -C homework_1 test
+	make -C homework_2 test
 
 build-run: build run
 
