@@ -1,7 +1,6 @@
 package com.ylab.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,14 +10,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
+/**
+ * Класс-сущность представляет форму лога активности пользователя
+ */
 @Entity
 @Table(name = "logs", schema = "car_shop_schema")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@JsonSerialize
+@JsonDeserialize
 public class LogEntry {
 
     @Id
@@ -29,5 +29,5 @@ public class LogEntry {
 
     private String endPoint;
 
-    private LocalDateTime createdAt;
+    private String createdAt;
 }

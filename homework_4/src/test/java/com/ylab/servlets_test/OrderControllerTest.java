@@ -5,9 +5,9 @@ import com.ylab.controller.OrderController;
 import com.ylab.entity.Order;
 import com.ylab.entity.OrderStatus;
 import com.ylab.entity.User;
-import com.ylab.entity.dto.CarFindDto;
-import com.ylab.entity.dto.OrderDto;
-import com.ylab.entity.dto.OrderFindDto;
+import com.ylab.entity.dto.car.CarFindDto;
+import com.ylab.entity.dto.order.OrderForUpdateStatusDto;
+import com.ylab.entity.dto.order.OrderFindDto;
 import com.ylab.mapper.OrderMapper;
 import com.ylab.service.CarService;
 import com.ylab.service.OrderService;
@@ -53,7 +53,7 @@ public class OrderControllerTest {
     public void testShowOrders() throws Exception {
         List<Order> orders = List.of(new Order(), new Order());
         when(orderService.viewOrders()).thenReturn(orders);
-        when(orderMapper.toOrderDto(any(Order.class))).thenReturn(new OrderDto());
+        when(orderMapper.toOrderDto(any(Order.class))).thenReturn(new OrderForUpdateStatusDto());
 
         mockMvc.perform(get("/v1/carshop/show_orders")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -85,7 +85,7 @@ public class OrderControllerTest {
         when(carService.findByModelAndBrand(anyString(), anyString())).thenReturn(Optional.of(new com.ylab.entity.Car()));
 
         verify(orderService, times(1)).addOrder(order);
-        when(orderMapper.toOrderDto(any(Order.class))).thenReturn(new OrderDto());
+        when(orderMapper.toOrderDto(any(Order.class))).thenReturn(new OrderForUpdateStatusDto());
 
         mockMvc.perform(post("/v1/carshop/create_order")
                         .contentType(MediaType.APPLICATION_JSON)

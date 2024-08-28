@@ -1,11 +1,12 @@
 package com.ylab.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ylab.entity.Order;
 import com.ylab.entity.OrderStatus;
 import com.ylab.entity.User;
-import com.ylab.entity.dto.CarFindDto;
-import com.ylab.entity.dto.OrderDto;
-import com.ylab.entity.dto.OrderFindDto;
+import com.ylab.entity.dto.car.CarFindDto;
+import com.ylab.entity.dto.order.OrderFindDto;
 import com.ylab.mapper.OrderMapper;
 import com.ylab.service.CarService;
 import com.ylab.service.OrderService;
@@ -46,6 +47,8 @@ public class OrderController {
 
     private final UserService userService;
 
+    private final ObjectMapper objectMapper;
+
     /**
      * Обработка запроса вывода всех заказов
      *
@@ -54,11 +57,16 @@ public class OrderController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Список автомобилей")
     })
-    @GetMapping(value = "show_orders", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "orders", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> showOrders() {
-        List<OrderDto> listOfOrders = orderService.viewOrders().stream()
-                .map(orderMapper::toOrderDto)
-                .toList();
+        List<String> listOfOrders = orderService.viewOrders().stream()
+                .map(order -> {
+                    try {
+                        return objectMapper.writeValueAsString(orderMapper.toOrderDto(order));
+                    } catch (JsonProcessingException e) {
+                        return ResponseEntity.status(HttpStatus.CONFLICT).body("Некорректный формат!").getBody();
+                    }
+                }).toList();
         return ResponseEntity.ok("Список заказов автомобилей:\n" + listOfOrders);
     }
 
@@ -73,7 +81,7 @@ public class OrderController {
             @ApiResponse(responseCode = "404", description = "Нет пользователя с такими именем и паролем!"),
             @ApiResponse(responseCode = "404", description = "Нет пользователя с такими именем и паролем!")
     })
-    @PostMapping(value = "create_order", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "orders", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> createOrder(@RequestBody CarFindDto carDto) {
         var userDetails = userService.getCurrentAuthenticatedUser();
         int id = userService.getUserByUsername(userDetails.getUsername()).getId();
@@ -83,15 +91,10 @@ public class OrderController {
         user.setUsername(userDetails.getUsername());
         user.setPassword(userDetails.getPassword());
 
-        Order order = new Order(
-                user,
-                carService.findByModelAndBrand(
-                                carDto.getBrand(),
-                                carDto.getModel())
-                        .orElseThrow(NullPointerException::new
-                        ),
-                OrderStatus.CREATED.name()
-        );
+        var car = carService.findByModelAndBrand(carDto.getBrand(), carDto.getModel())
+                .orElseThrow(NullPointerException::new);
+
+        Order order = new Order(user, car, OrderStatus.CREATED.name());
         orderService.addOrder(order);
         return ResponseEntity.status(HttpStatus.CREATED).body("Заказ " + orderMapper.toOrderDto(order) + "создан!");
     }
@@ -106,7 +109,7 @@ public class OrderController {
             @ApiResponse(responseCode = "200", description = "Статус заказа изменен"),
             @ApiResponse(responseCode = "404", description = "Не существует такого заказа!")
     })
-    @PatchMapping(value = "staff/edit_order_status", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(value = "staff/order-status", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> changeOrderStatus(@RequestBody OrderFindDto orderFindDto) throws IllegalArgumentException {
         var order = orderService.findOrder(orderFindDto.getModel(), orderFindDto.getBrand());
         order.setStatus(orderFindDto.getStatus());
@@ -122,7 +125,7 @@ public class OrderController {
             @ApiResponse(responseCode = "200", description = "Заказ удален!"),
             @ApiResponse(responseCode = "404", description = "Не существует такого заказа!")
     })
-    @DeleteMapping(value = "staff/remove_order", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "staff/orders", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> removeOrder(@Valid @RequestBody OrderFindDto orderFindDto) {
         orderService.removeOrder(orderService.findOrder(orderFindDto.getModel(), orderFindDto.getBrand()));
         return ResponseEntity.ok("Заказ %s удален!".formatted(orderFindDto));

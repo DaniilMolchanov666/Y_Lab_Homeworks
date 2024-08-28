@@ -23,7 +23,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: message
-                  type: varchar(100)
+                  type: text
                   remarks: Сообщение
               - column:
                   name: end_point
@@ -31,5 +31,5 @@ databaseChangeLog:
                   remarks: Url запроса
               - column:
                   name: created_at
-                  type: timestamp
+                  type: text
                   remarks: Время действия

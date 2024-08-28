@@ -2,8 +2,8 @@ package com.ylab.servlets_test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ylab.controller.UsersController;
-import com.ylab.entity.dto.UserForShowDto;
-import com.ylab.entity.dto.UserUpdateDto;
+import com.ylab.entity.dto.user.UserForShowAndUpdateRoleDto;
+import com.ylab.entity.dto.user.UserUpdateDto;
 import com.ylab.mapper.UserMapper;
 import com.ylab.entity.User;
 import com.ylab.service.CustomUserDetailsService;
@@ -49,7 +49,7 @@ public class UserControllerTest {
     public void testViewUsers() throws Exception {
         List<User> users = List.of(new User(), new User());
         when(userService.getAllUsers()).thenReturn(users);
-        when(userMapper.toForShowDto(any(User.class))).thenReturn(new UserForShowDto());
+        when(userMapper.toUserForShowDto(any(User.class))).thenReturn(new UserForShowAndUpdateRoleDto());
 
         mockMvc.perform(get("/v1/carshop/admin/show_users")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -57,7 +57,7 @@ public class UserControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
         verify(userService, times(1)).getAllUsers();
-        verify(userMapper, times(users.size())).toForShowDto(any(User.class));
+        verify(userMapper, times(users.size())).toUserForShowDto(any(User.class));
     }
 
     @Test
@@ -85,11 +85,11 @@ public class UserControllerTest {
 
     @Test
     public void testEditUserRole() throws Exception {
-        UserForShowDto userUpdateDto = new UserForShowDto();
+        UserForShowAndUpdateRoleDto userUpdateDto = new UserForShowAndUpdateRoleDto();
         User user = new User();
 
         when(userService.getUserByUsername(anyString())).thenReturn(user);
-        doNothing().when(userMapper).updateRole(any(UserForShowDto.class), any(User.class));
+        doNothing().when(userMapper).updateRole(any(UserForShowAndUpdateRoleDto.class), any(User.class));
         doNothing().when(userService).editUser(anyInt(), any(User.class));
 
         mockMvc.perform(patch("/v1/carshop/admin/edit_role")
@@ -99,7 +99,7 @@ public class UserControllerTest {
                 .andExpect(content().string(String.format("Роль пользователя '%s' изменена на '%s'!", userUpdateDto.getUsername(), userUpdateDto.getRole())));
 
         verify(userService, times(1)).getUserByUsername(anyString());
-        verify(userMapper, times(1)).updateRole(any(UserForShowDto.class), any(User.class));
+        verify(userMapper, times(1)).updateRole(any(UserForShowAndUpdateRoleDto.class), any(User.class));
         verify(userService, times(1)).editUser(anyInt(), any(User.class));
     }
 

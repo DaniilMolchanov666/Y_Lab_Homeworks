@@ -1,9 +1,10 @@
 package com.ylab.utils;
 
-import com.ylab.annotaion.ValidPriceCar;
 import com.ylab.annotaion.ValidYearCar;
+import com.ylab.exception.ValidationCarDataException;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import lombok.SneakyThrows;
 
 import java.time.Year;
 import java.util.Arrays;
@@ -22,6 +23,7 @@ public class CarYearValidation implements ConstraintValidator<ValidYearCar, Stri
      *
      * @return результат проверки на валидность
      */
+    @SneakyThrows
     @Override
     public boolean isValid(String year, ConstraintValidatorContext constraintValidatorContext) {
 
@@ -29,9 +31,14 @@ public class CarYearValidation implements ConstraintValidator<ValidYearCar, Stri
         int minSizeOfYearValue = 4;
         int minYear = 1970;
 
-        return Arrays.stream(year.split("")).allMatch(i -> Character.isDigit(i.charAt(0)))
+        boolean isCorrectYear = Arrays.stream(year.split("")).allMatch(i -> Character.isDigit(i.charAt(0)))
                 && year.split("").length == minSizeOfYearValue
                 && ((Integer.parseInt(year) >= minYear
                 && Integer.parseInt(year) <= currentYear));
+
+        if (!isCorrectYear) {
+            throw new ValidationCarDataException();
+        }
+        return true;
     }
 }

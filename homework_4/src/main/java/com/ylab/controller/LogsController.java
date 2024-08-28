@@ -31,7 +31,7 @@ public class LogsController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Список логов")
     })
-    @GetMapping("admin/show_logs")
+    @GetMapping("admin/logs")
     public ResponseEntity<List<LogEntry>> getLogs() {
         return ResponseEntity.ok(logEntryService.getAllLogs());
     }

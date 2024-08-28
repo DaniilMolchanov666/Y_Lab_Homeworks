@@ -1,9 +1,10 @@
 package com.ylab.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ylab.entity.User;
-import com.ylab.entity.dto.UserForShowDto;
-import com.ylab.entity.dto.UserUpdateDto;
+import com.ylab.entity.dto.user.UserForShowAndUpdateRoleDto;
+import com.ylab.entity.dto.user.UserUpdateDto;
 import com.ylab.mapper.UserMapper;
 import com.ylab.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.Level;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,6 +39,8 @@ public class UsersController {
 
     private final UserMapper userMapper;
 
+    private final ObjectMapper objectMapper;
+
     /**
      * Обработка запросов отображения всех пользователей из базы данных (только для администрации)
      * @return список всех пользователей и статус 200 OK
@@ -45,9 +49,16 @@ public class UsersController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Список зарегистрированных пользователей")
     })
-    @GetMapping(value = "admin/show_users", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "admin/users", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> viewUsers() throws JsonProcessingException {
-        List<UserForShowDto> users = userService.getAllUsers().stream().map(userMapper::toForShowDto).toList();
+        List<String> users = userService.getAllUsers().stream()
+                .map(user -> {
+                    try {
+                        return objectMapper.writeValueAsString(userMapper.toUserForShowDto(user));
+                    } catch (JsonProcessingException e) {
+                        return ResponseEntity.status(HttpStatus.CONFLICT).body("Некорректный формат!").getBody();
+                    }
+                }).toList();
         log.log(Level.INFO, users);
         return ResponseEntity.ok("Список зарегистрированных пользователей:\n" + users);
     }
@@ -63,7 +74,7 @@ public class UsersController {
             @ApiResponse(responseCode = "404", description = "Нет пользователя с такими именем и паролем!"),
 
     })
-    @PatchMapping(value = "edit_profile", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(value = "users", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> editUser(@RequestBody UserUpdateDto userUpdateDto) {
         var userDetails = userService.getCurrentAuthenticatedUser();
         int id = userService.getUserByUsername(userDetails.getUsername()).getId();
@@ -89,8 +100,8 @@ public class UsersController {
             @ApiResponse(responseCode = "404", description = "Нет пользователя с таким именем!"),
 
     })
-    @PatchMapping(value = "admin/edit_role", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> editUserRole(@RequestBody UserForShowDto userUpdateDto) {
+    @PatchMapping(value = "admin/user-role", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> editUserRole(@RequestBody UserForShowAndUpdateRoleDto userUpdateDto) {
         User foundedUser = userService.getUserByUsername(userUpdateDto.getUsername());
         int id = foundedUser.getId();
 
@@ -112,7 +123,7 @@ public class UsersController {
             @ApiResponse(responseCode = "404", description = "Нет пользователя с таким именем!"),
 
     })
-    @DeleteMapping(value = "admin/remove_profile/{userName}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "admin/users/{userName}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> removeUser(@PathVariable String userName) throws NullPointerException {
         userService.removeUser(userService.getUserByUsername(userName));
         return ResponseEntity.ok("Пользователь '%s' успешно удален!".formatted(userName));

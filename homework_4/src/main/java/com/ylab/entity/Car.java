@@ -1,6 +1,5 @@
 package com.ylab.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.ylab.annotaion.ValidPriceCar;
 import com.ylab.annotaion.ValidYearCar;
 import jakarta.persistence.Entity;
@@ -11,7 +10,6 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -19,15 +17,12 @@ import lombok.NoArgsConstructor;
 /**
  * Класс-сущность представляет автомобиль в автосалоне.
  */
-
 @Entity
 @Table(name = "cars", schema = "car_shop_schema")
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @EqualsAndHashCode(of = {"brand", "model"})
-@JsonSerialize
 public class Car {
 
     @Id

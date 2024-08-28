@@ -1,8 +1,10 @@
 package com.ylab.utils;
 
 import com.ylab.annotaion.ValidPriceCar;
+import com.ylab.exception.ValidationCarDataException;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import lombok.SneakyThrows;
 
 public class CarPriceValidation implements ConstraintValidator<ValidPriceCar, String> {
     @Override
@@ -17,8 +19,12 @@ public class CarPriceValidation implements ConstraintValidator<ValidPriceCar, St
      *
      * @return результат проверки на валидность
      */
+    @SneakyThrows
     @Override
     public boolean isValid(String price, ConstraintValidatorContext constraintValidatorContext) {
-        return price.matches("^\\d+$");
+        if (!price.matches("^\\d+$")) {
+            throw new ValidationCarDataException();
+        }
+        return true;
     }
 }

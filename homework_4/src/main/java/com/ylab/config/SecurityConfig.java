@@ -14,6 +14,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * Класс-конфигурация для распределения обязанностей автосалона по ролям (ADMIN, MANAGER, CLIENT),
+ * а также настройки авторизации и регистрации пользователей
+ */
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
@@ -28,11 +32,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/carshop/register").permitAll()
-                        .requestMatchers("/carshop/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/carshop/staff/**").hasAnyRole("ADMIN", "MANAGER")
-                        .anyRequest().permitAll())
-                .formLogin(formLoginConfigurer -> formLoginConfigurer.defaultSuccessUrl("/carshop/show_cars"))
+                        .requestMatchers("/v1/carshop/register").permitAll()
+                        .requestMatchers("/v1/carshop/admin/*").hasAuthority("ADMIN")
+                        .requestMatchers("/v1/carshop/staff/*").hasAnyAuthority("ADMIN", "MANAGER")
+                        .anyRequest().authenticated())
+                .formLogin(formLoginConfigurer -> formLoginConfigurer.defaultSuccessUrl("/v1/carshop/cars"))
                 .build();
     }
 

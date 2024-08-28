@@ -1,9 +1,9 @@
 package com.ylab.mapper;
 
 import com.ylab.entity.User;
-import com.ylab.entity.dto.UserDto;
-import com.ylab.entity.dto.UserForShowDto;
-import com.ylab.entity.dto.UserUpdateDto;
+import com.ylab.entity.dto.user.UserForRegisterDto;
+import com.ylab.entity.dto.user.UserForShowAndUpdateRoleDto;
+import com.ylab.entity.dto.user.UserUpdateDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
@@ -20,13 +20,11 @@ import org.mapstruct.ReportingPolicy;
 )
 public interface UserMapper {
 
-    User toUSer(UserDto userDto);
-
-    UserDto toUserDto(User user);
+    User toUser(UserForRegisterDto userDto);
 
     void updateOwnProfile(UserUpdateDto userDto, @MappingTarget User user);
 
-    void updateRole(UserForShowDto userForShowDto, @MappingTarget User user);
+    void updateRole(UserForShowAndUpdateRoleDto userForShowDto, @MappingTarget User user);
 
-    UserForShowDto toForShowDto(User user);
+    UserForShowAndUpdateRoleDto toUserForShowDto(User user);
 }

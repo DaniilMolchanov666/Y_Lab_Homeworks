@@ -1,7 +1,9 @@
 package com.ylab.controller;
 
-import com.ylab.entity.dto.CarDto;
-import com.ylab.entity.dto.CarFindDto;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ylab.entity.dto.car.CarForCreateDto;
+import com.ylab.entity.dto.car.CarFindDto;
 import com.ylab.mapper.CarMapper;
 import com.ylab.service.CarService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,6 +17,7 @@ import org.apache.logging.log4j.Level;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -39,20 +42,36 @@ public class CarController {
 
     private final CarMapper carMapper;
 
+    private final ObjectMapper objectMapper;
+
     /**
      * Обработка запроса создания заказа
      * @return список автомобилей и статус 200 ОК
      */
     @Operation(summary = "Вывод автомобилей")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Список автомобилей")
+            @ApiResponse(responseCode = "200", description = "Список автомобилей"),
+            @ApiResponse(responseCode = "409", description = "Некорректный формат!")
     })
     @SneakyThrows
-    @GetMapping(value = "show_cars", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "cars", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> showCars() {
-        List<CarDto> listOfCars = carService.getAllCars().stream().map(carMapper::toCarDto).toList();
+        List<String> listOfCars = carService.getAllCars().stream()
+                .map(car -> {
+                    try {
+                        return objectMapper.writeValueAsString(carMapper.toCarDto(car));
+                    } catch (JsonProcessingException e) {
+                        return ResponseEntity.status(HttpStatus.CONFLICT).body("Некорректный формат!").getBody();
+                    }
+                }).toList();
         log.log(Level.INFO, listOfCars);
-        return ResponseEntity.ok("Список доступных для заказа автомобилей:\n" + listOfCars);
+        return ResponseEntity.ok("""
+                Добро пожаловать в наш автосалон!
+                Список доступных для заказа автомобилей:
+                %s
+                """.
+                formatted(listOfCars));
     }
 
     /**
@@ -64,8 +83,8 @@ public class CarController {
             @ApiResponse(responseCode = "200", description = "Автомобиль успешно создан!"),
             @ApiResponse(responseCode = "409", description = "Автомобиль с такими данными уже существует!")
     })
-    @PostMapping(value = "staff/create_car", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> createCar(@Valid @RequestBody CarDto carDto) {
+    @PostMapping(value = "staff/cars", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> createCar(@Valid @RequestBody CarForCreateDto carDto) {
         carService.addCar(carMapper.toCar(carDto));
         log.log(Level.INFO, "Автомобиль '%s' успешно создан!".formatted(carDto));
         return ResponseEntity.status(HttpStatus.CREATED).body("Автомобиль успешно создан!");
@@ -80,7 +99,7 @@ public class CarController {
             @ApiResponse(responseCode = "200", description = "Автомобиль успешно обновлен!"),
             @ApiResponse(responseCode = "404", description = "Не существует автомобиля такого брэнда и модели!")
     })
-    @PatchMapping(value = "staff/edit_car", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(value = "staff/cars", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> editCar(@Valid @RequestBody CarFindDto carDto) {
         carService.editCar(carDto.getBrand(), carDto.getModel(), carMapper.findCarDtoToCar(carDto));
         log.log(Level.INFO, "Автомобиль %s %s успешно обновлен!".formatted(carDto.getBrand(), carDto.getModel()));
@@ -96,7 +115,7 @@ public class CarController {
             @ApiResponse(responseCode = "200", description = "Автомобиль успешно удален!"),
             @ApiResponse(responseCode = "404", description = "Не существует автомобиля такого брэнда и модели!")
     })
-    @DeleteMapping(value = "staff/remove_car", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "staff/cars", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> removeCar(@Valid @RequestParam(value = "brand", required = false) String brand,
                                             @Valid @RequestParam(value = "model", required = false) String model) {
         carService.removeCar(carService.findByModelAndBrand(brand, model).orElse(null));

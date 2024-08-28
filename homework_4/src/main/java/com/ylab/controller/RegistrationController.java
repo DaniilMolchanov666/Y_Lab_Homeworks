@@ -1,6 +1,6 @@
 package com.ylab.controller;
 
-import com.ylab.entity.dto.UserDto;
+import com.ylab.entity.dto.user.UserForRegisterDto;
 import com.ylab.mapper.UserMapper;
 import com.ylab.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,8 +40,8 @@ public class RegistrationController {
             @ApiResponse(responseCode = "409", description = "Пользователь с таким именем уже существует!")
     })
     @PostMapping(value = "register", produces = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity<String> registerUser(@RequestBody UserDto userDto) {
-        userService.addUser(userMapper.toUSer(userDto));
+    public ResponseEntity<String> registerUser(@RequestBody UserForRegisterDto userDto) {
+        userService.addUser(userMapper.toUser(userDto));
         log.log(Level.INFO, "Пользователь зарегистрирован!");
         return ResponseEntity.ok("Пользователь %s сохранен!".formatted(userDto));
     }

@@ -1,27 +1,38 @@
-package com.ylab.entity.dto;
+package com.ylab.entity.dto.car;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ylab.annotaion.ValidPriceCar;
+import com.ylab.annotaion.ValidYearCar;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 /**
- * DTO для поиска автомобиля
+ * DTO для вывода и создания автомобилей
  */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonSerialize
 @JsonDeserialize
-@ToString
-public class CarFindDto {
+public class CarForCreateDto {
+
     @JsonProperty
     private String brand;
+
     @JsonProperty
     private String model;
+
+    @JsonProperty
+    @ValidYearCar
+    private String year;
+
+    @JsonProperty
+    @ValidPriceCar
+    private String price;
+
+    @JsonProperty
+    private String condition;
 }

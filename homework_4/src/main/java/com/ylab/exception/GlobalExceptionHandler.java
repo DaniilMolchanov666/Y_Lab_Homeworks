@@ -7,6 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+/**
+ * Глобальный обработчик ошибок, возникающих в случаях отсутствия данных, добавления уже существующих данных
+ * и отрицательных проверок на валидность полей автомобиля
+ */
 @RestControllerAdvice
 @Log4j2
 public class GlobalExceptionHandler {

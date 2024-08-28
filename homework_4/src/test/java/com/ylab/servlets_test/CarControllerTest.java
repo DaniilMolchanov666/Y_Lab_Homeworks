@@ -3,8 +3,8 @@ package com.ylab.servlets_test;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ylab.controller.CarController;
 import com.ylab.entity.Car;
-import com.ylab.entity.dto.CarDto;
-import com.ylab.entity.dto.CarFindDto;
+import com.ylab.entity.dto.car.CarForCreateDto;
+import com.ylab.entity.dto.car.CarFindDto;
 import com.ylab.mapper.CarMapper;
 import com.ylab.service.CarService;
 import org.junit.jupiter.api.Test;
@@ -39,7 +39,7 @@ public class CarControllerTest {
     public void testShowCars() throws Exception {
         List<Car> cars = List.of(new Car(), new Car());
         when(carService.getAllCars()).thenReturn(cars);
-        when(carMapper.toCarDto(any(Car.class))).thenReturn(new CarDto());
+        when(carMapper.toCarDto(any(Car.class))).thenReturn(new CarForCreateDto());
 
         mockMvc.perform(get("/v1/carshop/show_cars")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -52,7 +52,7 @@ public class CarControllerTest {
 
     @Test
     public void testCreateCar() throws Exception {
-        CarDto carDto = new CarDto();
+        CarForCreateDto carDto = new CarForCreateDto();
         carDto.setBrand("Toyota");
         carDto.setModel("Camry");
 

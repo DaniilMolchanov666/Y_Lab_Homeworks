@@ -1,7 +1,7 @@
 package com.ylab.mapper;
 
 import com.ylab.entity.Order;
-import com.ylab.entity.dto.OrderDto;
+import com.ylab.entity.dto.order.OrderForUpdateStatusDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.NullValuePropertyMappingStrategy;
@@ -14,7 +14,7 @@ import org.mapstruct.ReportingPolicy;
 )
 public interface OrderMapper {
 
-    Order toOrder(OrderDto orderDto);
+    Order toOrder(OrderForUpdateStatusDto orderDto);
 
-    OrderDto toOrderDto(Order order);
+    OrderForUpdateStatusDto toOrderDto(Order order);
 }

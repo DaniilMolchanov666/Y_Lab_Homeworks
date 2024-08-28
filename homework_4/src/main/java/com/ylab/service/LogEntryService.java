@@ -2,14 +2,16 @@ package com.ylab.service;
 
 import com.ylab.entity.LogEntry;
 import com.ylab.repository.LogEntryRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Класс управляет добавлением и выводом логов
+ */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class LogEntryService {
 
     private final LogEntryRepository logEntryRepository;

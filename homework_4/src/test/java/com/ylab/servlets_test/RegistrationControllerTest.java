@@ -3,7 +3,7 @@ package com.ylab.servlets_test;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ylab.controller.RegistrationController;
 import com.ylab.entity.Role;
-import com.ylab.entity.dto.UserDto;
+import com.ylab.entity.dto.user.UserForRegisterDto;
 import com.ylab.mapper.UserMapper;
 import com.ylab.service.UserService;
 import org.junit.jupiter.api.Test;
@@ -35,7 +35,7 @@ public class RegistrationControllerTest {
     @Test
     public void testRegisterUser() throws Exception {
         // Arrange
-        UserDto userDto = new UserDto();
+        UserForRegisterDto userDto = new UserForRegisterDto();
         userDto.setUsername("testUser");
         userDto.setPassword("testPassword");
         userDto.setRole(Role.valueOf("ADMIN"));
@@ -45,7 +45,7 @@ public class RegistrationControllerTest {
         user.setPassword("testPassword");
         user.setRole("USER");
 
-        when(userMapper.toUSer(userDto)).thenReturn(user);
+        when(userMapper.toUser(userDto)).thenReturn(user);
         doNothing().when(userService).addUser(user);
 
         // Act & Assert
@@ -55,7 +55,7 @@ public class RegistrationControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("Пользователь " + userDto + " сохранен!"));
 
-        verify(userMapper, times(1)).toUSer(userDto);
+        verify(userMapper, times(1)).toUser(userDto);
         verify(userService, times(1)).addUser(user);
     }
 }
