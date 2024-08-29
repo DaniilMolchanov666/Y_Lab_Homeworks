@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.ylab.AuthenticationServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-08-12T12:17:17" hostname="CottonPads" time="0.24">
-  <properties/>
-  <testcase name="testAuthenticateUser()" classname="com.ylab.AuthenticationServiceTest" time="0.24"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

@@ -1,0 +1,99 @@
+plugins {
+    id 'war'
+    id 'java'
+    id 'application'
+    id 'io.freefair.aspectj.post-compile-weaving' version '6.3.0'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.springframework.boot' version '3.2.3'
+}
+
+group 'com.ylab'
+version '1.0-SNAPSHOT'
+
+application {
+    mainClassName = 'com.ylab.Main'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+
+    testImplementation 'org.assertj:assertj-core:3.26.3'
+    testImplementation 'org.mockito:mockito-core:5.12.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.12.0'
+    testImplementation(platform("org.junit:junit-bom:5.10.0"))
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+    implementation 'org.mapstruct:mapstruct:1.6.0'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.0'
+
+    implementation 'org.postgresql:postgresql:42.7.2'
+
+    implementation 'org.liquibase:liquibase-commercial:4.29.1'
+    implementation 'org.liquibase:liquibase-core:4.29.1'
+
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.17.2")
+
+    implementation("jakarta.validation:jakarta.validation-api:3.1.0")
+
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.3.3")
+
+    runtimeOnly 'org.aspectj:aspectjweaver:1.9.22.1'
+    runtimeOnly 'org.aspectj:aspectjrt:1.9.22.1'
+    implementation 'org.aspectj:aspectjtools:1.9.22.1'
+
+    aspect 'org.aspectj:aspectjrt:1.9.7'
+    aspect 'org.aspectj:aspectjweaver:1.9.7'
+
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation("org.springframework.boot:spring-boot-starter-aop:3.3.3")
+    implementation 'org.springframework:spring-context:6.1.12'
+    implementation 'org.springframework:spring-web:6.1.12'
+    implementation 'org.springframework:spring-core:6.1.12'
+
+    implementation("org.hibernate.orm:hibernate-core:6.6.0.Final")
+
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
+    testImplementation("org.springframework:spring-mock:2.0.8")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:3.3.3")
+    testImplementation("org.springframework.security:spring-security-test:6.3.3")
+
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'com.ylab.Main'
+        )
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}

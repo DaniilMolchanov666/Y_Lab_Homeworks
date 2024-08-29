@@ -1,7 +1,19 @@
-# Домашние задания
+# Домашнее задание №4
+# REST приложение "Автосалон" с использованием Spring Framework
+# Описание
+Апгрейд домашнего задания №1 с заменой репозиториев на таблицы PostgreSQL и миграцией баз данных при
+помощи инструментов LiquiBase и Spring Framework
 
-[ДЗ №1](https://github.com/DaniilMolchanov666/Y_Lab_Homeworks/tree/homework_1)
+- аутентификация, авторизация и регистрация пользователей
+- присвоение ролей пользователям и разделение функционала
+- возможность редактирования заказов, автомобилей, информации о клиентах
+- логирование и запись логов в файл
 
-[ДЗ №2](https://github.com/DaniilMolchanov666/Y_Lab_Homeworks/tree/homework_2) 
+# Запуск 
+Создание подключения к БД через docker compose и war файла, который потом добавляеся в директорию webapps вашего TomCat сервера
+```sh
+make run
+```
 
-[ДЗ №3](https://github.com/DaniilMolchanov666/Y_Lab_Homeworks/tree/homework_3)  
+# Основные запросы:
+![swagger.png](image/swagger.png)
