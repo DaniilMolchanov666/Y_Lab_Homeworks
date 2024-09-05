@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: daniilmolchanov
+      schemaName: car_shop_schema
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            tableExists:
+              tableName: cars
+      changes:
+        - insert:
+            schemaName: car_shop_schema
+            tableName: cars
+            columns:
+              - column:
+                  name: brand
+                  value: MAZDA
+              - column:
+                  name: model
+                  value: MAZDA 3
+              - column:
+                  name: year
+                  value: 2005
+              - column:
+                  name: price
+                  value: 1234569
+              - column:
+                  name: condition
+                  value: READY

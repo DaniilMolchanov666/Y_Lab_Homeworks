@@ -17,8 +17,9 @@
 **/gradle
 
 *.bat
-
+/startserver
 /gradlew
+/logs
 
 # Package Files #
 *.jar
