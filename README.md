@@ -79,4 +79,8 @@ make run
 ```
 
 # Основные запросы:
-![swagger.png](image/swagger.png)
+[http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+
+![image_1.png](image/image_1.png)
+
+![image_2.png](image/image_2.png)
